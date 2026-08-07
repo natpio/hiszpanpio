@@ -1,0 +1,69 @@
+{
+  "lesson_metadata": {
+    "id": "A1_07",
+    "level": "A1",
+    "title": "En la oficina (W biurie i pracy)"
+  },
+  "sections": [
+    {
+      "id": "sec_01",
+      "type": "dialog",
+      "title": "Diálogo 1: Buscando el informe",
+      "content": [
+        {"speaker": "Ana", "text": "¿Dónde está el informe de logística para Madrid?"},
+        {"speaker": "Piotr", "text": "Está en la mesa, al lado del ordenador portátil."},
+        {"speaker": "Ana", "text": "Perfecto. ¿Y las facturas de la feria comercial?"},
+        {"speaker": "Piotr", "text": "Están dentro del archivador azul en el armario."}
+      ]
+    },
+    {
+      "id": "sec_02",
+      "type": "vocabulary",
+      "title": "Vocabulario (Biuro i dokumenty)",
+      "items": [
+        {"es": "El informe", "pl": "Raport"},
+        {"es": "La oficina", "pl": "Biuro"},
+        {"es": "El ordenador", "pl": "Komputer"},
+        {"es": "La factura", "pl": "Faktura"},
+        {"es": "El documento", "pl": "Dokument"},
+        {"es": "El jefe / La jefa", "pl": "Szef / Szefowa"},
+        {"es": "El compañero", "pl": "Kolega z pracy"},
+        {"es": "La reunión", "pl": "Spotkanie / Zebranie"},
+        {"es": "El correo", "pl": "Poczta / E-mail"}
+      ]
+    },
+    {
+      "id": "sec_03",
+      "type": "grammar",
+      "title": "Gramatyka: Rodzajniki określone i nieokreślone",
+      "content": "W języku hiszpańskim rzeczowniki mają rodzaj męski (el / un) lub żeński (la / una). Używamy rodzajników nieokreślonych (un/una) mówiąc o czymś po raz pierwszy, a określonych (el/la), gdy wiemy dokładnie, o jakim przedmiocie mowa."
+    },
+    {
+      "id": "sec_04",
+      "type": "exercises",
+      "title": "Ejercicios (Ćwiczenia)",
+      "items": [
+        {
+          "question": "El ___ está en la mesa.",
+          "answer": "informe",
+          "translation": "Raport jest na stole."
+        },
+        {
+          "question": "Trabajo en una ___ grande.",
+          "answer": "oficina",
+          "translation": "Pracuję w dużym biurze."
+        },
+        {
+          "question": "Necesito imprimir este ___.",
+          "answer": "documento",
+          "translation": "Muszę wydrukować ten dokument."
+        },
+        {
+          "question": "Mañana tenemos una ___ importante.",
+          "answer": "reunión",
+          "translation": "Jutro mamy ważne spotkanie."
+        }
+      ]
+    }
+  ]
+}

@@ -20,50 +20,128 @@ def get_base64_of_bin_file(bin_file):
     return base64.b64encode(data).decode()
 
 def set_random_background_and_styles():
-    """Wczytuje zew. plik CSS oraz dynamicznie generuje reguły dla zakodowanych teł"""
+    """Generuje CSS i wstrzykuje tła w locie (odporne na Streamlit Cloud)"""
     bg_image = random.choice(BG_IMAGES)
     main_bg_path = os.path.join("assets", bg_image)
     panel_bg_path = os.path.join("assets", "washi_bg.jpg")
-    css_path = os.path.join("assets", "style.css")
+    
+    # Bazowe zmienne CSS
+    main_bg_css = ""
+    panel_bg_css = "background-color: #F9F1E6 !important;" # Fallback - jasny beż
     
     try:
-        # 1. Wczytanie statycznego CSS z pliku
-        with open(css_path, "r", encoding="utf-8") as f:
-            static_css = f.read()
-            
-        # 2. Generowanie dynamicznego CSS z grafikami Base64
         main_bin_str = get_base64_of_bin_file(main_bg_path)
+        main_bg_css = f'background-image: url("data:image/png;base64,{main_bin_str}");'
+    except Exception:
+        pass
         
-        try:
-            panel_bin_str = get_base64_of_bin_file(panel_bg_path)
-            panel_bg_css = f'background-image: url("data:image/jpeg;base64,{panel_bin_str}") !important; background-size: cover !important;'
-        except FileNotFoundError:
-            panel_bg_css = 'background-color: #F9F1E6 !important;'
-
-        dynamic_css = f"""
-        .stApp::before {{
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background-image: url("data:image/png;base64,{main_bin_str}");
-            background-size: cover;
-            background-position: center;
-            filter: blur(3px) brightness(0.4);
-            z-index: -1;
-            transition: background-image 0.5s ease-in-out;
-        }}
-        [data-testid="stAppViewBlockContainer"] {{
-            {panel_bg_css}
-        }}
-        """
-        
-        # 3. Wstrzyknięcie pełnego pakietu stylów do aplikacji
-        st.markdown(f"<style>\n{static_css}\n{dynamic_css}\n</style>", unsafe_allow_html=True)
+    try:
+        panel_bin_str = get_base64_of_bin_file(panel_bg_path)
+        # Zmuszamy Streamlita do pokazania tekstury washi
+        panel_bg_css = f'background: #F9F1E6 url("data:image/jpeg;base64,{panel_bin_str}") center/cover no-repeat !important;'
     except Exception as e:
-        st.warning(f"Błąd ładowania stylów: {e}")
+        # Jeśli plik washi_bg.jpg ma np. literówkę w nazwie, zadziała fallback (jasny beż)
+        pass
+
+    css = f"""
+    <style>
+    /* Ukrycie standardowego tła Streamlita */
+    .stApp {{
+        background-color: transparent !important;
+    }}
+
+    /* Tło meksykańskie na całym ekranie - ZNACZNIE JAŚNIEJSZE (brightness 0.8) */
+    .stApp::before {{
+        content: "";
+        position: fixed;
+        top: 0; left: 0; width: 100vw; height: 100vh;
+        {main_bg_css}
+        background-size: cover;
+        background-position: center;
+        filter: blur(4px) brightness(0.8); 
+        z-index: -1;
+        transition: background-image 0.5s ease-in-out;
+    }}
+
+    /* GŁÓWNY PANEL - PANCERNY SELEKTOR */
+    div.block-container {{
+        {panel_bg_css}
+        border: 1px solid #D2B48C !important;
+        border-radius: 8px !important;
+        box-shadow: 0px 20px 50px rgba(0,0,0,0.6) !important;
+        padding: 3rem !important;
+        margin-top: 2rem !important;
+        margin-bottom: 2rem !important;
+        animation: fadeInDocument 0.8s ease-out; 
+    }}
+
+    @keyframes fadeInDocument {{
+        from {{ opacity: 0; transform: translateY(15px); }}
+        to {{ opacity: 1; transform: translateY(0); }}
+    }}
+
+    /* Typografia - Ciemny tekst na jasnym pergaminie */
+    .stMarkdown, .stText, p, div, span, label, li {{
+        color: #2c1e16 !important; 
+        font-size: clamp(1rem, 2.5vw, 1.15rem) !important;
+    }}
+    
+    h1 {{ 
+        color: #5c2c16 !important; 
+        font-size: clamp(1.8rem, 4vw, 2.5rem) !important; 
+        border-bottom: 2px solid rgba(210, 180, 140, 0.6); 
+        padding-bottom: 10px;
+    }}
+    h2 {{ color: #4a2511 !important; font-size: clamp(1.5rem, 3vw, 2rem) !important; }}
+    h3 {{ color: #3a1c0d !important; font-size: clamp(1.2rem, 2.5vw, 1.6rem) !important; }}
+
+    /* Fiszki - Efekty 3D i lekka przezroczystość */
+    .flashcard-front, .flashcard-back {{
+        border-radius: 8px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }}
+    .flashcard-front:hover, .flashcard-back:hover {{
+        transform: scale(1.02); 
+        box-shadow: 0px 10px 20px rgba(0,0,0,0.25);
+        cursor: pointer;
+    }}
+    .flashcard-front {{ 
+        text-align: center; 
+        font-size: clamp(24px, 5vw, 32px) !important; 
+        font-weight: 600; 
+        color: #2C3E50 !important; 
+        background: rgba(255, 255, 255, 0.5) !important;
+        padding: 20px;
+        border: 1px dashed #b89d7d !important;
+        margin-bottom: 20px; 
+    }}
+    .flashcard-back {{ 
+        text-align: center; 
+        font-size: clamp(32px, 7vw, 44px) !important; 
+        font-weight: 800; 
+        color: #b33929 !important; 
+        background: rgba(255, 255, 255, 0.7) !important;
+        padding: 30px;
+        border: 1px solid #b89d7d !important;
+        margin-bottom: 30px; 
+        animation: flipCard 0.4s ease-out; 
+    }}
+
+    @keyframes flipCard {{
+        from {{ transform: rotateX(90deg); opacity: 0; }}
+        to {{ transform: rotateX(0deg); opacity: 1; }}
+    }}
+
+    /* Ukrycie menu Streamlita */
+    #MainMenu {{visibility: hidden;}}
+    footer {{visibility: hidden;}}
+    header {{background: transparent !important;}}
+    </style>
+    """
+    st.markdown(css, unsafe_allow_html=True)
 
 def trigger_js_confetti():
-    """Uruchamia natywny efekt JavaScript (Konfetti) za pomocą biblioteki canvas-confetti"""
+    """Wystrzeliwuje konfetti!"""
     components.html(
         """
         <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -161,7 +239,6 @@ def main():
                 due_cards.append(card)
         
         if not due_cards:
-            # Wystrzelenie konfetti z JavaScriptu po ukończeniu materiału!
             trigger_js_confetti()
             st.success("🎉 Świetna robota! Przerobiłeś wszystkie słówka na dzisiaj. Wróć jutro!")
             if st.button("Zresetuj dzisiejszą sesję (Tylko do testów)"):

@@ -19,23 +19,33 @@ def get_base64_of_bin_file(bin_file):
     return base64.b64encode(data).decode()
 
 def set_random_background():
-    """Losuje tło przy każdym przeładowaniu i stylizuje panel na stary papier"""
+    """Losuje meksykańskie tło aplikacji i ustawia washi_bg.jpg jako tło panelu tekstowego"""
     bg_image = random.choice(BG_IMAGES)
-    file_path = os.path.join("assets", bg_image)
+    main_bg_path = os.path.join("assets", bg_image)
+    panel_bg_path = os.path.join("assets", "washi_bg.jpg")
     
     try:
-        bin_str = get_base64_of_bin_file(file_path)
+        main_bin_str = get_base64_of_bin_file(main_bg_path)
+        
+        # Próba załadowania tekstury washi dla panelu tekstowego
+        try:
+            panel_bin_str = get_base64_of_bin_file(panel_bg_path)
+            panel_bg_css = f'background-image: url("data:image/jpeg;base64,{panel_bin_str}") !important; background-size: cover !important;'
+        except FileNotFoundError:
+            # Zabezpieczenie: jeśli pliku washi nie ma, użyj zwykłego koloru
+            panel_bg_css = 'background-color: #F9F1E6 !important;'
+
         page_bg_img = f"""
         <style>
-        /* Tło na całym ekranie - przyciemnione, by stanowić jedynie klimat */
+        /* Tło meksykańskie na całym ekranie */
         .stApp::before {{
             content: "";
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            background-image: url("data:image/png;base64,{bin_str}");
+            background-image: url("data:image/png;base64,{main_bin_str}");
             background-size: cover;
             background-position: center;
-            filter: blur(3px) brightness(0.4); /* Mocniejsze przyciemnienie */
+            filter: blur(3px) brightness(0.4);
             z-index: -1;
             transition: background-image 0.5s ease-in-out;
         }}
@@ -44,40 +54,39 @@ def set_random_background():
             background-color: transparent !important;
         }}
 
-        /* Główny kontener stylizowany na stary pergamin / papier */
+        /* Główny kontener z teksturą washi_bg.jpg */
         [data-testid="stAppViewBlockContainer"] {{
-            background-color: #F9F1E6 !important; /* Ciepły, pergaminowy kolor */
-            background-image: url("https://www.transparenttextures.com/patterns/old-wall.png"); /* Subtelna tekstura w tle */
+            {panel_bg_css}
             border: 1px solid #D2B48C;
-            border-radius: 4px; /* Ostre rogi jak w arkuszu papieru */
-            box-shadow: 0px 20px 50px rgba(0,0,0,0.8); /* Mocny cień - arkusz "wisi" w powietrzu */
+            border-radius: 4px;
+            box-shadow: 0px 20px 50px rgba(0,0,0,0.8);
             padding: 3rem !important;
             margin-top: 2rem;
             margin-bottom: 2rem;
         }}
 
-        /* Zmiana czcionki na ciemny brąz/sepię (zamiast smolistej czerni) */
+        /* Tekst dopasowany do papierowego tła */
         .stMarkdown, .stText, p, div, span, label, li {{
             color: #2c1e16 !important; 
             font-size: clamp(1rem, 2.5vw, 1.15rem) !important;
         }}
         
         h1 {{ 
-            color: #5c2c16 !important; /* Rdzawy, hiszpański brąz */
+            color: #5c2c16 !important; 
             font-size: clamp(1.8rem, 4vw, 2.5rem) !important; 
-            border-bottom: 2px solid #D2B48C; /* Linia oddzielająca pod tytułem */
+            border-bottom: 2px solid rgba(210, 180, 140, 0.6); 
             padding-bottom: 10px;
         }}
         h2 {{ color: #4a2511 !important; font-size: clamp(1.5rem, 3vw, 2rem) !important; }}
         h3 {{ color: #3a1c0d !important; font-size: clamp(1.2rem, 2.5vw, 1.6rem) !important; }}
 
-        /* Fiszki - Wygląd jak grubsze kartoniki na pergaminie */
+        /* Fiszki - lekko prześwitujące, by pokazać teksturę washi pod spodem */
         .flashcard-front {{ 
             text-align: center; 
             font-size: clamp(24px, 5vw, 32px) !important; 
             font-weight: 600; 
             color: #2C3E50 !important; 
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.5);
             padding: 20px;
             border-radius: 8px;
             border: 1px dashed #b89d7d;
@@ -87,8 +96,8 @@ def set_random_background():
             text-align: center; 
             font-size: clamp(32px, 7vw, 44px) !important; 
             font-weight: 800; 
-            color: #b33929 !important; /* Wypłowiała czerwień */
-            background: rgba(255, 255, 255, 0.6);
+            color: #b33929 !important; 
+            background: rgba(255, 255, 255, 0.7);
             padding: 30px;
             border-radius: 8px;
             border: 1px solid #b89d7d;

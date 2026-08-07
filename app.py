@@ -19,7 +19,7 @@ def get_base64_of_bin_file(bin_file):
     return base64.b64encode(data).decode()
 
 def set_random_background():
-    """Losuje tło przy każdym przeładowaniu (np. przy obrocie fiszki)"""
+    """Losuje tło przy każdym przeładowaniu i nakłada efekt zamglenia"""
     bg_image = random.choice(BG_IMAGES)
     file_path = os.path.join("assets", bg_image)
     
@@ -27,23 +27,59 @@ def set_random_background():
         bin_str = get_base64_of_bin_file(file_path)
         page_bg_img = f"""
         <style>
-        .stApp {{
+        /* Nakładamy tło na warstwę pod spodem, by móc je rozmyć bez rozmywania aplikacji */
+        .stApp::before {{
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
             background-image: url("data:image/png;base64,{bin_str}");
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;
+            /* TUTAJ KONTROLUJESZ ZAMGLENIE (blur) I JASNOŚĆ (brightness) */
+            filter: blur(8px) brightness(0.85); 
+            z-index: -1;
             transition: background-image 0.4s ease-in-out;
         }}
-        .main .block-container {{
-            background-color: rgba(255, 255, 255, 0.92);
-            padding: 2.5rem;
-            border-radius: 15px;
-            margin-top: 2rem;
-            box-shadow: 0px 8px 25px rgba(0,0,0,0.3);
+        
+        /* Usuwamy standardowe tło Streamlita, żeby przepuszczało naszą warstwę */
+        .stApp {{
+            background-color: transparent;
         }}
-        /* Stylizacja karty fiszki */
-        .flashcard-front {{ text-align: center; font-size: 24px; font-weight: 500; color: #2C3E50; margin-bottom: 20px; }}
-        .flashcard-back {{ text-align: center; font-size: 32px; font-weight: bold; color: #E74C3C; margin-bottom: 30px; }}
+        
+        /* Główny panel - powiększony, mniej prześwitujący */
+        .main .block-container {{
+            background-color: rgba(255, 255, 255, 0.96);
+            padding: 3rem;
+            border-radius: 20px;
+            margin-top: 2rem;
+            box-shadow: 0px 10px 30px rgba(0,0,0,0.5);
+        }}
+        
+        /* Zwiększenie ogólnej czcionki dla tekstów, akapitów i list */
+        p, div, span, label, li {{
+            font-size: 1.15rem !important;
+        }}
+        
+        /* Zwiększenie nagłówków */
+        h1 {{ font-size: 2.8rem !important; }}
+        h2 {{ font-size: 2.2rem !important; }}
+        h3 {{ font-size: 1.8rem !important; }}
+        
+        /* Fiszki - gigantyczne i super czytelne */
+        .flashcard-front {{ 
+            text-align: center; 
+            font-size: 32px !important; 
+            font-weight: 600; 
+            color: #2C3E50; 
+            margin-bottom: 20px; 
+        }}
+        .flashcard-back {{ 
+            text-align: center; 
+            font-size: 44px !important; 
+            font-weight: 800; 
+            color: #E74C3C; 
+            margin-bottom: 30px; 
+        }}
         </style>
         """
         st.markdown(page_bg_img, unsafe_allow_html=True)

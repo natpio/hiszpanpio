@@ -5,6 +5,7 @@ import os
 import random
 import base64
 from datetime import datetime, timedelta
+import pandas as pd
 
 # 1. Konfiguracja strony
 st.set_page_config(page_title="Kurs Hiszpańskiego A1", page_icon="🇪🇸", layout="centered")
@@ -158,7 +159,6 @@ def load_data(lesson_filename):
     return lesson_data, progress_data
 
 def load_all_vocabulary(lesson_dir):
-    """Pobiera wszystkie słówka ze wszystkich lekcji do Słownika Globalnego"""
     all_words = []
     lesson_names = []
     try:
@@ -176,9 +176,21 @@ def load_all_vocabulary(lesson_dir):
                         })
     except FileNotFoundError:
         pass
-    
     lesson_names.sort()
     return all_words, lesson_names
+
+def calculate_lesson_progress(lesson_filename, progress_data):
+    """Wylicza procent ukończenia lekcji na podstawie powtórzonych fiszek"""
+    try:
+        with open(os.path.join("data", "A1", lesson_filename), "r", encoding="utf-8") as f:
+            data = json.load(f)
+            cards = data['sections']['flashcards']
+            if not cards:
+                return 0
+            completed = sum(1 for c in cards if c['id'] in progress_data and progress_data[c['id']]['repetitions'] > 0)
+            return int((completed / len(cards)) * 100)
+    except Exception:
+        return 0
 
 def save_progress(progress_data):
     with open(os.path.join("data", "user_progress.json"), "w", encoding="utf-8") as f:
@@ -203,16 +215,25 @@ def calculate_sm2(quality, repetitions, ease_factor, interval):
 def main():
     set_random_background_and_styles()
     
+    lesson_dir = os.path.join("data", "A1")
+    
+    # Wczytanie ogólnego postępu dla paska bocznego
+    try:
+        with open(os.path.join("data", "user_progress.json"), "r", encoding="utf-8") as f:
+            global_progress = json.load(f)
+    except Exception:
+        global_progress = {}
+
     # -------------------------------------
     # NAWIGACJA W PASKU BOCZNYM (SIDEBAR)
     # -------------------------------------
     st.sidebar.title("🇪🇸 Menu Kursu")
-    
-    # Wybór trybu działania aplikacji
-    app_mode = st.sidebar.radio("Wybierz tryb:", ["🎓 Tryb Nauki (Lekcje)", "📚 Słownik Globalny"])
+    app_mode = st.sidebar.radio("Wybierz tryb:", [
+        "🎓 Tryb Nauki (Lekcje)", 
+        "📚 Słownik Globalny", 
+        "📊 Dashboard Analityczny & Kalendarz"
+    ])
     st.sidebar.markdown("---")
-    
-    lesson_dir = os.path.join("data", "A1")
     
     if app_mode == "🎓 Tryb Nauki (Lekcje)":
         try:
@@ -223,10 +244,17 @@ def main():
             st.sidebar.error("Nie znaleziono folderu z lekcjami.")
 
         if available_lessons:
+            # Tworzymy etykiety z procentowym postępem dla każdej lekcji
+            lesson_labels = {}
+            for f in available_lessons:
+                pct = calculate_lesson_progress(f, global_progress)
+                clean_name = f.replace(".json", "").replace("_", " ").title()
+                lesson_labels[f] = f"{clean_name} ({pct}%)"
+
             selected_file = st.sidebar.selectbox(
                 "Wybierz moduł:", 
                 available_lessons, 
-                format_func=lambda x: x.replace(".json", "").replace("_", " ").title()
+                format_func=lambda x: lesson_labels[x]
             )
             
             lesson_data, progress_data = load_data(selected_file)
@@ -354,20 +382,17 @@ def main():
         if not all_words:
             st.warning("Nie znaleziono słówek. Upewnij się, że lekcje są dodane.")
         else:
-            # Panele filtrowania
             col_search, col_filter = st.columns([1, 1])
             with col_search:
                 search_query = st.text_input("🔍 Szukaj słówka (PL / ES):")
             with col_filter:
                 selected_lessons = st.multiselect("Filtruj po lekcjach:", lesson_names, default=lesson_names)
             
-            # Logika filtrowania
             filtered_words = [w for w in all_words if w['lesson'] in selected_lessons]
             if search_query:
                 query = search_query.strip().lower()
                 filtered_words = [w for w in filtered_words if query in w['es'].lower() or query in w['pl'].lower()]
             
-            # Generowanie estetycznej tabeli HTML dopasowanej do pergaminu
             if filtered_words:
                 table_html = "<table style='width:100%; border-collapse: collapse; margin-top: 15px;'>"
                 table_html += """
@@ -389,6 +414,68 @@ def main():
                 st.caption(f"Wyświetlono słówek: {len(filtered_words)}")
             else:
                 st.info("Brak słówek spełniających kryteria wyszukiwania.")
+
+    # -------------------------------------
+    # TRYB DASHBOARDU ANALITYCZNEGO I KALENDARZA
+    # -------------------------------------
+    elif app_mode == "📊 Dashboard Analityczny & Kalendarz":
+        st.title("📊 Dashboard Analityczny & Kalendarz Powtórek")
+        st.write("Monitoruj swoją pamięć, statystyki algorytmu SuperMemo oraz nadchodzące powtórki.")
+        
+        try:
+            with open(os.path.join("data", "user_progress.json"), "r", encoding="utf-8") as f:
+                prog_data = json.load(f)
+        except Exception:
+            prog_data = {}
+
+        if not prog_data:
+            st.info("Brak danych o postępach. Rozpocznij naukę fiszek, aby wygenerować statystyki!")
+        else:
+            # Przetwarzanie danych do tabeli analitycznej
+            records = []
+            for cid, info in prog_data.items():
+                records.append({
+                    "card_id": cid,
+                    "repetitions": info.get("repetitions", 0),
+                    "ease_factor": info.get("ease_factor", 2.5),
+                    "interval": info.get("interval", 0),
+                    "next_review": info.get("next_review", "")
+                })
+            df = pd.DataFrame(records)
+
+            # --- METRYKI GŁÓWNE ---
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                st.metric("Łącznie poznanych słówek", len(df))
+            with col2:
+                due_today = len(df[df['next_review'] <= datetime.now().strftime("%Y-%m-%d")])
+                st.metric("Powtórki na dzisiaj", due_today)
+            with col3:
+                avg_ef = round(df['ease_factor'].mean(), 2)
+                st.metric("Średni współczynnik (EF)", avg_ef)
+
+            st.markdown("---")
+
+            # --- KALENDARZ / HARMONOGRAM POWTÓREK ---
+            st.subheader("📅 Harmonogram Nadchodzących Powtórek (Kalendarz)")
+            st.write("Liczba słówek zaplanowanych do powtórki w poszczególnych dniach:")
+            
+            # Grupowanie po dacie powtórki
+            review_counts = df.groupby('next_review').size().reset_index(name='count')
+            review_counts = review_counts.sort_values('next_review')
+            
+            # Wykres słupkowy powtórek w czasie
+            st.bar_chart(review_counts.set_index('next_review')['count'])
+
+            st.markdown("---")
+
+            # --- ANALIZA TRUDNOŚCI (Wykres struktury) ---
+            st.subheader("🧠 Rozkład Stopnia Opanowania Słówek")
+            st.write("Podział słówek według liczby pomyślnych powtórczeń:")
+            
+            rep_counts = df.groupby('repetitions').size().reset_index(name='liczba_slówek')
+            rep_counts['status'] = rep_counts['repetitions'].apply(lambda x: f"Poziom {x} (Powtórzone {x}x)")
+            st.bar_chart(rep_counts.set_index('status')['liczba_slówek'])
 
 if __name__ == "__main__":
     main()

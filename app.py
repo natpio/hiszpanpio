@@ -5,7 +5,7 @@ import random
 import base64
 from datetime import datetime, timedelta
 
-# 1. Konfiguracja strony - wyśrodkowany układ jest idealny pod telefony i PC
+# 1. Konfiguracja strony
 st.set_page_config(page_title="Kurs Hiszpańskiego A1", page_icon="🇪🇸", layout="centered")
 
 BG_IMAGES = [
@@ -19,7 +19,7 @@ def get_base64_of_bin_file(bin_file):
     return base64.b64encode(data).decode()
 
 def set_random_background():
-    """Losuje tło przy każdym przeładowaniu i wymusza pancerny, biały panel pod tekstem"""
+    """Losuje tło przy każdym przeładowaniu i stylizuje panel na stary papier"""
     bg_image = random.choice(BG_IMAGES)
     file_path = os.path.join("assets", bg_image)
     
@@ -27,7 +27,7 @@ def set_random_background():
         bin_str = get_base64_of_bin_file(file_path)
         page_bg_img = f"""
         <style>
-        /* Rozmyte tło aplikacji */
+        /* Tło na całym ekranie - przyciemnione, by stanowić jedynie klimat */
         .stApp::before {{
             content: "";
             position: fixed;
@@ -35,61 +35,67 @@ def set_random_background():
             background-image: url("data:image/png;base64,{bin_str}");
             background-size: cover;
             background-position: center;
-            filter: blur(6px) brightness(0.8);
+            filter: blur(3px) brightness(0.4); /* Mocniejsze przyciemnienie */
             z-index: -1;
-            transition: background-image 0.4s ease-in-out;
+            transition: background-image 0.5s ease-in-out;
         }}
         
         .stApp {{
             background-color: transparent !important;
         }}
 
-        /* Pancerny selektor dla głównego panelu - Gwarantuje białe tło pod tekstem */
+        /* Główny kontener stylizowany na stary pergamin / papier */
         [data-testid="stAppViewBlockContainer"] {{
-            background-color: rgba(255, 255, 255, 0.95) !important;
-            padding: 2rem !important;
-            border-radius: 20px;
-            box-shadow: 0px 10px 40px rgba(0,0,0,0.6);
+            background-color: #F9F1E6 !important; /* Ciepły, pergaminowy kolor */
+            background-image: url("https://www.transparenttextures.com/patterns/old-wall.png"); /* Subtelna tekstura w tle */
+            border: 1px solid #D2B48C;
+            border-radius: 4px; /* Ostre rogi jak w arkuszu papieru */
+            box-shadow: 0px 20px 50px rgba(0,0,0,0.8); /* Mocny cień - arkusz "wisi" w powietrzu */
+            padding: 3rem !important;
             margin-top: 2rem;
             margin-bottom: 2rem;
         }}
 
-        /* Wymuszenie CIEMNYCH liter na białym panelu (niezależnie od systemowego Dark Mode) */
+        /* Zmiana czcionki na ciemny brąz/sepię (zamiast smolistej czerni) */
         .stMarkdown, .stText, p, div, span, label, li {{
-            color: #1a1a1a !important;
-            font-size: clamp(1rem, 2.5vw, 1.15rem) !important; /* Responsywne: mniejsze na telefonie, większe na PC */
+            color: #2c1e16 !important; 
+            font-size: clamp(1rem, 2.5vw, 1.15rem) !important;
         }}
         
         h1 {{ 
-            color: #111 !important; 
+            color: #5c2c16 !important; /* Rdzawy, hiszpański brąz */
             font-size: clamp(1.8rem, 4vw, 2.5rem) !important; 
+            border-bottom: 2px solid #D2B48C; /* Linia oddzielająca pod tytułem */
+            padding-bottom: 10px;
         }}
-        h2 {{ 
-            color: #222 !important; 
-            font-size: clamp(1.5rem, 3vw, 2rem) !important; 
-        }}
-        h3 {{ 
-            color: #333 !important; 
-            font-size: clamp(1.2rem, 2.5vw, 1.6rem) !important; 
-        }}
+        h2 {{ color: #4a2511 !important; font-size: clamp(1.5rem, 3vw, 2rem) !important; }}
+        h3 {{ color: #3a1c0d !important; font-size: clamp(1.2rem, 2.5vw, 1.6rem) !important; }}
 
-        /* Fiszki - Responsywne */
+        /* Fiszki - Wygląd jak grubsze kartoniki na pergaminie */
         .flashcard-front {{ 
             text-align: center; 
             font-size: clamp(24px, 5vw, 32px) !important; 
             font-weight: 600; 
             color: #2C3E50 !important; 
+            background: rgba(255, 255, 255, 0.4);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px dashed #b89d7d;
             margin-bottom: 20px; 
         }}
         .flashcard-back {{ 
             text-align: center; 
             font-size: clamp(32px, 7vw, 44px) !important; 
             font-weight: 800; 
-            color: #E74C3C !important; 
+            color: #b33929 !important; /* Wypłowiała czerwień */
+            background: rgba(255, 255, 255, 0.6);
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid #b89d7d;
             margin-bottom: 30px; 
         }}
 
-        /* Ukrycie menu Streamlita dla wyglądu czystej aplikacji mobilnej */
+        /* Ukrycie menu Streamlita */
         #MainMenu {{visibility: hidden;}}
         footer {{visibility: hidden;}}
         header {{background: transparent !important;}}
@@ -133,7 +139,6 @@ def main():
     set_random_background()
     lesson_data, progress_data = load_data()
     
-    # Inicjalizacja stanu sesji dla fiszek
     if 'current_card' not in st.session_state:
         st.session_state.current_card = 0
     if 'show_answer' not in st.session_state:
@@ -159,7 +164,6 @@ def main():
         st.subheader("Tryb Powtórek")
         today_str = datetime.now().strftime("%Y-%m-%d")
         
-        # Filtrujemy fiszki: szukamy nowych lub tych, którym minął termin powtórki
         due_cards = []
         for card in lesson_data['sections']['flashcards']:
             c_id = card['id']
@@ -174,7 +178,6 @@ def main():
                 st.session_state.clear()
                 st.rerun()
         else:
-            # Mechanika wyświetlania fiszki
             if st.session_state.current_card >= len(due_cards):
                 st.session_state.current_card = 0
                 

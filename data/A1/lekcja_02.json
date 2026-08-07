@@ -1,0 +1,71 @@
+{
+  "lesson_metadata": {
+    "id": "A1_02",
+    "level": "A1",
+    "title": "Skąd jesteś? Kraje i zawody"
+  },
+  "sections": {
+    "dialog": {
+      "title": "Diálogo: En el aeropuerto (Na lotnisku)",
+      "content": [
+        {"speaker": "Oficial", "text": "Buenos días. ¿De dónde es usted?"},
+        {"speaker": "Piotr", "text": "Soy de Polonia, vivo en Poznań."},
+        {"speaker": "Oficial", "text": "¿Y a qué se dedica?"},
+        {"speaker": "Piotr", "text": "Soy especialista en logística. Trabajo en una empresa internacional."}
+      ]
+    },
+    "reading": {
+      "title": "Lectura (Czytanie)",
+      "text": "Mi equipo de trabajo es muy internacional. Carlos es de España y habla inglés y español. Anna es de Alemania, pero vive en Madrid. Yo soy polaco y estudio español todos los días."
+    },
+    "grammar": {
+      "title": "Gramatyka: Czasowniki regularne (-ar, -er, -ir)",
+      "explanation": "W języku hiszpańskim czasowniki dzielą się na trzy grupy w zależności od końcówki bezokolicznika: -ar (np. trabajar), -er (np. comer), -ir (np. vivir). Odmieniając je w czasie teraźniejszym, odcinamy końcówkę i dodajemy odpowiednią literę dla danej osoby.",
+      "table": [
+        ["Osoba", "-AR (trabajar - pracować)", "-ER (comer - jeść)", "-IR (vivir - żyć/mieszkać)"],
+        ["Yo (ja)", "trabaj-o", "com-o", "viv-o"],
+        ["Tú (ty)", "trabaj-as", "com-es", "viv-es"],
+        ["Él/Ella/Usted (on/ona/Pan)", "trabaj-a", "com-e", "viv-e"]
+      ]
+    },
+    "flashcards": [
+      {"id": "A1_02_f1", "es": "¿De dónde eres?", "pl": "Skąd jesteś?"},
+      {"id": "A1_02_f2", "es": "Vivir", "pl": "Mieszkać / Żyć"},
+      {"id": "A1_02_f3", "es": "Trabajar", "pl": "Pracować"},
+      {"id": "A1_02_f4", "es": "Hablar", "pl": "Mówić"},
+      {"id": "A1_02_f5", "es": "El país", "pl": "Kraj"},
+      {"id": "A1_02_f6", "es": "El idioma", "pl": "Język (mowa)"},
+      {"id": "A1_02_f7", "es": "¿A qué te dedicas?", "pl": "Czym się zajmujesz? (zawodowo)"}
+    ],
+    "exercises": [
+      {
+        "id": "A1_02_e1",
+        "type": "fill_gap",
+        "question": "Yo ___ en Polonia.",
+        "answer": "vivo",
+        "translation": "Ja mieszkam w Polsce."
+      },
+      {
+        "id": "A1_02_e2",
+        "type": "fill_gap",
+        "question": "¿Tú ___ español?",
+        "answer": "hablas",
+        "translation": "Czy ty mówisz po hiszpańsku?"
+      },
+      {
+        "id": "A1_02_e3",
+        "type": "fill_gap",
+        "question": "Carlos ___ en una empresa internacional.",
+        "answer": "trabaja",
+        "translation": "Carlos pracuje w międzynarodowej firmie."
+      },
+      {
+        "id": "A1_02_e4",
+        "type": "fill_gap",
+        "question": "Anna ___ de Alemania.",
+        "answer": "es",
+        "translation": "Anna jest z Niemiec."
+      }
+    ]
+  }
+}

@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 import json
 import os
 import random
@@ -18,26 +19,28 @@ def get_base64_of_bin_file(bin_file):
         data = f.read()
     return base64.b64encode(data).decode()
 
-def set_random_background():
-    """Losuje meksykańskie tło aplikacji i ustawia washi_bg.jpg jako tło panelu tekstowego"""
+def set_random_background_and_styles():
+    """Wczytuje zew. plik CSS oraz dynamicznie generuje reguły dla zakodowanych teł"""
     bg_image = random.choice(BG_IMAGES)
     main_bg_path = os.path.join("assets", bg_image)
     panel_bg_path = os.path.join("assets", "washi_bg.jpg")
+    css_path = os.path.join("assets", "style.css")
     
     try:
+        # 1. Wczytanie statycznego CSS z pliku
+        with open(css_path, "r", encoding="utf-8") as f:
+            static_css = f.read()
+            
+        # 2. Generowanie dynamicznego CSS z grafikami Base64
         main_bin_str = get_base64_of_bin_file(main_bg_path)
         
-        # Próba załadowania tekstury washi dla panelu tekstowego
         try:
             panel_bin_str = get_base64_of_bin_file(panel_bg_path)
             panel_bg_css = f'background-image: url("data:image/jpeg;base64,{panel_bin_str}") !important; background-size: cover !important;'
         except FileNotFoundError:
-            # Zabezpieczenie: jeśli pliku washi nie ma, użyj zwykłego koloru
             panel_bg_css = 'background-color: #F9F1E6 !important;'
 
-        page_bg_img = f"""
-        <style>
-        /* Tło meksykańskie na całym ekranie */
+        dynamic_css = f"""
         .stApp::before {{
             content: "";
             position: fixed;
@@ -49,70 +52,49 @@ def set_random_background():
             z-index: -1;
             transition: background-image 0.5s ease-in-out;
         }}
-        
-        .stApp {{
-            background-color: transparent !important;
-        }}
-
-        /* Główny kontener z teksturą washi_bg.jpg */
         [data-testid="stAppViewBlockContainer"] {{
             {panel_bg_css}
-            border: 1px solid #D2B48C;
-            border-radius: 4px;
-            box-shadow: 0px 20px 50px rgba(0,0,0,0.8);
-            padding: 3rem !important;
-            margin-top: 2rem;
-            margin-bottom: 2rem;
         }}
-
-        /* Tekst dopasowany do papierowego tła */
-        .stMarkdown, .stText, p, div, span, label, li {{
-            color: #2c1e16 !important; 
-            font-size: clamp(1rem, 2.5vw, 1.15rem) !important;
-        }}
-        
-        h1 {{ 
-            color: #5c2c16 !important; 
-            font-size: clamp(1.8rem, 4vw, 2.5rem) !important; 
-            border-bottom: 2px solid rgba(210, 180, 140, 0.6); 
-            padding-bottom: 10px;
-        }}
-        h2 {{ color: #4a2511 !important; font-size: clamp(1.5rem, 3vw, 2rem) !important; }}
-        h3 {{ color: #3a1c0d !important; font-size: clamp(1.2rem, 2.5vw, 1.6rem) !important; }}
-
-        /* Fiszki - lekko prześwitujące, by pokazać teksturę washi pod spodem */
-        .flashcard-front {{ 
-            text-align: center; 
-            font-size: clamp(24px, 5vw, 32px) !important; 
-            font-weight: 600; 
-            color: #2C3E50 !important; 
-            background: rgba(255, 255, 255, 0.5);
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px dashed #b89d7d;
-            margin-bottom: 20px; 
-        }}
-        .flashcard-back {{ 
-            text-align: center; 
-            font-size: clamp(32px, 7vw, 44px) !important; 
-            font-weight: 800; 
-            color: #b33929 !important; 
-            background: rgba(255, 255, 255, 0.7);
-            padding: 30px;
-            border-radius: 8px;
-            border: 1px solid #b89d7d;
-            margin-bottom: 30px; 
-        }}
-
-        /* Ukrycie menu Streamlita */
-        #MainMenu {{visibility: hidden;}}
-        footer {{visibility: hidden;}}
-        header {{background: transparent !important;}}
-        </style>
         """
-        st.markdown(page_bg_img, unsafe_allow_html=True)
-    except FileNotFoundError:
-        pass
+        
+        # 3. Wstrzyknięcie pełnego pakietu stylów do aplikacji
+        st.markdown(f"<style>\n{static_css}\n{dynamic_css}\n</style>", unsafe_allow_html=True)
+    except Exception as e:
+        st.warning(f"Błąd ładowania stylów: {e}")
+
+def trigger_js_confetti():
+    """Uruchamia natywny efekt JavaScript (Konfetti) za pomocą biblioteki canvas-confetti"""
+    components.html(
+        """
+        <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+        <script>
+            var duration = 3 * 1000;
+            var end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 7,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#26ccff', '#a25afd', '#ff5e7e', '#88ff5a', '#fcff42', '#ffa62d', '#ff36ff']
+                });
+                confetti({
+                    particleCount: 7,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#26ccff', '#a25afd', '#ff5e7e', '#88ff5a', '#fcff42', '#ffa62d', '#ff36ff']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        </script>
+        """,
+        height=0,
+    )
 
 def load_data():
     with open(os.path.join("data", "A1", "lekcja_01.json"), "r", encoding="utf-8") as f:
@@ -122,12 +104,10 @@ def load_data():
     return lesson_data, progress_data
 
 def save_progress(progress_data):
-    """Zapisuje postępy z powrotem do pliku JSON"""
     with open(os.path.join("data", "user_progress.json"), "w", encoding="utf-8") as f:
         json.dump(progress_data, f, indent=4)
 
 def calculate_sm2(quality, repetitions, ease_factor, interval):
-    """Algorytm SuperMemo-2 do obliczania kolejnej daty powtórki"""
     if quality >= 3:
         if repetitions == 0:
             interval = 1
@@ -140,12 +120,11 @@ def calculate_sm2(quality, repetitions, ease_factor, interval):
     else:
         repetitions = 0
         interval = 1
-    
     ease_factor = max(1.3, ease_factor)
     return repetitions, ease_factor, interval
 
 def main():
-    set_random_background()
+    set_random_background_and_styles()
     lesson_data, progress_data = load_data()
     
     if 'current_card' not in st.session_state:
@@ -182,6 +161,8 @@ def main():
                 due_cards.append(card)
         
         if not due_cards:
+            # Wystrzelenie konfetti z JavaScriptu po ukończeniu materiału!
+            trigger_js_confetti()
             st.success("🎉 Świetna robota! Przerobiłeś wszystkie słówka na dzisiaj. Wróć jutro!")
             if st.button("Zresetuj dzisiejszą sesję (Tylko do testów)"):
                 st.session_state.clear()

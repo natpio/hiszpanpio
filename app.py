@@ -5,7 +5,7 @@ import random
 import base64
 from datetime import datetime, timedelta
 
-# 1. Konfiguracja strony
+# 1. Konfiguracja strony - wyśrodkowany układ jest idealny pod telefony i PC
 st.set_page_config(page_title="Kurs Hiszpańskiego A1", page_icon="🇪🇸", layout="centered")
 
 BG_IMAGES = [
@@ -19,7 +19,7 @@ def get_base64_of_bin_file(bin_file):
     return base64.b64encode(data).decode()
 
 def set_random_background():
-    """Losuje tło przy każdym przeładowaniu i nakłada efekt zamglenia"""
+    """Losuje tło przy każdym przeładowaniu i wymusza pancerny, biały panel pod tekstem"""
     bg_image = random.choice(BG_IMAGES)
     file_path = os.path.join("assets", bg_image)
     
@@ -27,7 +27,7 @@ def set_random_background():
         bin_str = get_base64_of_bin_file(file_path)
         page_bg_img = f"""
         <style>
-        /* Nakładamy tło na warstwę pod spodem, by móc je rozmyć bez rozmywania aplikacji */
+        /* Rozmyte tło aplikacji */
         .stApp::before {{
             content: "";
             position: fixed;
@@ -35,51 +35,64 @@ def set_random_background():
             background-image: url("data:image/png;base64,{bin_str}");
             background-size: cover;
             background-position: center;
-            /* TUTAJ KONTROLUJESZ ZAMGLENIE (blur) I JASNOŚĆ (brightness) */
-            filter: blur(8px) brightness(0.85); 
+            filter: blur(6px) brightness(0.8);
             z-index: -1;
             transition: background-image 0.4s ease-in-out;
         }}
         
-        /* Usuwamy standardowe tło Streamlita, żeby przepuszczało naszą warstwę */
         .stApp {{
-            background-color: transparent;
+            background-color: transparent !important;
         }}
-        
-        /* Główny panel - powiększony, mniej prześwitujący */
-        .main .block-container {{
-            background-color: rgba(255, 255, 255, 0.96);
-            padding: 3rem;
+
+        /* Pancerny selektor dla głównego panelu - Gwarantuje białe tło pod tekstem */
+        [data-testid="stAppViewBlockContainer"] {{
+            background-color: rgba(255, 255, 255, 0.95) !important;
+            padding: 2rem !important;
             border-radius: 20px;
+            box-shadow: 0px 10px 40px rgba(0,0,0,0.6);
             margin-top: 2rem;
-            box-shadow: 0px 10px 30px rgba(0,0,0,0.5);
+            margin-bottom: 2rem;
+        }}
+
+        /* Wymuszenie CIEMNYCH liter na białym panelu (niezależnie od systemowego Dark Mode) */
+        .stMarkdown, .stText, p, div, span, label, li {{
+            color: #1a1a1a !important;
+            font-size: clamp(1rem, 2.5vw, 1.15rem) !important; /* Responsywne: mniejsze na telefonie, większe na PC */
         }}
         
-        /* Zwiększenie ogólnej czcionki dla tekstów, akapitów i list */
-        p, div, span, label, li {{
-            font-size: 1.15rem !important;
+        h1 {{ 
+            color: #111 !important; 
+            font-size: clamp(1.8rem, 4vw, 2.5rem) !important; 
         }}
-        
-        /* Zwiększenie nagłówków */
-        h1 {{ font-size: 2.8rem !important; }}
-        h2 {{ font-size: 2.2rem !important; }}
-        h3 {{ font-size: 1.8rem !important; }}
-        
-        /* Fiszki - gigantyczne i super czytelne */
+        h2 {{ 
+            color: #222 !important; 
+            font-size: clamp(1.5rem, 3vw, 2rem) !important; 
+        }}
+        h3 {{ 
+            color: #333 !important; 
+            font-size: clamp(1.2rem, 2.5vw, 1.6rem) !important; 
+        }}
+
+        /* Fiszki - Responsywne */
         .flashcard-front {{ 
             text-align: center; 
-            font-size: 32px !important; 
+            font-size: clamp(24px, 5vw, 32px) !important; 
             font-weight: 600; 
-            color: #2C3E50; 
+            color: #2C3E50 !important; 
             margin-bottom: 20px; 
         }}
         .flashcard-back {{ 
             text-align: center; 
-            font-size: 44px !important; 
+            font-size: clamp(32px, 7vw, 44px) !important; 
             font-weight: 800; 
-            color: #E74C3C; 
+            color: #E74C3C !important; 
             margin-bottom: 30px; 
         }}
+
+        /* Ukrycie menu Streamlita dla wyglądu czystej aplikacji mobilnej */
+        #MainMenu {{visibility: hidden;}}
+        footer {{visibility: hidden;}}
+        header {{background: transparent !important;}}
         </style>
         """
         st.markdown(page_bg_img, unsafe_allow_html=True)
@@ -172,30 +185,25 @@ def main():
             if not st.session_state.show_answer:
                 if st.button("Pokaż odpowiedź", use_container_width=True):
                     st.session_state.show_answer = True
-                    st.rerun() # Przeładowanie wyzwoli też zmianę tła!
+                    st.rerun()
             else:
                 st.markdown(f"<div class='flashcard-back'>{active_card['es']}</div>", unsafe_allow_html=True)
                 
                 st.write("Jak dobrze pamiętałeś to słówko?")
                 col1, col2, col3, col4 = st.columns(4)
                 
-                # Przetwarzanie odpowiedzi użytkownika
                 def process_answer(quality):
                     c_id = active_card['id']
-                    # Jeśli słówko jest nowe, stwórz mu profil w bazie
                     if c_id not in progress_data:
                         progress_data[c_id] = {'repetitions': 0, 'ease_factor': 2.5, 'interval': 0, 'next_review': today_str}
                     
-                    # Pobierz stare dane
                     rep = progress_data[c_id]['repetitions']
                     ef = progress_data[c_id]['ease_factor']
                     intrv = progress_data[c_id]['interval']
                     
-                    # Przelicz nowe dane za pomocą algorytmu
                     new_rep, new_ef, new_intrv = calculate_sm2(quality, rep, ef, intrv)
                     next_date = datetime.now() + timedelta(days=new_intrv)
                     
-                    # Zapisz w słowniku
                     progress_data[c_id] = {
                         'repetitions': new_rep,
                         'ease_factor': new_ef,
@@ -203,14 +211,10 @@ def main():
                         'next_review': next_date.strftime("%Y-%m-%d")
                     }
                     
-                    # Zapisz do pliku JSON
                     save_progress(progress_data)
-                    
-                    # Przejdź do następnej karty i ukryj odpowiedź
                     st.session_state.show_answer = False
                     st.rerun()
 
-                # Przyciski oceny trudności
                 with col1:
                     if st.button("Nie wiem (0)", use_container_width=True): process_answer(0)
                 with col2:
@@ -227,18 +231,13 @@ def main():
         st.markdown("<br>", unsafe_allow_html=True)
         
         for i, ex in enumerate(lesson_data['sections']['exercises']):
-            # Pokazujemy polskie tłumaczenie jako podpowiedź nad polem
             st.caption(f"💡 {ex['translation']}")
-            
-            # Dzielimy układ na kolumnę z polem i kolumnę na wynik
             col1, col2 = st.columns([3, 1])
             
             with col1:
-                # Zamieniamy symbol "___" z JSONa na pole tekstowe
                 user_answer = st.text_input(ex['question'].replace("___", "[ ... ]"), key=f"ex_{ex['id']}")
             
             with col2:
-                # Sprawdzanie odpowiedzi w czasie rzeczywistym
                 if user_answer:
                     if user_answer.strip().lower() == ex['answer'].lower():
                         st.success("✅ ¡Perfecto!")

@@ -186,8 +186,30 @@ def main():
 
     # --- ZAKŁADKA 3: ĆWICZENIA ---
     with tab3:
-        st.subheader("Sprawdź wiedzę (Luki)")
-        st.warning("Ta sekcja zostanie dodana w KROKU 5.")
+        st.subheader("Sprawdź wiedzę (Wypełnij luki)")
+        st.write("Wpisz brakujące słowo i naciśnij Enter, aby sprawdzić.")
+        st.markdown("<br>", unsafe_allow_html=True)
+        
+        for i, ex in enumerate(lesson_data['sections']['exercises']):
+            # Pokazujemy polskie tłumaczenie jako podpowiedź nad polem
+            st.caption(f"💡 {ex['translation']}")
+            
+            # Dzielimy układ na kolumnę z polem i kolumnę na wynik
+            col1, col2 = st.columns([3, 1])
+            
+            with col1:
+                # Zamieniamy symbol "___" z JSONa na pole tekstowe
+                user_answer = st.text_input(ex['question'].replace("___", "[ ... ]"), key=f"ex_{ex['id']}")
+            
+            with col2:
+                # Sprawdzanie odpowiedzi w czasie rzeczywistym
+                if user_answer:
+                    if user_answer.strip().lower() == ex['answer'].lower():
+                        st.success("✅ ¡Perfecto!")
+                    else:
+                        st.error(f"❌ Poprawnie: {ex['answer']}")
+            
+            st.markdown("---")
 
 if __name__ == "__main__":
     main()

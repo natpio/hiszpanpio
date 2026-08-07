@@ -4,8 +4,10 @@
     "level": "A1",
     "title": "Dane kontaktowe i formularze"
   },
-  "sections": {
-    "dialog": {
+  "sections": [
+    {
+      "id": "sec_01",
+      "type": "dialog",
       "title": "Diálogo: En la recepción del hotel (W recepcji hotelu)",
       "content": [
         {"speaker": "Recepcionista", "text": "Buenos días. ¿Cuál es su nombre y apellido, por favor?"},
@@ -16,61 +18,53 @@
         {"speaker": "Piotr", "text": "Es p.dukiel arroba correo punto com."}
       ]
     },
-    "reading": {
-      "title": "Lectura (Czytanie)",
-      "text": "Para viajar o reservar un hotel en España, necesitas completar formularios. Siempre piden los datos personales: el nombre, los apellidos, la nacionalidad, el número de teléfono y el correo electrónico. Recuerda: el símbolo '@' se dice 'arroba' y el símbolo '.' se dice 'punto'."
-    },
-    "grammar": {
-      "title": "Gramatyka: Zaimki pytające i kontakt",
-      "explanation": "Zaimki pytające w hiszpańskim ZAWSZE mają akcent graficzny (tyldę). Zwróć uwagę, że pytając o dane kontaktowe (jak numer czy e-mail) używamy słowa '¿Cuál?' (Który/Jaki jest z wielu możliwych?), a nie '¿Qué?'.",
-      "table": [
-        ["Zaimek pytający", "Znaczenie", "Przykład użycia"],
-        ["¿Qué?", "Co? / Jaki?", "¿Qué es esto? (Co to jest?)"],
-        ["¿Cómo?", "Jak?", "¿Cómo te llamas? (Jak się nazywasz?)"],
-        ["¿Dónde?", "Gdzie?", "¿Dónde vives? (Gdzie mieszkasz?)"],
-        ["¿Cuál? / ¿Cuáles?", "Który? / Jaki?", "¿Cuál es tu correo? (Jaki jest twój e-mail?)"],
-        ["¿Cuántos? / ¿Cuántas?", "Ile?", "¿Cuántos años tienes? (Ile masz lat?)"]
+    {
+      "id": "sec_02",
+      "type": "vocabulary",
+      "title": "Vocabulario (Kontakt)",
+      "items": [
+        {"es": "El correo electrónico", "pl": "Adres e-mail"},
+        {"es": "La arroba (@)", "pl": "Małpa (@)"},
+        {"es": "El punto (.)", "pl": "Kropka (.)"},
+        {"es": "El número de teléfono", "pl": "Numer telefonu"},
+        {"es": "¿Cuál?", "pl": "Jaki? / Który?"},
+        {"es": "¿Cuántos?", "pl": "Ile?"},
+        {"es": "El apellido", "pl": "Nazwisko"},
+        {"es": "Los datos personales", "pl": "Dane osobowe"}
       ]
     },
-    "flashcards": [
-      {"id": "A1_03_f1", "es": "El correo electrónico", "pl": "Adres e-mail"},
-      {"id": "A1_03_f2", "es": "La arroba (@)", "pl": "Małpa (@)"},
-      {"id": "A1_03_f3", "es": "El punto (.)", "pl": "Kropka (.)"},
-      {"id": "A1_03_f4", "es": "El número de teléfono", "pl": "Numer telefonu"},
-      {"id": "A1_03_f5", "es": "¿Cuál?", "pl": "Jaki? / Który?"},
-      {"id": "A1_03_f6", "es": "¿Cuántos?", "pl": "Ile?"},
-      {"id": "A1_03_f7", "es": "El apellido", "pl": "Nazwisko"},
-      {"id": "A1_03_f8", "es": "Los datos personales", "pl": "Dane osobowe"}
-    ],
-    "exercises": [
-      {
-        "id": "A1_03_e1",
-        "type": "fill_gap",
-        "question": "¿___ es tu número de teléfono?",
-        "answer": "Cuál",
-        "translation": "Jaki jest twój numer telefonu?"
-      },
-      {
-        "id": "A1_03_e2",
-        "type": "fill_gap",
-        "question": "¿___ vives?",
-        "answer": "Dónde",
-        "translation": "Gdzie mieszkasz?"
-      },
-      {
-        "id": "A1_03_e3",
-        "type": "fill_gap",
-        "question": "Mi correo es piotr___gmail.com",
-        "answer": "arroba",
-        "translation": "Mój e-mail to piotr małpa gmail.com"
-      },
-      {
-        "id": "A1_03_e4",
-        "type": "fill_gap",
-        "question": "¿___ te llamas?",
-        "answer": "Cómo",
-        "translation": "Jak się nazywasz?"
-      }
-    ]
-  }
+    {
+      "id": "sec_03",
+      "type": "grammar",
+      "title": "Gramatyka: Zaimki pytające i kontakt",
+      "content": "Zaimki pytające w hiszpańskim ZAWSZE mają akcent graficzny (tyldę). Zwróć uwagę, że pytając o dane kontaktowe (jak numer czy e-mail) używamy słowa '¿Cuál?' (Który/Jaki jest z wielu możliwych?), a nie '¿Qué?'."
+    },
+    {
+      "id": "sec_04",
+      "type": "exercises",
+      "title": "Ejercicios (Ćwiczenia)",
+      "items": [
+        {
+          "question": "¿___ es tu número de teléfono?",
+          "answer": "Cuál",
+          "translation": "Jaki jest twój numer telefonu?"
+        },
+        {
+          "question": "¿___ vives?",
+          "answer": "Dónde",
+          "translation": "Gdzie mieszkasz?"
+        },
+        {
+          "question": "Mi correo es piotr___gmail.com",
+          "answer": "arroba",
+          "translation": "Mój e-mail to piotr małpa gmail.com"
+        },
+        {
+          "question": "¿___ te llamas?",
+          "answer": "Cómo",
+          "translation": "Jak się nazywasz?"
+        }
+      ]
+    }
+  ]
 }

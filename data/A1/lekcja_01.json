@@ -4,8 +4,10 @@
     "level": "A1",
     "title": "Powitania i przedstawianie się"
   },
-  "sections": {
-    "dialog": {
+  "sections": [
+    {
+      "id": "sec_01",
+      "type": "dialog",
       "title": "Diálogo: En la calle (Na ulicy)",
       "content": [
         {"speaker": "Ana", "text": "¡Hola! Buenos días. ¿Cómo te llamas?"},
@@ -14,48 +16,40 @@
         {"speaker": "Piotr", "text": "Igualmente."}
       ]
     },
-    "reading": {
-      "title": "Lectura (Czytanie)",
-      "text": "Hola, me llamo Piotr. Soy de Polonia y soy especialista en logística. Ahora estudio español porque me encanta la cultura."
-    },
-    "grammar": {
-      "title": "Gramatyka: Czasownik SER (być)",
-      "explanation": "Czasownik 'ser' jest nieregularny. Używamy go do opisywania cech stałych, zawodu, pochodzenia oraz do przedstawiania się.",
-      "table": [
-        ["Yo", "soy", "(ja jestem)"],
-        ["Tú", "eres", "(ty jesteś)"],
-        ["Él/Ella/Usted", "es", "(on/ona/Pan/Pani jest)"]
+    {
+      "id": "sec_02",
+      "type": "vocabulary",
+      "title": "Vocabulario (Podstawy)",
+      "items": [
+        {"es": "¡Hola!", "pl": "Cześć!"},
+        {"es": "Buenos días", "pl": "Dzień dobry"},
+        {"es": "Gracias", "pl": "Dziękuję"},
+        {"es": "Encantado / Encantada", "pl": "Miło mi"},
+        {"es": "Igualmente", "pl": "Wzajemnie"}
       ]
     },
-    "flashcards": [
-      {"id": "A1_01_f1", "es": "¡Hola!", "pl": "Cześć!"},
-      {"id": "A1_01_f2", "es": "Buenos días", "pl": "Dzień dobry (rano)"},
-      {"id": "A1_01_f3", "es": "Adiós", "pl": "Do widzenia"},
-      {"id": "A1_01_f4", "es": "Gracias", "pl": "Dziękuję"},
-      {"id": "A1_01_f5", "es": "Encantado / Encantada", "pl": "Miło mi (mówi mężczyzna / kobieta)"}
-    ],
-    "exercises": [
-      {
-        "id": "A1_01_e1",
-        "type": "fill_gap",
-        "question": "Yo ___ Piotr.",
-        "answer": "soy",
-        "translation": "Ja jestem Piotr."
-      },
-      {
-        "id": "A1_01_e2",
-        "type": "fill_gap",
-        "question": "¡Hola! ¿Cómo te ___?",
-        "answer": "llamas",
-        "translation": "Cześć! Jak się nazywasz?"
-      },
-      {
-        "id": "A1_01_e3",
-        "type": "fill_gap",
-        "question": "Tú ___ de España.",
-        "answer": "eres",
-        "translation": "Ty jesteś z Hiszpanii."
-      }
-    ]
-  }
+    {
+      "id": "sec_03",
+      "type": "grammar",
+      "title": "Gramatyka: Czasownik SER (być)",
+      "content": "Czasownik 'ser' jest nieregularny. Używamy go do opisywania cech stałych, zawodu, pochodzenia oraz do przedstawiania się."
+    },
+    {
+      "id": "sec_04",
+      "type": "exercises",
+      "title": "Ejercicios (Ćwiczenia)",
+      "items": [
+        {
+          "question": "Yo ___ Ana.",
+          "answer": "soy",
+          "translation": "Ja jestem Ana."
+        },
+        {
+          "question": "___ te llamas?",
+          "answer": "Cómo",
+          "translation": "Jak się nazywasz?"
+        }
+      ]
+    }
+  ]
 }

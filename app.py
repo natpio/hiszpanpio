@@ -121,7 +121,6 @@ def set_random_background_and_styles():
         to {{ transform: rotateX(0deg); opacity: 1; }}
     }}
 
-    /* Menu boczne (Sidebar) */
     [data-testid="stSidebar"] {{
         background-color: rgba(249, 241, 230, 0.95) !important;
         border-right: 1px solid #D2B48C;
@@ -152,12 +151,34 @@ def trigger_js_confetti():
     )
 
 def load_data(lesson_filename):
-    """Wczytuje dynamicznie wybraną lekcję na podstawie nazwy pliku"""
     with open(os.path.join("data", "A1", lesson_filename), "r", encoding="utf-8") as f:
         lesson_data = json.load(f)
     with open(os.path.join("data", "user_progress.json"), "r", encoding="utf-8") as f:
         progress_data = json.load(f)
     return lesson_data, progress_data
+
+def load_all_vocabulary(lesson_dir):
+    """Pobiera wszystkie słówka ze wszystkich lekcji do Słownika Globalnego"""
+    all_words = []
+    lesson_names = []
+    try:
+        for f in os.listdir(lesson_dir):
+            if f.endswith('.json'):
+                with open(os.path.join(lesson_dir, f), "r", encoding="utf-8") as file:
+                    data = json.load(file)
+                    title = data['lesson_metadata']['title']
+                    lesson_names.append(title)
+                    for card in data['sections']['flashcards']:
+                        all_words.append({
+                            "es": card["es"],
+                            "pl": card["pl"],
+                            "lesson": title
+                        })
+    except FileNotFoundError:
+        pass
+    
+    lesson_names.sort()
+    return all_words, lesson_names
 
 def save_progress(progress_data):
     with open(os.path.join("data", "user_progress.json"), "w", encoding="utf-8") as f:
@@ -185,136 +206,189 @@ def main():
     # -------------------------------------
     # NAWIGACJA W PASKU BOCZNYM (SIDEBAR)
     # -------------------------------------
-    st.sidebar.title("📚 Menu Kursu")
+    st.sidebar.title("🇪🇸 Menu Kursu")
+    
+    # Wybór trybu działania aplikacji
+    app_mode = st.sidebar.radio("Wybierz tryb:", ["🎓 Tryb Nauki (Lekcje)", "📚 Słownik Globalny"])
     st.sidebar.markdown("---")
     
     lesson_dir = os.path.join("data", "A1")
-    try:
-        available_lessons = [f for f in os.listdir(lesson_dir) if f.endswith('.json')]
-        available_lessons.sort() 
-    except FileNotFoundError:
-        available_lessons = []
-        st.sidebar.error("Nie znaleziono folderu z lekcjami.")
+    
+    if app_mode == "🎓 Tryb Nauki (Lekcje)":
+        try:
+            available_lessons = [f for f in os.listdir(lesson_dir) if f.endswith('.json')]
+            available_lessons.sort() 
+        except FileNotFoundError:
+            available_lessons = []
+            st.sidebar.error("Nie znaleziono folderu z lekcjami.")
 
-    if available_lessons:
-        selected_file = st.sidebar.selectbox(
-            "Wybierz moduł:", 
-            available_lessons, 
-            format_func=lambda x: x.replace(".json", "").replace("_", " ").title()
-        )
-        
-        lesson_data, progress_data = load_data(selected_file)
-        
-        if 'current_card' not in st.session_state:
-            st.session_state.current_card = 0
-        if 'show_answer' not in st.session_state:
-            st.session_state.show_answer = False
-        
-        st.title(f"🇪🇸 {lesson_data['lesson_metadata']['title']}")
-        
-        tab1, tab2, tab3 = st.tabs(["📖 Teoria", "🧠 Fiszki (Tryb SuperMemo)", "📝 Ćwiczenia"])
-        
-        # --- ZAKŁADKA 1: TEORIA ---
-        with tab1:
-            st.subheader(lesson_data['sections']['dialog']['title'])
-            for line in lesson_data['sections']['dialog']['content']:
-                st.write(f"**{line['speaker']}**: {line['text']}")
-                
-            st.markdown("---")
-            st.subheader(lesson_data['sections']['grammar']['title'])
-            st.info(lesson_data['sections']['grammar']['explanation'])
-            st.table(lesson_data['sections']['grammar']['table'])
+        if available_lessons:
+            selected_file = st.sidebar.selectbox(
+                "Wybierz moduł:", 
+                available_lessons, 
+                format_func=lambda x: x.replace(".json", "").replace("_", " ").title()
+            )
             
-        # --- ZAKŁADKA 2: FISZKI I SRS ---
-        with tab2:
-            st.subheader("Tryb Powtórek")
-            today_str = datetime.now().strftime("%Y-%m-%d")
+            lesson_data, progress_data = load_data(selected_file)
             
-            due_cards = []
-            for card in lesson_data['sections']['flashcards']:
-                c_id = card['id']
-                if c_id not in progress_data:
-                    due_cards.append(card)
-                elif progress_data[c_id]['next_review'] <= today_str:
-                    due_cards.append(card)
+            if 'current_card' not in st.session_state:
+                st.session_state.current_card = 0
+            if 'show_answer' not in st.session_state:
+                st.session_state.show_answer = False
             
-            if not due_cards:
-                trigger_js_confetti()
-                st.success("🎉 Świetna robota! Przerobiłeś wszystkie słówka w tej lekcji na dzisiaj. Wróć jutro!")
-                if st.button("Zresetuj dzisiejszą sesję (Tylko do testów)"):
-                    st.session_state.clear()
-                    st.rerun()
-            else:
-                if st.session_state.current_card >= len(due_cards):
-                    st.session_state.current_card = 0
+            st.title(f"🇪🇸 {lesson_data['lesson_metadata']['title']}")
+            
+            tab1, tab2, tab3 = st.tabs(["📖 Teoria", "🧠 Fiszki (Tryb SuperMemo)", "📝 Ćwiczenia"])
+            
+            # --- ZAKŁADKA 1: TEORIA ---
+            with tab1:
+                st.subheader(lesson_data['sections']['dialog']['title'])
+                for line in lesson_data['sections']['dialog']['content']:
+                    st.write(f"**{line['speaker']}**: {line['text']}")
                     
-                active_card = due_cards[st.session_state.current_card]
+                st.markdown("---")
+                st.subheader(lesson_data['sections']['grammar']['title'])
+                st.info(lesson_data['sections']['grammar']['explanation'])
+                st.table(lesson_data['sections']['grammar']['table'])
                 
-                st.markdown(f"<div class='flashcard-front'>{active_card['pl']}</div>", unsafe_allow_html=True)
+            # --- ZAKŁADKA 2: FISZKI I SRS ---
+            with tab2:
+                st.subheader("Tryb Powtórek")
+                today_str = datetime.now().strftime("%Y-%m-%d")
                 
-                if not st.session_state.show_answer:
-                    if st.button("Pokaż odpowiedź", use_container_width=True):
-                        st.session_state.show_answer = True
+                due_cards = []
+                for card in lesson_data['sections']['flashcards']:
+                    c_id = card['id']
+                    if c_id not in progress_data:
+                        due_cards.append(card)
+                    elif progress_data[c_id]['next_review'] <= today_str:
+                        due_cards.append(card)
+                
+                if not due_cards:
+                    trigger_js_confetti()
+                    st.success("🎉 Świetna robota! Przerobiłeś wszystkie słówka w tej lekcji na dzisiaj. Wróć jutro!")
+                    if st.button("Zresetuj dzisiejszą sesję (Tylko do testów)"):
+                        st.session_state.clear()
                         st.rerun()
                 else:
-                    st.markdown(f"<div class='flashcard-back'>{active_card['es']}</div>", unsafe_allow_html=True)
+                    if st.session_state.current_card >= len(due_cards):
+                        st.session_state.current_card = 0
+                        
+                    active_card = due_cards[st.session_state.current_card]
                     
-                    st.write("Jak dobrze pamiętałeś to słówko?")
-                    col1, col2, col3, col4 = st.columns(4)
+                    st.markdown(f"<div class='flashcard-front'>{active_card['pl']}</div>", unsafe_allow_html=True)
                     
-                    def process_answer(quality):
-                        c_id = active_card['id']
-                        if c_id not in progress_data:
-                            progress_data[c_id] = {'repetitions': 0, 'ease_factor': 2.5, 'interval': 0, 'next_review': today_str}
+                    if not st.session_state.show_answer:
+                        if st.button("Pokaż odpowiedź", use_container_width=True):
+                            st.session_state.show_answer = True
+                            st.rerun()
+                    else:
+                        st.markdown(f"<div class='flashcard-back'>{active_card['es']}</div>", unsafe_allow_html=True)
                         
-                        rep = progress_data[c_id]['repetitions']
-                        ef = progress_data[c_id]['ease_factor']
-                        intrv = progress_data[c_id]['interval']
+                        st.write("Jak dobrze pamiętałeś to słówko?")
+                        col1, col2, col3, col4 = st.columns(4)
                         
-                        new_rep, new_ef, new_intrv = calculate_sm2(quality, rep, ef, intrv)
-                        next_date = datetime.now() + timedelta(days=new_intrv)
-                        
-                        progress_data[c_id] = {
-                            'repetitions': new_rep,
-                            'ease_factor': new_ef,
-                            'interval': new_intrv,
-                            'next_review': next_date.strftime("%Y-%m-%d")
-                        }
-                        
-                        save_progress(progress_data)
-                        st.session_state.show_answer = False
-                        st.rerun()
+                        def process_answer(quality):
+                            c_id = active_card['id']
+                            if c_id not in progress_data:
+                                progress_data[c_id] = {'repetitions': 0, 'ease_factor': 2.5, 'interval': 0, 'next_review': today_str}
+                            
+                            rep = progress_data[c_id]['repetitions']
+                            ef = progress_data[c_id]['ease_factor']
+                            intrv = progress_data[c_id]['interval']
+                            
+                            new_rep, new_ef, new_intrv = calculate_sm2(quality, rep, ef, intrv)
+                            next_date = datetime.now() + timedelta(days=new_intrv)
+                            
+                            progress_data[c_id] = {
+                                'repetitions': new_rep,
+                                'ease_factor': new_ef,
+                                'interval': new_intrv,
+                                'next_review': next_date.strftime("%Y-%m-%d")
+                            }
+                            
+                            save_progress(progress_data)
+                            st.session_state.show_answer = False
+                            st.rerun()
 
+                        with col1:
+                            if st.button("Nie wiem (0)", use_container_width=True): process_answer(0)
+                        with col2:
+                            if st.button("Trudne (3)", use_container_width=True): process_answer(3)
+                        with col3:
+                            if st.button("Dobre (4)", use_container_width=True): process_answer(4)
+                        with col4:
+                            if st.button("Łatwe (5)", use_container_width=True): process_answer(5)
+
+            # --- ZAKŁADKA 3: ĆWICZENIA ---
+            with tab3:
+                st.subheader("Sprawdź wiedzę (Wypełnij luki)")
+                st.write("Wpisz brakujące słowo i naciśnij Enter, aby sprawdzić.")
+                st.markdown("<br>", unsafe_allow_html=True)
+                
+                for i, ex in enumerate(lesson_data['sections']['exercises']):
+                    st.caption(f"💡 {ex['translation']}")
+                    col1, col2 = st.columns([3, 1])
+                    
                     with col1:
-                        if st.button("Nie wiem (0)", use_container_width=True): process_answer(0)
+                        user_answer = st.text_input(ex['question'].replace("___", "[ ... ]"), key=f"ex_{ex['id']}")
+                    
                     with col2:
-                        if st.button("Trudne (3)", use_container_width=True): process_answer(3)
-                    with col3:
-                        if st.button("Dobre (4)", use_container_width=True): process_answer(4)
-                    with col4:
-                        if st.button("Łatwe (5)", use_container_width=True): process_answer(5)
+                        if user_answer:
+                            if user_answer.strip().lower() == ex['answer'].lower():
+                                st.success("✅ ¡Perfecto!")
+                            else:
+                                st.error(f"❌ Poprawnie: {ex['answer']}")
+                    
+                    st.markdown("---")
 
-        # --- ZAKŁADKA 3: ĆWICZENIA ---
-        with tab3:
-            st.subheader("Sprawdź wiedzę (Wypełnij luki)")
-            st.write("Wpisz brakujące słowo i naciśnij Enter, aby sprawdzić.")
-            st.markdown("<br>", unsafe_allow_html=True)
+    # -------------------------------------
+    # TRYB SŁOWNIKA GLOBALNEGO
+    # -------------------------------------
+    elif app_mode == "📚 Słownik Globalny":
+        st.title("📚 Słownik Globalny")
+        st.write("Przeglądaj, filtruj i wyszukuj słownictwo z całego kursu.")
+        
+        all_words, lesson_names = load_all_vocabulary(lesson_dir)
+        
+        if not all_words:
+            st.warning("Nie znaleziono słówek. Upewnij się, że lekcje są dodane.")
+        else:
+            # Panele filtrowania
+            col_search, col_filter = st.columns([1, 1])
+            with col_search:
+                search_query = st.text_input("🔍 Szukaj słówka (PL / ES):")
+            with col_filter:
+                selected_lessons = st.multiselect("Filtruj po lekcjach:", lesson_names, default=lesson_names)
             
-            for i, ex in enumerate(lesson_data['sections']['exercises']):
-                st.caption(f"💡 {ex['translation']}")
-                col1, col2 = st.columns([3, 1])
+            # Logika filtrowania
+            filtered_words = [w for w in all_words if w['lesson'] in selected_lessons]
+            if search_query:
+                query = search_query.strip().lower()
+                filtered_words = [w for w in filtered_words if query in w['es'].lower() or query in w['pl'].lower()]
+            
+            # Generowanie estetycznej tabeli HTML dopasowanej do pergaminu
+            if filtered_words:
+                table_html = "<table style='width:100%; border-collapse: collapse; margin-top: 15px;'>"
+                table_html += """
+                <tr style='border-bottom: 2px solid #D2B48C;'>
+                    <th style='text-align:left; padding:12px; color:#5c2c16;'>Hiszpański</th>
+                    <th style='text-align:left; padding:12px; color:#5c2c16;'>Polski</th>
+                    <th style='text-align:right; padding:12px; color:#5c2c16;'>Moduł</th>
+                </tr>
+                """
+                for w in filtered_words:
+                    table_html += f"<tr style='border-bottom: 1px dashed rgba(210, 180, 140, 0.5);'>"
+                    table_html += f"<td style='padding:12px; font-weight:bold; color:#b33929; font-size: 1.1rem;'>{w['es']}</td>"
+                    table_html += f"<td style='padding:12px; color:#2C3E50;'>{w['pl']}</td>"
+                    table_html += f"<td style='padding:12px; text-align:right; font-size:0.85em; opacity:0.8;'>{w['lesson']}</td>"
+                    table_html += "</tr>"
+                table_html += "</table>"
                 
-                with col1:
-                    user_answer = st.text_input(ex['question'].replace("___", "[ ... ]"), key=f"ex_{ex['id']}")
-                
-                with col2:
-                    if user_answer:
-                        if user_answer.strip().lower() == ex['answer'].lower():
-                            st.success("✅ ¡Perfecto!")
-                        else:
-                            st.error(f"❌ Poprawnie: {ex['answer']}")
-                
-                st.markdown("---")
+                st.markdown(table_html, unsafe_allow_html=True)
+                st.caption(f"Wyświetlono słówek: {len(filtered_words)}")
+            else:
+                st.info("Brak słówek spełniających kryteria wyszukiwania.")
 
 if __name__ == "__main__":
     main()

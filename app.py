@@ -20,14 +20,12 @@ def get_base64_of_bin_file(bin_file):
     return base64.b64encode(data).decode()
 
 def set_random_background_and_styles():
-    """Generuje CSS i wstrzykuje tła w locie (odporne na Streamlit Cloud)"""
     bg_image = random.choice(BG_IMAGES)
     main_bg_path = os.path.join("assets", bg_image)
     panel_bg_path = os.path.join("assets", "washi_bg.jpg")
     
-    # Bazowe zmienne CSS
     main_bg_css = ""
-    panel_bg_css = "background-color: #F9F1E6 !important;" # Fallback - jasny beż
+    panel_bg_css = "background-color: #F9F1E6 !important;"
     
     try:
         main_bin_str = get_base64_of_bin_file(main_bg_path)
@@ -37,20 +35,14 @@ def set_random_background_and_styles():
         
     try:
         panel_bin_str = get_base64_of_bin_file(panel_bg_path)
-        # Zmuszamy Streamlita do pokazania tekstury washi
         panel_bg_css = f'background: #F9F1E6 url("data:image/jpeg;base64,{panel_bin_str}") center/cover no-repeat !important;'
-    except Exception as e:
-        # Jeśli plik washi_bg.jpg ma np. literówkę w nazwie, zadziała fallback (jasny beż)
+    except Exception:
         pass
 
     css = f"""
     <style>
-    /* Ukrycie standardowego tła Streamlita */
-    .stApp {{
-        background-color: transparent !important;
-    }}
+    .stApp {{ background-color: transparent !important; }}
 
-    /* Tło meksykańskie na całym ekranie - ZNACZNIE JAŚNIEJSZE (brightness 0.8) */
     .stApp::before {{
         content: "";
         position: fixed;
@@ -63,7 +55,6 @@ def set_random_background_and_styles():
         transition: background-image 0.5s ease-in-out;
     }}
 
-    /* GŁÓWNY PANEL - PANCERNY SELEKTOR */
     div.block-container {{
         {panel_bg_css}
         border: 1px solid #D2B48C !important;
@@ -80,7 +71,6 @@ def set_random_background_and_styles():
         to {{ opacity: 1; transform: translateY(0); }}
     }}
 
-    /* Typografia - Ciemny tekst na jasnym pergaminie */
     .stMarkdown, .stText, p, div, span, label, li {{
         color: #2c1e16 !important; 
         font-size: clamp(1rem, 2.5vw, 1.15rem) !important;
@@ -95,7 +85,6 @@ def set_random_background_and_styles():
     h2 {{ color: #4a2511 !important; font-size: clamp(1.5rem, 3vw, 2rem) !important; }}
     h3 {{ color: #3a1c0d !important; font-size: clamp(1.2rem, 2.5vw, 1.6rem) !important; }}
 
-    /* Fiszki - Efekty 3D i lekka przezroczystość */
     .flashcard-front, .flashcard-back {{
         border-radius: 8px;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -132,7 +121,12 @@ def set_random_background_and_styles():
         to {{ transform: rotateX(0deg); opacity: 1; }}
     }}
 
-    /* Ukrycie menu Streamlita */
+    /* Menu boczne (Sidebar) */
+    [data-testid="stSidebar"] {{
+        background-color: rgba(249, 241, 230, 0.95) !important;
+        border-right: 1px solid #D2B48C;
+    }}
+
     #MainMenu {{visibility: hidden;}}
     footer {{visibility: hidden;}}
     header {{background: transparent !important;}}
@@ -141,41 +135,25 @@ def set_random_background_and_styles():
     st.markdown(css, unsafe_allow_html=True)
 
 def trigger_js_confetti():
-    """Wystrzeliwuje konfetti!"""
     components.html(
         """
         <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
         <script>
             var duration = 3 * 1000;
             var end = Date.now() + duration;
-
             (function frame() {
-                confetti({
-                    particleCount: 7,
-                    angle: 60,
-                    spread: 55,
-                    origin: { x: 0 },
-                    colors: ['#26ccff', '#a25afd', '#ff5e7e', '#88ff5a', '#fcff42', '#ffa62d', '#ff36ff']
-                });
-                confetti({
-                    particleCount: 7,
-                    angle: 120,
-                    spread: 55,
-                    origin: { x: 1 },
-                    colors: ['#26ccff', '#a25afd', '#ff5e7e', '#88ff5a', '#fcff42', '#ffa62d', '#ff36ff']
-                });
-
-                if (Date.now() < end) {
-                    requestAnimationFrame(frame);
-                }
+                confetti({ particleCount: 7, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#26ccff', '#a25afd', '#ff5e7e', '#88ff5a', '#fcff42', '#ffa62d', '#ff36ff'] });
+                confetti({ particleCount: 7, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#26ccff', '#a25afd', '#ff5e7e', '#88ff5a', '#fcff42', '#ffa62d', '#ff36ff'] });
+                if (Date.now() < end) requestAnimationFrame(frame);
             }());
         </script>
         """,
         height=0,
     )
 
-def load_data():
-    with open(os.path.join("data", "A1", "lekcja_01.json"), "r", encoding="utf-8") as f:
+def load_data(lesson_filename):
+    """Wczytuje dynamicznie wybraną lekcję na podstawie nazwy pliku"""
+    with open(os.path.join("data", "A1", lesson_filename), "r", encoding="utf-8") as f:
         lesson_data = json.load(f)
     with open(os.path.join("data", "user_progress.json"), "r", encoding="utf-8") as f:
         progress_data = json.load(f)
@@ -203,118 +181,140 @@ def calculate_sm2(quality, repetitions, ease_factor, interval):
 
 def main():
     set_random_background_and_styles()
-    lesson_data, progress_data = load_data()
     
-    if 'current_card' not in st.session_state:
-        st.session_state.current_card = 0
-    if 'show_answer' not in st.session_state:
-        st.session_state.show_answer = False
+    # -------------------------------------
+    # NAWIGACJA W PASKU BOCZNYM (SIDEBAR)
+    # -------------------------------------
+    st.sidebar.title("📚 Menu Kursu")
+    st.sidebar.markdown("---")
     
-    st.title(f"🇪🇸 {lesson_data['lesson_metadata']['title']}")
-    
-    tab1, tab2, tab3 = st.tabs(["📖 Teoria", "🧠 Fiszki (Tryb SuperMemo)", "📝 Ćwiczenia"])
-    
-    # --- ZAKŁADKA 1: TEORIA ---
-    with tab1:
-        st.subheader(lesson_data['sections']['dialog']['title'])
-        for line in lesson_data['sections']['dialog']['content']:
-            st.write(f"**{line['speaker']}**: {line['text']}")
-            
-        st.markdown("---")
-        st.subheader(lesson_data['sections']['grammar']['title'])
-        st.info(lesson_data['sections']['grammar']['explanation'])
-        st.table(lesson_data['sections']['grammar']['table'])
+    lesson_dir = os.path.join("data", "A1")
+    try:
+        available_lessons = [f for f in os.listdir(lesson_dir) if f.endswith('.json')]
+        available_lessons.sort() 
+    except FileNotFoundError:
+        available_lessons = []
+        st.sidebar.error("Nie znaleziono folderu z lekcjami.")
+
+    if available_lessons:
+        selected_file = st.sidebar.selectbox(
+            "Wybierz moduł:", 
+            available_lessons, 
+            format_func=lambda x: x.replace(".json", "").replace("_", " ").title()
+        )
         
-    # --- ZAKŁADKA 2: FISZKI I SRS ---
-    with tab2:
-        st.subheader("Tryb Powtórek")
-        today_str = datetime.now().strftime("%Y-%m-%d")
+        lesson_data, progress_data = load_data(selected_file)
         
-        due_cards = []
-        for card in lesson_data['sections']['flashcards']:
-            c_id = card['id']
-            if c_id not in progress_data:
-                due_cards.append(card)
-            elif progress_data[c_id]['next_review'] <= today_str:
-                due_cards.append(card)
+        if 'current_card' not in st.session_state:
+            st.session_state.current_card = 0
+        if 'show_answer' not in st.session_state:
+            st.session_state.show_answer = False
         
-        if not due_cards:
-            trigger_js_confetti()
-            st.success("🎉 Świetna robota! Przerobiłeś wszystkie słówka na dzisiaj. Wróć jutro!")
-            if st.button("Zresetuj dzisiejszą sesję (Tylko do testów)"):
-                st.session_state.clear()
-                st.rerun()
-        else:
-            if st.session_state.current_card >= len(due_cards):
-                st.session_state.current_card = 0
+        st.title(f"🇪🇸 {lesson_data['lesson_metadata']['title']}")
+        
+        tab1, tab2, tab3 = st.tabs(["📖 Teoria", "🧠 Fiszki (Tryb SuperMemo)", "📝 Ćwiczenia"])
+        
+        # --- ZAKŁADKA 1: TEORIA ---
+        with tab1:
+            st.subheader(lesson_data['sections']['dialog']['title'])
+            for line in lesson_data['sections']['dialog']['content']:
+                st.write(f"**{line['speaker']}**: {line['text']}")
                 
-            active_card = due_cards[st.session_state.current_card]
+            st.markdown("---")
+            st.subheader(lesson_data['sections']['grammar']['title'])
+            st.info(lesson_data['sections']['grammar']['explanation'])
+            st.table(lesson_data['sections']['grammar']['table'])
             
-            st.markdown(f"<div class='flashcard-front'>{active_card['pl']}</div>", unsafe_allow_html=True)
+        # --- ZAKŁADKA 2: FISZKI I SRS ---
+        with tab2:
+            st.subheader("Tryb Powtórek")
+            today_str = datetime.now().strftime("%Y-%m-%d")
             
-            if not st.session_state.show_answer:
-                if st.button("Pokaż odpowiedź", use_container_width=True):
-                    st.session_state.show_answer = True
+            due_cards = []
+            for card in lesson_data['sections']['flashcards']:
+                c_id = card['id']
+                if c_id not in progress_data:
+                    due_cards.append(card)
+                elif progress_data[c_id]['next_review'] <= today_str:
+                    due_cards.append(card)
+            
+            if not due_cards:
+                trigger_js_confetti()
+                st.success("🎉 Świetna robota! Przerobiłeś wszystkie słówka w tej lekcji na dzisiaj. Wróć jutro!")
+                if st.button("Zresetuj dzisiejszą sesję (Tylko do testów)"):
+                    st.session_state.clear()
                     st.rerun()
             else:
-                st.markdown(f"<div class='flashcard-back'>{active_card['es']}</div>", unsafe_allow_html=True)
+                if st.session_state.current_card >= len(due_cards):
+                    st.session_state.current_card = 0
+                    
+                active_card = due_cards[st.session_state.current_card]
                 
-                st.write("Jak dobrze pamiętałeś to słówko?")
-                col1, col2, col3, col4 = st.columns(4)
+                st.markdown(f"<div class='flashcard-front'>{active_card['pl']}</div>", unsafe_allow_html=True)
                 
-                def process_answer(quality):
-                    c_id = active_card['id']
-                    if c_id not in progress_data:
-                        progress_data[c_id] = {'repetitions': 0, 'ease_factor': 2.5, 'interval': 0, 'next_review': today_str}
+                if not st.session_state.show_answer:
+                    if st.button("Pokaż odpowiedź", use_container_width=True):
+                        st.session_state.show_answer = True
+                        st.rerun()
+                else:
+                    st.markdown(f"<div class='flashcard-back'>{active_card['es']}</div>", unsafe_allow_html=True)
                     
-                    rep = progress_data[c_id]['repetitions']
-                    ef = progress_data[c_id]['ease_factor']
-                    intrv = progress_data[c_id]['interval']
+                    st.write("Jak dobrze pamiętałeś to słówko?")
+                    col1, col2, col3, col4 = st.columns(4)
                     
-                    new_rep, new_ef, new_intrv = calculate_sm2(quality, rep, ef, intrv)
-                    next_date = datetime.now() + timedelta(days=new_intrv)
-                    
-                    progress_data[c_id] = {
-                        'repetitions': new_rep,
-                        'ease_factor': new_ef,
-                        'interval': new_intrv,
-                        'next_review': next_date.strftime("%Y-%m-%d")
-                    }
-                    
-                    save_progress(progress_data)
-                    st.session_state.show_answer = False
-                    st.rerun()
+                    def process_answer(quality):
+                        c_id = active_card['id']
+                        if c_id not in progress_data:
+                            progress_data[c_id] = {'repetitions': 0, 'ease_factor': 2.5, 'interval': 0, 'next_review': today_str}
+                        
+                        rep = progress_data[c_id]['repetitions']
+                        ef = progress_data[c_id]['ease_factor']
+                        intrv = progress_data[c_id]['interval']
+                        
+                        new_rep, new_ef, new_intrv = calculate_sm2(quality, rep, ef, intrv)
+                        next_date = datetime.now() + timedelta(days=new_intrv)
+                        
+                        progress_data[c_id] = {
+                            'repetitions': new_rep,
+                            'ease_factor': new_ef,
+                            'interval': new_intrv,
+                            'next_review': next_date.strftime("%Y-%m-%d")
+                        }
+                        
+                        save_progress(progress_data)
+                        st.session_state.show_answer = False
+                        st.rerun()
 
+                    with col1:
+                        if st.button("Nie wiem (0)", use_container_width=True): process_answer(0)
+                    with col2:
+                        if st.button("Trudne (3)", use_container_width=True): process_answer(3)
+                    with col3:
+                        if st.button("Dobre (4)", use_container_width=True): process_answer(4)
+                    with col4:
+                        if st.button("Łatwe (5)", use_container_width=True): process_answer(5)
+
+        # --- ZAKŁADKA 3: ĆWICZENIA ---
+        with tab3:
+            st.subheader("Sprawdź wiedzę (Wypełnij luki)")
+            st.write("Wpisz brakujące słowo i naciśnij Enter, aby sprawdzić.")
+            st.markdown("<br>", unsafe_allow_html=True)
+            
+            for i, ex in enumerate(lesson_data['sections']['exercises']):
+                st.caption(f"💡 {ex['translation']}")
+                col1, col2 = st.columns([3, 1])
+                
                 with col1:
-                    if st.button("Nie wiem (0)", use_container_width=True): process_answer(0)
+                    user_answer = st.text_input(ex['question'].replace("___", "[ ... ]"), key=f"ex_{ex['id']}")
+                
                 with col2:
-                    if st.button("Trudne (3)", use_container_width=True): process_answer(3)
-                with col3:
-                    if st.button("Dobre (4)", use_container_width=True): process_answer(4)
-                with col4:
-                    if st.button("Łatwe (5)", use_container_width=True): process_answer(5)
-
-    # --- ZAKŁADKA 3: ĆWICZENIA ---
-    with tab3:
-        st.subheader("Sprawdź wiedzę (Wypełnij luki)")
-        st.write("Wpisz brakujące słowo i naciśnij Enter, aby sprawdzić.")
-        st.markdown("<br>", unsafe_allow_html=True)
-        
-        for i, ex in enumerate(lesson_data['sections']['exercises']):
-            st.caption(f"💡 {ex['translation']}")
-            col1, col2 = st.columns([3, 1])
-            
-            with col1:
-                user_answer = st.text_input(ex['question'].replace("___", "[ ... ]"), key=f"ex_{ex['id']}")
-            
-            with col2:
-                if user_answer:
-                    if user_answer.strip().lower() == ex['answer'].lower():
-                        st.success("✅ ¡Perfecto!")
-                    else:
-                        st.error(f"❌ Poprawnie: {ex['answer']}")
-            
-            st.markdown("---")
+                    if user_answer:
+                        if user_answer.strip().lower() == ex['answer'].lower():
+                            st.success("✅ ¡Perfecto!")
+                        else:
+                            st.error(f"❌ Poprawnie: {ex['answer']}")
+                
+                st.markdown("---")
 
 if __name__ == "__main__":
     main()

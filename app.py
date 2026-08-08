@@ -1,5 +1,6 @@
 import streamlit as st
 import os
+import random
 from datetime import datetime, timedelta
 
 from utils import (
@@ -13,7 +14,15 @@ def main():
     set_random_background_and_styles()
     
     st.sidebar.title("📚 Kurs A1 - Ultra Pro")
-    mode = st.sidebar.radio("Widok:", ["🎓 Moduły Kursu", "🧠 Tryb Powtórek (Fiszki)", "📖 Tablice Czasowników", "📊 Dashboard Analityczny"])
+    
+    # ZAKTUALIZOWANE MENU
+    mode = st.sidebar.radio("Widok:", [
+        "🎓 Moduły Kursu", 
+        "🧠 Tryb Powtórek (SM-2)", 
+        "🏋️ Trener Słówek (Losowe 20)",
+        "📖 Tablice Czasowników", 
+        "📊 Dashboard Analityczny"
+    ])
     st.sidebar.markdown("---")
     
     lesson_dir = os.path.join("data", "A1")
@@ -126,12 +135,15 @@ def main():
             st.success("🎉 Sekcja ukończona!")
             if current_section['type'] == 'vocabulary':
                 st.info("💡 Słówka z tej sekcji zostały odblokowane do globalnych powtórek SuperMemo!")
+            elif current_section['type'] == 'exercises':
+                st.info("💡 Te ćwiczenia zostały odblokowane do powtórek SuperMemo (jako fiszki ze zdaniami)!")
 
     # -------------------------------------
-    # TRYB 2: FISZKI (SUPERMEMO)
+    # TRYB 2: FISZKI (SUPERMEMO + ĆWICZENIA)
     # -------------------------------------
-    elif mode == "🧠 Tryb Powtórek (Fiszki)":
-        st.title("🧠 Globalny Tryb Powtórek")
+    elif mode == "🧠 Tryb Powtórek (SM-2)":
+        st.title("🧠 Globalny Tryb Powtórek (SM-2)")
+        st.write("Algorytm dba o to, byś powtarzał słówka i zdania z lukami w idealnym momencie.")
         today_str = datetime.now().strftime("%Y-%m-%d")
         due_cards = []
         
@@ -139,15 +151,26 @@ def main():
             l_data = load_lesson(f)
             l_id = l_data['lesson_metadata']['id']
             for s in l_data['sections']:
-                if s['type'] == 'vocabulary' and progress.get(f"{l_id}_{s['id']}", False):
-                    for item in s['items']:
-                        vocab_key = f"vocab_{l_id}_{item['es']}"
-                        card_data = progress.get(vocab_key)
-                        if not card_data or card_data['next_review'] <= today_str:
-                            due_cards.append({'key': vocab_key, 'es': item['es'], 'pl': item['pl']})
+                if progress.get(f"{l_id}_{s['id']}", False):
+                    # Pobieranie słownictwa
+                    if s['type'] == 'vocabulary':
+                        for item in s['items']:
+                            vocab_key = f"vocab_{l_id}_{item['es']}"
+                            card_data = progress.get(vocab_key)
+                            if not card_data or card_data['next_review'] <= today_str:
+                                due_cards.append({'key': vocab_key, 'front': item['pl'], 'back': item['es']})
+                    # Pobieranie ZDAŃ z lukami
+                    elif s['type'] == 'exercises':
+                        for i, ex in enumerate(s['items']):
+                            ex_key = f"ex_card_{l_id}_{s['id']}_{i}"
+                            card_data = progress.get(ex_key)
+                            if not card_data or card_data['next_review'] <= today_str:
+                                front_text = f"{ex['question'].replace('___', '[ ... ]')}<br><br><span style='font-size: 0.8em; color: #5c2c16;'>💡 {ex['translation']}</span>"
+                                back_text = ex['question'].replace("___", f"<b style='color:#b33929;'>{ex['answer']}</b>")
+                                due_cards.append({'key': ex_key, 'front': front_text, 'back': back_text})
 
         if not due_cards:
-            st.success("🎉 Świetna robota! Brak słówek do powtórki na dzisiaj.")
+            st.success("🎉 Świetna robota! Nie masz na dziś żadnych elementów do powtórki.")
             trigger_js_confetti()
         else:
             if 'current_card_index' not in st.session_state: st.session_state.current_card_index = 0
@@ -155,17 +178,17 @@ def main():
             if st.session_state.current_card_index >= len(due_cards): st.session_state.current_card_index = 0
                 
             active_card = due_cards[st.session_state.current_card_index]
-            st.info(f"Słówek do powtórki w tej sesji: **{len(due_cards)}**")
+            st.info(f"Fiszek do powtórki w tej sesji: **{len(due_cards)}**")
             
-            st.markdown(f"<div class='flashcard-front'>{active_card['pl']}</div>", unsafe_allow_html=True)
+            st.markdown(f"<div class='flashcard-front'>{active_card['front']}</div>", unsafe_allow_html=True)
             
             if not st.session_state.show_answer:
                 if st.button("Pokaż odpowiedź", use_container_width=True):
                     st.session_state.show_answer = True
                     st.rerun()
             else:
-                st.markdown(f"<div class='flashcard-back'>{active_card['es']}</div>", unsafe_allow_html=True)
-                st.write("Jak dobrze pamiętałeś to słówko?")
+                st.markdown(f"<div class='flashcard-back'>{active_card['back']}</div>", unsafe_allow_html=True)
+                st.write("Jak dobrze to pamiętałeś?")
                 
                 cols = st.columns(4)
                 buttons = [("Nie wiem (0)", 0), ("Trudne (3)", 3), ("Dobre (4)", 4), ("Łatwe (5)", 5)]
@@ -188,7 +211,72 @@ def main():
                     if col.button(label, use_container_width=True): process_answer(q_val)
 
     # -------------------------------------
-    # TRYB 3: TABLICE CZASOWNIKÓW 
+    # TRYB 3: TRENER SŁÓWEK (NOWOŚĆ)
+    # -------------------------------------
+    elif mode == "🏋️ Trener Słówek (Losowe 20)":
+        st.title("🏋️ Szybki Trening Słówek")
+        st.write("Idealne na 5 minut przerwy! Aplikacja wylosuje 20 słówek ze wszystkich zakończonych przez Ciebie sekcji. Te powtórki nie wpływają na algorytm SuperMemo.")
+        
+        unlocked_words = []
+        for f in lesson_files:
+            l_data = load_lesson(f)
+            l_id = l_data['lesson_metadata']['id']
+            for s in l_data['sections']:
+                if s['type'] == 'vocabulary' and progress.get(f"{l_id}_{s['id']}", False):
+                    for item in s['items']:
+                        unlocked_words.append(item)
+
+        if not unlocked_words:
+            st.warning("Nie ukończyłeś jeszcze żadnej sekcji ze słownictwem. Przerób moduły z lekcji, aby odblokować słówka!")
+        else:
+            if 'trainer_active' not in st.session_state or not st.session_state.trainer_active:
+                if st.button("Rozpocznij losowanie 20 słówek 🚀", use_container_width=True):
+                    st.session_state.trainer_active = True
+                    sample_size = min(20, len(unlocked_words))
+                    st.session_state.trainer_words = random.sample(unlocked_words, sample_size)
+                    st.session_state.trainer_idx = 0
+                    st.session_state.trainer_score = 0
+                    st.session_state.trainer_show_ans = False
+                    st.rerun()
+            else:
+                idx = st.session_state.trainer_idx
+                words = st.session_state.trainer_words
+                
+                if idx < len(words):
+                    st.progress(idx / len(words), text=f"Słówko {idx + 1} z {len(words)}")
+                    current_word = words[idx]
+                    
+                    st.markdown(f"<div class='flashcard-front'>{current_word['pl']}</div>", unsafe_allow_html=True)
+                    
+                    if not st.session_state.trainer_show_ans:
+                        if st.button("Pokaż odpowiedź", use_container_width=True):
+                            st.session_state.trainer_show_ans = True
+                            st.rerun()
+                    else:
+                        st.markdown(f"<div class='flashcard-back'>{current_word['es']}</div>", unsafe_allow_html=True)
+                        
+                        col1, col2 = st.columns(2)
+                        with col1:
+                            if st.button("🔴 Nie pamiętałem", use_container_width=True):
+                                st.session_state.trainer_idx += 1
+                                st.session_state.trainer_show_ans = False
+                                st.rerun()
+                        with col2:
+                            if st.button("🟢 Pamiętałem (+1)", use_container_width=True):
+                                st.session_state.trainer_score += 1
+                                st.session_state.trainer_idx += 1
+                                st.session_state.trainer_show_ans = False
+                                st.rerun()
+                else:
+                    st.progress(100, text="Trening zakończony!")
+                    st.success(f"Twój wynik: **{st.session_state.trainer_score} / {len(words)}**")
+                    trigger_js_confetti()
+                    if st.button("Zakończ i wróć", use_container_width=True):
+                        st.session_state.trainer_active = False
+                        st.rerun()
+
+    # -------------------------------------
+    # TRYB 4: TABLICE CZASOWNIKÓW 
     # -------------------------------------
     elif mode == "📖 Tablice Czasowników":
         st.title("📖 Tablice Odmian Czasowników")
@@ -369,11 +457,11 @@ def main():
             """)
 
     # -------------------------------------
-    # TRYB 4: DASHBOARD ANALITYCZNY
+    # TRYB 5: DASHBOARD ANALITYCZNY
     # -------------------------------------
     elif mode == "📊 Dashboard Analityczny":
         st.title("📊 Dashboard Analityczny Kursu")
-        total_sections, completed_sections_count, words_in_learning = 0, 0, 0
+        total_sections, completed_sections_count = 0, 0
         lesson_progress_summary = []
         
         for f in lesson_files:
@@ -385,12 +473,15 @@ def main():
             pct = int((l_done / l_total) * 100) if l_total > 0 else 0
             lesson_progress_summary.append({"Lekcja": l_data['lesson_metadata']['title'], "Ukończono (%)": pct, "Zaliczone": f"{l_done}/{l_total}"})
 
+        # Oddzielne statystyki dla słówek i zdań w SM-2
         words_in_learning = sum(1 for key in progress if key.startswith("vocab_"))
+        ex_in_learning = sum(1 for key in progress if key.startswith("ex_card_"))
 
-        col1, col2, col3 = st.columns(3)
+        col1, col2, col3, col4 = st.columns(4)
         col1.metric("Ukończone sekcje", f"{completed_sections_count} / {total_sections}")
         col2.metric("Ogólny postęp", f"{int((completed_sections_count / total_sections) * 100) if total_sections > 0 else 0}%")
         col3.metric("Opanowane słówka", words_in_learning)
+        col4.metric("Opanowane zdania", ex_in_learning)
 
         st.markdown("---")
         for item in lesson_progress_summary:

@@ -10,10 +10,10 @@
       "type": "dialog",
       "title": "Diálogo: En el aeropuerto (Na lotnisku)",
       "content": [
-        {"speaker": "Oficial", "text": "Buenos días. ¿De dónde es usted?"},
-        {"speaker": "Piotr", "text": "Soy de Polonia, vivo en Poznań."},
-        {"speaker": "Oficial", "text": "¿Y a qué se dedica?"},
-        {"speaker": "Piotr", "text": "Soy especialista en logística. Trabajo en una empresa internacional."}
+        {"speaker": "Oficial", "text": "Buenos días. ¿De dónde es usted?", "translation": "Dzień dobry. Skąd Pan jest?"},
+        {"speaker": "Piotr", "text": "Soy de Polonia, vivo en Poznań.", "translation": "Jestem z Polski, mieszkam w Poznaniu."},
+        {"speaker": "Oficial", "text": "¿Y a qué se dedica?", "translation": "A czym się Pan zajmuje?"},
+        {"speaker": "Piotr", "text": "Soy especialista en logística. Trabajo en una empresa internacional.", "translation": "Jestem specjalistą ds. logistyki. Pracuję w międzynarodowej firmie."}
       ]
     },
     {
@@ -34,7 +34,7 @@
       "id": "sec_03",
       "type": "grammar",
       "title": "Gramatyka: Czasowniki regularne (-ar, -er, -ir)",
-      "content": "W języku hiszpańskim czasowniki dzielą się na trzy grupy w zależności od końcówki bezokolicznika: -ar (np. trabajar), -er (np. comer), -ir (np. vivir). Odmieniając je w czasie teraźniejszym, odcinamy końcówkę i dodajemy odpowiednią literę dla danej osoby."
+      "content": "Czasowniki w języku hiszpańskim dzielą się na trzy grupy (koniugacje), w zależności od końcówki bezokolicznika: **-AR**, **-ER**, **-IR**. \n\nAby odmienić czasownik regularny w czasie teraźniejszym (Presente de Indicativo), odcinamy końcówkę i dodajemy odpowiednią literę dla danej osoby.\n\n### Odmiana czasowników regularnych\n\n| Osoba | -AR (np. trabajar - pracować) | -ER (np. comer - jeść) | -IR (np. vivir - żyć/mieszkać) |\n| :--- | :--- | :--- | :--- |\n| **Yo** (Ja) | trabaj**o** | com**o** | viv**o** |\n| **Tú** (Ty) | trabaj**as** | com**es** | viv**es** |\n| **Él/Ella/Usted** (On/Ona/Pan) | trabaj**a** | com**e** | viv**e** |\n| **Nosotros** (My) | trabaj**amos** | com**emos** | viv**imos** |\n| **Vosotros** (Wy) | trabaj**áis** | com**éis** | viv**ís** |\n| **Ellos/Ellas/Ustedes** (Oni/Państwo) | trabaj**an** | com**en** | viv**en** |\n\n💡 **Przykłady użycia w praktyce:**\n* *Yo vivo en Poznań.* (Mieszkam w Poznaniu.)\n* *¿Tú hablas español?* (Mówisz po hiszpańsku?)\n* *Piotr trabaja en logística.* (Piotr pracuje w logistyce.)"
     },
     {
       "id": "sec_04",

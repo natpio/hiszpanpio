@@ -1,0 +1,114 @@
+{
+  "lesson_metadata": {
+    "id": "A1_15",
+    "level": "A1",
+    "title": "Projekty, pasje i wspomnienia (Podsumowanie A1)"
+  },
+  "sections": [
+    {
+      "id": "sec_01",
+      "type": "dialog",
+      "title": "Diálogo: Un mes lleno de éxitos",
+      "content": [
+        {"speaker": "Natalia", "text": "¡Qué mes más intenso! ¿Cómo ha ido la degustación hoy?"},
+        {"speaker": "Piotr", "text": "Ha sido un éxito total. He usado la picadora Serie 6 de 2100W y las salchichas artesanales han quedado perfectas. Nuestra 'Manufaktura Kiełbas' va por muy buen camino."},
+        {"speaker": "Natalia", "text": "Me alegro mucho. Por cierto, ¿has terminado el proyecto con las fotos de las vacaciones?"},
+        {"speaker": "Piotr", "text": "Sí, he generado unas canciones de hip-hop con inteligencia artificial para nuestro álbum. Así vamos a recordar siempre el viaje por Chicago, Des Moines y Wisconsin Dells."},
+        {"speaker": "Natalia", "text": "¡Genial! Ha sido un viaje inolvidable y un verano espectacular."}
+      ]
+    },
+    {
+      "id": "sec_02",
+      "type": "vocabulary",
+      "title": "Vocabulario (Projekty, biznes i wspomnienia)",
+      "items": [
+        {"es": "El proyecto", "pl": "Projekt"},
+        {"es": "El negocio / La empresa", "pl": "Biznes / Firma"},
+        {"es": "El éxito", "pl": "Sukces"},
+        {"es": "La degustación", "pl": "Degustacja"},
+        {"es": "La picadora de carne", "pl": "Maszynka do mięsa"},
+        {"es": "La inteligencia artificial", "pl": "Sztuczna inteligencja"},
+        {"es": "La canción", "pl": "Piosenka"},
+        {"es": "El recuerdo", "pl": "Wspomnienie"},
+        {"es": "Recordar", "pl": "Pamiętać / Wspominać"},
+        {"es": "Inolvidable", "pl": "Niezapomniany"},
+        {"es": "Espectacular", "pl": "Spektakularny / Wspaniały"},
+        {"es": "Crear", "pl": "Tworzyć"},
+        {"es": "Generar", "pl": "Generować"},
+        {"es": "Compartir", "pl": "Dzielić się (np. zdjęciami)"},
+        {"es": "Quedar bien/mal", "pl": "Wyjść (np. dobrze/źle o jedzeniu, projekcie)"},
+        {"es": "Me alegro", "pl": "Cieszę się"}
+      ]
+    },
+    {
+      "id": "sec_03",
+      "type": "grammar",
+      "title": "Gramatyka: Podsumowanie (Wyrażanie opinii o przeszłości)",
+      "content": "Aby ocenić wydarzenia z przeszłości, często używamy czasu Pretérito Perfecto z przymiotnikami. Przykłady: 'Ha sido un éxito' (To był sukces), 'Ha sido inolvidable' (To było niezapomniane). Używamy też czasownika 'quedar', aby opowiedzieć o rezultacie naszej pracy: 'Las salchichas han quedado perfectas' (Kiełbasy wyszły idealnie)."
+    },
+    {
+      "id": "sec_04",
+      "type": "exercises",
+      "title": "Ejercicios (Ćwiczenia 1-25)",
+      "items": [
+        {"question": "La ___ de nuestros productos ha sido un éxito.", "answer": "degustación", "translation": "Degustacja naszych produktów była sukcesem."},
+        {"question": "Queremos abrir un nuevo ___ familiar.", "answer": "negocio", "translation": "Chcemy otworzyć nowy rodzinny biznes."},
+        {"question": "He usado la ___ de carne Serie 6 para la receta.", "answer": "picadora", "translation": "Użyłem maszynki do mięsa Serie 6 do tego przepisu."},
+        {"question": "La 'Manufaktura Kiełbas' es un ___ muy interesante.", "answer": "proyecto", "translation": "'Manufaktura Kiełbas' to bardzo interesujący projekt."},
+        {"question": "El viaje por Estados Unidos ha sido ___.", "answer": "inolvidable", "translation": "Podróż po Stanach Zjednoczonych była niezapomniana."},
+        {"question": "He generado una ___ de hip-hop para el video.", "answer": "canción", "translation": "Wygenerowałem piosenkę hip-hopową do wideo."},
+        {"question": "He usado ___ artificial para crear la música.", "answer": "inteligencia", "translation": "Użyłem sztucznej inteligencji do stworzenia muzyki."},
+        {"question": "Las fotos de Chicago son un gran ___.", "answer": "recuerdo", "translation": "Zdjęcia z Chicago to świetne wspomnienie."},
+        {"question": "La cena de hoy ha ___ espectacular.", "answer": "sido", "translation": "Dzisiejsza kolacja była wspaniała."},
+        {"question": "Las salchichas han ___ perfectas.", "answer": "quedado", "translation": "Kiełbasy wyszły idealnie."},
+        {"question": "Me ___ mucho de tu éxito profesional.", "answer": "alegro", "translation": "Bardzo się cieszę z twojego sukcesu zawodowego."},
+        {"question": "Voy a ___ el álbum de fotos con la familia.", "answer": "compartir", "translation": "Zamierzam podzielić się albumem ze zdjęciami z rodziną."},
+        {"question": "Es difícil ___ una empresa de logística desde cero.", "answer": "crear", "translation": "Trudno jest stworzyć firmę logistyczną od zera."},
+        {"question": "A veces es bonito ___ los buenos momentos.", "answer": "recordar", "translation": "Czasami miło jest wspominać dobre chwile."},
+        {"question": "El motor del Nissan ha ___ muy bien.", "answer": "quedado", "translation": "Silnik w Nissanie wypadł (sprawdził się) bardzo dobrze."},
+        {"question": "Nuestro verano en Estados Unidos ha sido un ___ total.", "answer": "éxito", "translation": "Nasze lato w Stanach Zjednoczonych było całkowitym sukcesem."},
+        {"question": "He ___ unas imágenes muy bonitas hoy.", "answer": "generado", "translation": "Wygenerowałem dziś bardzo ładne obrazy."},
+        {"question": "Vamos a organizar una ___ de embutidos en Poznań.", "answer": "degustación", "translation": "Zamierzamy zorganizować degustację wędlin w Poznaniu."},
+        {"question": "¿Has usado la ___ para picar el ajo?", "answer": "picadora", "translation": "Użyłeś maszynki do posiekania czosnku?"},
+        {"question": "Tengo un ___ de mi vuelo sobre Wisconsin.", "answer": "recuerdo", "translation": "Mam wspomnienie mojego lotu nad Wisconsin."},
+        {"question": "La ___ tecnológica cambia el mundo rápido.", "answer": "inteligencia", "translation": "Inteligencja technologiczna szybko zmienia świat."},
+        {"question": "¿Qué ___ estás escuchando ahora mismo?", "answer": "canción", "translation": "Jakiej piosenki słuchasz w tym momencie?"},
+        {"question": "El evento internacional ha ___ muy profesional.", "answer": "sido", "translation": "Międzynarodowe wydarzenie było bardzo profesjonalne."},
+        {"question": "Hemos ___ una nueva marca de comida.", "answer": "creado", "translation": "Stworzyliśmy nową markę jedzenia."},
+        {"question": "Quiero ___ mis experiencias en el simulador con amigos.", "answer": "compartir", "translation": "Chcę podzielić się moimi doświadczeniami z symulatora z przyjaciółmi."}
+      ]
+    },
+    {
+      "id": "sec_05",
+      "type": "exercises",
+      "title": "Ejercicios (Ćwiczenia 26-50)",
+      "items": [
+        {"question": "La feria en Alemania ha sido un ___ comercial.", "answer": "éxito", "translation": "Targi w Niemczech były sukcesem komercyjnym."},
+        {"question": "Me ___ de que la maleta haya llegado al aeropuerto.", "answer": "alegro", "translation": "Cieszę się, że walizka dotarła na lotnisko."},
+        {"question": "El proyecto de la 'Manufaktura' va por buen ___.", "answer": "camino", "translation": "Projekt 'Manufaktury' idzie w dobrym kierunku (drogą)."},
+        {"question": "¿Te ha ___ bien el examen de piloto?", "answer": "quedado", "translation": "Dobrze ci poszedł (wyszedł) egzamin na pilota?"},
+        {"question": "Siempre vamos a ___ nuestro viaje por el país.", "answer": "recordar", "translation": "Zawsze będziemy wspominać naszą podróż po kraju."},
+        {"question": "Me gusta la música cantada por un ___ virtual.", "answer": "coro", "translation": "Lubię muzykę śpiewaną przez wirtualny chór."},
+        {"question": "La comida casera es ___.", "answer": "espectacular", "translation": "Domowe jedzenie jest spektakularne."},
+        {"question": "El nuevo software es capaz de ___ voces humanas.", "answer": "generar", "translation": "Nowe oprogramowanie jest w stanie generować ludzkie głosy."},
+        {"question": "La receta de estas ___ artesanales es secreta.", "answer": "salchichas", "translation": "Przepis na te rzemieślnicze kiełbasy jest sekretem."},
+        {"question": "¿Tienes ___ de tu viaje a Des Moines?", "answer": "recuerdos", "translation": "Masz wspomnienia ze swojej podróży do Des Moines?"},
+        {"question": "Trabajar en una gran ___ requiere mucha organización.", "answer": "empresa", "translation": "Praca w dużej firmie wymaga dużej organizacji."},
+        {"question": "La ___ de los productos fue aprobada por los clientes.", "answer": "degustación", "translation": "Degustacja produktów została zaaprobowana przez klientów."},
+        {"question": "¿Qué ___ vas a iniciar el próximo año?", "answer": "proyecto", "translation": "Jaki projekt zamierzasz rozpocząć w przyszłym roku?"},
+        {"question": "Las fotos de las vacaciones han ___ muy nítidas.", "answer": "quedado", "translation": "Zdjęcia z wakacji wyszły bardzo ostre."},
+        {"question": "La ___ artificial ayuda mucho en la logística moderna.", "answer": "inteligencia", "translation": "Sztuczna inteligencja bardzo pomaga w nowoczesnej logistyce."},
+        {"question": "Ha sido un viaje ___ para nuestras hijas.", "answer": "inolvidable", "translation": "To była niezapomniana podróż dla naszych córek."},
+        {"question": "Hemos ___ la noche escuchando tus canciones.", "answer": "pasado", "translation": "Spędziliśmy noc słuchając twoich piosenek."},
+        {"question": "Este mes hemos ___ mucho con el nuevo equipo.", "answer": "trabajado", "translation": "W tym miesiącu dużo pracowaliśmy z nowym sprzętem."},
+        {"question": "Me ___ escuchar cómo ha crecido tu negocio.", "answer": "alegro", "translation": "Cieszę się słysząc, jak urósł twój biznes."},
+        {"question": "La potencia de 2100W hace que la ___ funcione rápido.", "answer": "picadora", "translation": "Moc 2100W sprawia, że maszynka działa szybko."},
+        {"question": "Tengo que ___ un documento para la aduana.", "answer": "crear", "translation": "Muszę stworzyć dokument dla urzędu celnego."},
+        {"question": "A todos les gusta ___ sus fotos en las redes sociales.", "answer": "compartir", "translation": "Wszyscy lubią dzielić się swoimi zdjęciami w sieciach społecznościowych."},
+        {"question": "El ___ logístico para Ankara ya está completado.", "answer": "proyecto", "translation": "Projekt logistyczny do Ankary jest już ukończony."},
+        {"question": "Cantar una ___ en español es un buen ejercicio.", "answer": "canción", "translation": "Zaśpiewanie piosenki po hiszpańsku to dobre ćwiczenie."},
+        {"question": "¡Felicidades! Has completado el nivel A1 con gran ___.", "answer": "éxito", "translation": "Gratulacje! Ukończyłeś poziom A1 z wielkim sukcesem."}
+      ]
+    }
+  ]
+}

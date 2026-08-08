@@ -10,11 +10,11 @@
       "type": "dialog",
       "title": "Diálogo: En el restaurante",
       "content": [
-        {"speaker": "Camarero", "text": "¡Buenas tardes! ¿Qué van a tomar?"},
-        {"speaker": "Piotr", "text": "Para mí, una tabla de embutidos artesanales y queso, por favor. Me gusta mucho la carne."},
-        {"speaker": "Natalia", "text": "Y para mí, una ensalada mixta y pollo asado."},
-        {"speaker": "Camarero", "text": "Perfecto. ¿Y para beber?"},
-        {"speaker": "Piotr", "text": "Dos copas de vino tinto y agua sin gas para las niñas."}
+        {"speaker": "Camarero", "text": "¡Buenas tardes! ¿Qué van a tomar?", "translation": "Dzień dobry! Co państwo zamawiają?"},
+        {"speaker": "Piotr", "text": "Para mí, una tabla de embutidos artesanales y queso, por favor. Me gusta mucho la carne.", "translation": "Dla mnie deska rzemieślniczych wędlin i ser, proszę. Bardzo lubię mięso."},
+        {"speaker": "Natalia", "text": "Y para mí, una ensalada mixta y pollo asado.", "translation": "A dla mnie sałatka mieszana i pieczony kurczak."},
+        {"speaker": "Camarero", "text": "Perfecto. ¿Y para beber?", "translation": "Doskonale. A do picia?"},
+        {"speaker": "Piotr", "text": "Dos copas de vino tinto y agua sin gas para las niñas.", "translation": "Dwa kieliszki czerwonego wina i woda niegazowana dla dziewczynek."}
       ]
     },
     {
@@ -79,7 +79,7 @@
       "id": "sec_03",
       "type": "grammar",
       "title": "Gramatyka: Czasownik GUSTAR",
-      "content": "Czasownik 'gustar' (smakować / podobać się) działa inaczej niż w języku polskim. Dosłownie oznacza 'coś sprawia mi przyjemność'. Jeśli podoba Ci się JEDNA rzecz, używasz 'gusta' (np. Me gusta la carne). Jeśli podoba Ci się KILKA rzeczy, używasz 'gustan' (np. Me gustan los tomates). Osoby: me (mi), te (ci), le (jemu/jej), nos (nam), os (wam), les (im)."
+      "content": "Czasownik **gustar** tłumaczymy jako *lubić* lub *smakować/podobać się*, ale jego konstrukcja jest inna niż w języku polskim. Dosłownie mówimy: 'Coś sprawia mi przyjemność'.\n\nSkłada się z dwóch elementów: **zaimka** (określającego komu to sprawia przyjemność) oraz czasownika w **liczbie pojedynczej (gusta)** lub **mnogiej (gustan)** w zależności od rzeczy, która nam się podoba.\n\n### Krok 1: Kto lubi? (Zaimki)\n| Osoba | Zaimek (Komu?) |\n| :--- | :--- |\n| **A mí** (Ja) | **me** (mi) |\n| **A ti** (Ty) | **te** (ci) |\n| **A él/ella/usted** (On/Ona/Pan) | **le** (jemu/jej/panu) |\n| **A nosotros** (My) | **nos** (nam) |\n| **A vosotros** (Wy) | **os** (wam) |\n| **A ellos/ellas/ustedes** (Oni/Państwo)| **les** (im) |\n\n### Krok 2: Co jest lubiane? (Gusta vs Gustan)\n* **GUSTA** + rzeczownik w l. pojedynczej lub bezokolicznik (np. *Me gusta la carne* - Lubię mięso; *Me gusta comer* - Lubię jeść).\n* **GUSTAN** + rzeczownik w l. mnogiej (np. *Me gustan los tomates* - Lubię pomidory)."
     },
     {
       "id": "sec_04",

@@ -10,10 +10,10 @@
       "type": "dialog",
       "title": "Diálogo: En la calle (Na ulicy)",
       "content": [
-        {"speaker": "Ana", "text": "¡Hola! Buenos días. ¿Cómo te llamas?"},
-        {"speaker": "Piotr", "text": "Hola, buenos días. Me llamo Piotr, ¿y tú?"},
-        {"speaker": "Ana", "text": "Yo soy Ana. Encantada."},
-        {"speaker": "Piotr", "text": "Igualmente."}
+        {"speaker": "Ana", "text": "¡Hola! Buenos días. ¿Cómo te llamas?", "translation": "Cześć! Dzień dobry. Jak się nazywasz?"},
+        {"speaker": "Piotr", "text": "Hola, buenos días. Me llamo Piotr, ¿y tú?", "translation": "Cześć, dzień dobry. Nazywam się Piotr, a ty?"},
+        {"speaker": "Ana", "text": "Yo soy Ana. Encantada.", "translation": "Jestem Ana. Miło mi."},
+        {"speaker": "Piotr", "text": "Igualmente.", "translation": "Wzajemnie."}
       ]
     },
     {
@@ -32,7 +32,7 @@
       "id": "sec_03",
       "type": "grammar",
       "title": "Gramatyka: Czasownik SER (być)",
-      "content": "Czasownik 'ser' jest nieregularny. Używamy go do opisywania cech stałych, zawodu, pochodzenia oraz do przedstawiania się."
+      "content": "Czasownik **ser** (być) jest nieregularny. Używamy go do opisywania cech stałych, zawodu, pochodzenia oraz do przedstawiania się.\n\n### Odmiana czasownika SER\n\n| Osoba (Hiszpański) | Osoba (Polski) | Odmiana SER |\n| :--- | :--- | :--- |\n| **Yo** | Ja | **soy** (jestem) |\n| **Tú** | Ty | **eres** (jesteś) |\n| **Él / Ella / Usted** | On / Ona / Pan, Pani | **es** (jest) |\n| **Nosotros / Nosotras** | My | **somos** (jesteśmy) |\n| **Vosotros / Vosotras** | Wy | **sois** (jesteście) |\n| **Ellos / Ellas / Ustedes**| Oni / One / Państwo | **son** (są) |\n\n💡 **Przykłady użycia w praktyce:**\n* *Yo soy Piotr.* (Jestem Piotr.)\n* *Tú eres de Polonia.* (Jesteś z Polski.)\n* *Ella es inteligente.* (Ona jest inteligentna.)"
     },
     {
       "id": "sec_04",

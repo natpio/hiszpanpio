@@ -10,11 +10,11 @@
       "type": "dialog",
       "title": "Diálogo: Un mes lleno de éxitos",
       "content": [
-        {"speaker": "Natalia", "text": "¡Qué mes más intenso! ¿Cómo ha ido la degustación hoy?"},
-        {"speaker": "Piotr", "text": "Ha sido un éxito total. He usado la picadora Serie 6 de 2100W y las salchichas artesanales han quedado perfectas. Nuestra 'Manufaktura Kiełbas' va por muy buen camino."},
-        {"speaker": "Natalia", "text": "Me alegro mucho. Por cierto, ¿has terminado el proyecto con las fotos de las vacaciones?"},
-        {"speaker": "Piotr", "text": "Sí, he generado unas canciones de hip-hop con inteligencia artificial para nuestro álbum. Así vamos a recordar siempre el viaje por Chicago, Des Moines y Wisconsin Dells."},
-        {"speaker": "Natalia", "text": "¡Genial! Ha sido un viaje inolvidable y un verano espectacular."}
+        {"speaker": "Natalia", "text": "¡Qué mes más intenso! ¿Cómo ha ido la degustación hoy?", "translation": "Co za intensywny miesiąc! Jak poszła dzisiaj degustacja?"},
+        {"speaker": "Piotr", "text": "Ha sido un éxito total. He usado la picadora Serie 6 de 2100W y las salchichas artesanales han quedado perfectas. Nuestra 'Manufaktura Kiełbas' va por muy buen camino.", "translation": "Była całkowitym sukcesem. Użyłem maszynki Serie 6 o mocy 2100W i rzemieślnicze kiełbasy wyszły idealnie. Nasza 'Manufaktura Kiełbas' jest na bardzo dobrej drodze."},
+        {"speaker": "Natalia", "text": "Me alegro mucho. Por cierto, ¿has terminado el proyecto con las fotos de las vacaciones?", "translation": "Bardzo się cieszę. A tak przy okazji, skończyłeś projekt ze zdjęciami z wakacji?"},
+        {"speaker": "Piotr", "text": "Sí, he generado unas canciones de hip-hop con inteligencia artificial para nuestro álbum. Así vamos a recordar siempre el viaje por Chicago, Des Moines y Wisconsin Dells.", "translation": "Tak, wygenerowałem piosenki hip-hopowe za pomocą sztucznej inteligencji do naszego albumu. W ten sposób zawsze będziemy pamiętać podróż po Chicago, Des Moines i Wisconsin Dells."},
+        {"speaker": "Natalia", "text": "¡Genial! Ha sido un viaje inolvidable y un verano espectacular.", "translation": "Świetnie! To była niezapomniana podróż i spektakularne lato."}
       ]
     },
     {
@@ -44,7 +44,7 @@
       "id": "sec_03",
       "type": "grammar",
       "title": "Gramatyka: Podsumowanie (Wyrażanie opinii o przeszłości)",
-      "content": "Aby ocenić wydarzenia z przeszłości, często używamy czasu Pretérito Perfecto z przymiotnikami. Przykłady: 'Ha sido un éxito' (To był sukces), 'Ha sido inolvidable' (To było niezapomniane). Używamy też czasownika 'quedar', aby opowiedzieć o rezultacie naszej pracy: 'Las salchichas han quedado perfectas' (Kiełbasy wyszły idealnie)."
+      "content": "Jako wielkie podsumowanie poziomu A1, nauczymy się oceniać i podsumowywać nasze dotychczasowe osiągnięcia oraz wyjazdy.\n\n### 1. Ocena wydarzeń (Pretérito Perfecto + przymiotnik)\nAby powiedzieć, jaki był np. ostatni wyjazd lub wydarzenie, łączymy czas przeszły (Ha sido - *To było*) z odpowiednim słowem.\n* *El viaje **ha sido** inolvidable.* (Podróż była niezapomniana).\n* *La degustación **ha sido** un éxito.* (Degustacja była sukcesem).\n* *El verano **ha sido** espectacular.* (Lato było wspaniałe).\n\n### 2. Czasownik QUEDAR (Wyjść/Udać się)\nCzasownik *quedar* ma wiele znaczeń, ale w kontekście tworzenia projektów lub gotowania, używamy go, aby powiedzieć, jak nam coś **'wyszło'** (jaki jest tego rezultat).\n* *Las salchichas **han quedado** perfectas.* (Kiełbasy wyszły idealnie).\n* *Las fotos **han quedado** muy nítidas.* (Zdjęcia wyszły bardzo ostre).\n* *El proyecto **ha quedado** bien.* (Projekt wyszedł dobrze)."
     },
     {
       "id": "sec_04",

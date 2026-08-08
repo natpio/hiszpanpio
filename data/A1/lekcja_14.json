@@ -10,13 +10,13 @@
       "type": "dialog",
       "title": "Diálogo: Problemas en la terminal",
       "content": [
-        {"speaker": "Empleado", "text": "Buenos días. ¿En qué puedo ayudarle?"},
-        {"speaker": "Piotr", "text": "Buenos días. He volado desde Chicago y mi equipaje no está en la cinta. Creo que lo he perdido."},
-        {"speaker": "Empleado", "text": "Lo siento mucho. Tiene que rellenar este formulario con sus datos. ¿Cómo es su maleta?"},
-        {"speaker": "Piotr", "text": "Es una maleta grande. Pero tengo una buena noticia: tiene una etiqueta de localización dentro."},
-        {"speaker": "Empleado", "text": "¿Y qué dice el rastreador en su teléfono?"},
-        {"speaker": "Piotr", "text": "Dice que la maleta está aquí en Varsovia, dentro de la zona de clasificación del aeropuerto Chopin."},
-        {"speaker": "Empleado", "text": "¡Perfecto! Entonces tenemos que llamar a los técnicos para recuperarla pronto."}
+        {"speaker": "Empleado", "text": "Buenos días. ¿En qué puedo ayudarle?", "translation": "Dzień dobry. W czym mogę Panu pomóc?"},
+        {"speaker": "Piotr", "text": "Buenos días. He volado desde Chicago y mi equipaje no está en la cinta. Creo que lo he perdido.", "translation": "Dzień dobry. Przyleciałem z Chicago, a mojego bagażu nie ma na taśmie. Myślę, że go zgubiłem."},
+        {"speaker": "Empleado", "text": "Lo siento mucho. Tiene que rellenar este formulario con sus datos. ¿Cómo es su maleta?", "translation": "Bardzo mi przykro. Musi Pan wypełnić ten formularz swoimi danymi. Jak wygląda Pana walizka?"},
+        {"speaker": "Piotr", "text": "Es una maleta grande. Pero tengo una buena noticia: tiene una etiqueta de localización dentro.", "translation": "To duża walizka. Ale mam dobrą wiadomość: ma w środku lokalizator (tag)."},
+        {"speaker": "Empleado", "text": "¿Y qué dice el rastreador en su teléfono?", "translation": "A co mówi lokalizator w Pana telefonie?"},
+        {"speaker": "Piotr", "text": "Dice que la maleta está aquí en Varsovia, dentro de la zona de clasificación del aeropuerto Chopin.", "translation": "Mówi, że walizka jest tutaj w Warszawie, wewnątrz sortowni lotniska Chopina."},
+        {"speaker": "Empleado", "text": "¡Perfecto! Entonces tenemos que llamar a los técnicos para recuperarla pronto.", "translation": "Doskonale! W takim razie musimy zadzwonić do techników, żeby ją szybko odzyskać."}
       ]
     },
     {
@@ -47,8 +47,8 @@
     {
       "id": "sec_03",
       "type": "grammar",
-      "title": "Gramatyka: Obowiązki (Tener que + Infinitivo)",
-      "content": "Aby powiedzieć, że MUSISZ coś zrobić, używasz odmienionego czasownika 'Tener' (tengo, tienes, tiene, tenemos, tenéis, tienen), dodajesz słówko 'que' i czasownik w bezokoliczniku. Np. 'Tengo que buscar mi maleta' (Muszę poszukać mojej walizki). Jeśli mówisz, że 'trzeba' coś zrobić ogólnie, używasz bezosobowego 'Hay que' (np. 'Hay que rellenar el formulario' - Trzeba wypełnić formularz)."
+      "title": "Gramatyka: Obowiązki (Tener que vs Hay que)",
+      "content": "Aby wyrazić obowiązek w języku hiszpańskim, używamy dwóch głównych konstrukcji, w zależności od tego, czy mówimy o kimś konkretnym, czy o ogólnej zasadzie.\n\n### 1. TENER QUE + Infinitivo (Musieć coś zrobić)\nUżywamy, gdy **konkretna osoba** ma obowiązek coś wykonać. Odmieniamy czasownik *Tener* (tengo, tienes, tiene...).\n| Osoba | Konstrukcja | Przykład |\n| :--- | :--- | :--- |\n| **Yo** | **tengo que** + bezokolicznik | *Tengo que buscar mi maleta.* (Muszę poszukać mojej walizki) |\n| **Tú** | **tienes que** + bezokolicznik | *Tienes que rellenar esto.* (Musisz to wypełnić) |\n| **Él/Ella/Usted** | **tiene que** + bezokolicznik | *Tiene que llamar.* (On musi zadzwonić) |\n| **Nosotros** | **tenemos que** + bezokolicznik | *Tenemos que ir.* (Musimy iść) |\n| **Vosotros** | **tenéis que** + bezokolicznik | *Tenéis que esperar.* (Musicie poczekać) |\n| **Ellos/Ustedes** | **tienen que** + bezokolicznik | *Tienen que pagar.* (Oni muszą zapłacić) |\n\n### 2. HAY QUE + Infinitivo (Trzeba coś zrobić)\nUżywamy, gdy mówimy o **ogólnej zasadzie** i nie wskazujemy wykonawcy (bezosobowo). Konstrukcja jest stała i się nie odmienia.\n* *Hay que rellenar el formulario.* (Trzeba wypełnić formularz - ogólny wymóg).\n* *Hay que estar dos horas antes.* (Trzeba być dwie godziny wcześniej - zasada lotniskowa)."
     },
     {
       "id": "sec_04",

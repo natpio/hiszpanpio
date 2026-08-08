@@ -2,7 +2,7 @@
   "lesson_metadata": {
     "id": "A1_07",
     "level": "A1",
-    "title": "En la oficina (W biurie i pracy)"
+    "title": "En la oficina (W biurze i pracy)"
   },
   "sections": [
     {
@@ -10,10 +10,10 @@
       "type": "dialog",
       "title": "Diálogo 1: Buscando el informe",
       "content": [
-        {"speaker": "Ana", "text": "¿Dónde está el informe de logística para Madrid?"},
-        {"speaker": "Piotr", "text": "Está en la mesa, al lado del ordenador portátil."},
-        {"speaker": "Ana", "text": "Perfecto. ¿Y las facturas de la feria comercial?"},
-        {"speaker": "Piotr", "text": "Están dentro del archivador azul en el armario."}
+        {"speaker": "Ana", "text": "¿Dónde está el informe de logística para Madrid?", "translation": "Gdzie jest raport logistyczny do Madrytu?"},
+        {"speaker": "Piotr", "text": "Está en la mesa, al lado del ordenador portátil.", "translation": "Jest na stole, obok laptopa."},
+        {"speaker": "Ana", "text": "Perfecto. ¿Y las facturas de la feria comercial?", "translation": "Idealnie. A faktury z targów handlowych?"},
+        {"speaker": "Piotr", "text": "Están dentro del archivador azul en el armario.", "translation": "Są wewnątrz niebieskiego segregatora w szafie."}
       ]
     },
     {
@@ -24,45 +24,57 @@
         {"es": "El informe", "pl": "Raport"},
         {"es": "La oficina", "pl": "Biuro"},
         {"es": "El ordenador", "pl": "Komputer"},
+        {"es": "La pantalla", "pl": "Ekran / Monitor"},
+        {"es": "El teclado / El ratón", "pl": "Klawiatura / Myszka"},
         {"es": "La factura", "pl": "Faktura"},
-        {"es": "El documento", "pl": "Dokument"},
+        {"es": "El documento / El archivo", "pl": "Dokument / Plik"},
+        {"es": "La carpeta", "pl": "Teczka / Folder"},
         {"es": "El jefe / La jefa", "pl": "Szef / Szefowa"},
         {"es": "El compañero", "pl": "Kolega z pracy"},
         {"es": "La reunión", "pl": "Spotkanie / Zebranie"},
-        {"es": "El correo", "pl": "Poczta / E-mail"}
+        {"es": "El correo", "pl": "Poczta / E-mail"},
+        {"es": "El escritorio", "pl": "Biurko"},
+        {"es": "La impresora", "pl": "Drukarka"},
+        {"es": "Imprimir", "pl": "Drukować"},
+        {"es": "Firmar", "pl": "Podpisać"}
       ]
     },
     {
       "id": "sec_03",
       "type": "grammar",
       "title": "Gramatyka: Rodzajniki określone i nieokreślone",
-      "content": "W języku hiszpańskim rzeczowniki mają rodzaj męski (el / un) lub żeński (la / una). Używamy rodzajników nieokreślonych (un/una) mówiąc o czymś po raz pierwszy, a określonych (el/la), gdy wiemy dokładnie, o jakim przedmiocie mowa."
+      "content": "W języku hiszpańskim każdy rzeczownik ma rodzaj: męski lub żeński (nie ma rodzaju nijakiego). Dodatkowo używamy odpowiedniego rodzajnika (przedimka), w zależności od tego, czy mówimy o czymś konkretnym, czy o czymś po raz pierwszy.\n\n### Rodzajniki Określone (Ten konkretny)\nUżywamy ich, gdy mówimy o znanym nam przedmiocie (np. *Gdzie jest **ten** raport?*).\n\n| | Rodzaj męski | Rodzaj żeński |\n| :--- | :--- | :--- |\n| **L. pojedyncza** | **el** (el ordenador) | **la** (la mesa) |\n| **L. mnoga** | **los** (los ordenadores)| **las** (las mesas) |\n\n### Rodzajniki Nieokreślone (Jakiś / Jeden z wielu)\nUżywamy ich, gdy mówimy o czymś po raz pierwszy (np. *Potrzebuję **jakiegoś** komputera*).\n\n| | Rodzaj męski | Rodzaj żeński |\n| :--- | :--- | :--- |\n| **L. pojedyncza** | **un** (un informe) | **una** (una oficina) |\n| **L. mnoga** | **unos** (unos informes) | **unas** (unas oficinas) |"
     },
     {
       "id": "sec_04",
       "type": "exercises",
-      "title": "Ejercicios (Ćwiczenia)",
+      "title": "Ejercicios (Ćwiczenia 1-25)",
       "items": [
-        {
-          "question": "El ___ está en la mesa.",
-          "answer": "informe",
-          "translation": "Raport jest na stole."
-        },
-        {
-          "question": "Trabajo en una ___ grande.",
-          "answer": "oficina",
-          "translation": "Pracuję w dużym biurze."
-        },
-        {
-          "question": "Necesito imprimir este ___.",
-          "answer": "documento",
-          "translation": "Muszę wydrukować ten dokument."
-        },
-        {
-          "question": "Mañana tenemos una ___ importante.",
-          "answer": "reunión",
-          "translation": "Jutro mamy ważne spotkanie."
-        }
+        {"question": "El ___ está en la mesa.", "answer": "informe", "translation": "Raport jest na stole."},
+        {"question": "Trabajo en una ___ grande y moderna.", "answer": "oficina", "translation": "Pracuję w dużym i nowoczesnym biurze."},
+        {"question": "Necesito imprimir este ___ ahora mismo.", "answer": "documento", "translation": "Muszę wydrukować ten dokument w tej chwili."},
+        {"question": "Mañana tenemos una ___ importante con los clientes.", "answer": "reunión", "translation": "Jutro mamy ważne spotkanie z klientami."},
+        {"question": "El ___ portátil no funciona bien.", "answer": "ordenador", "translation": "Laptop (komputer przenośny) nie działa dobrze."},
+        {"question": "¿Dónde están las ___ de la feria comercial?", "answer": "facturas", "translation": "Gdzie są faktury z targów handlowych?"},
+        {"question": "Mi ___ es muy exigente pero comprensivo.", "answer": "jefe", "translation": "Mój szef jest bardzo wymagający, ale wyrozumiały."},
+        {"question": "Tengo que enviar un ___ electrónico a Turquía.", "answer": "correo", "translation": "Muszę wysłać e-mail do Turcji."},
+        {"question": "La ___ no tiene papel, no puedo imprimir.", "answer": "impresora", "translation": "Drukarka nie ma papieru, nie mogę drukować."},
+        {"question": "Mi ___ está lleno de documentos de logística.", "answer": "escritorio", "translation": "Moje biurko jest pełne dokumentów logistycznych."},
+        {"question": "Escribo muy rápido con el ___.", "answer": "teclado", "translation": "Piszę bardzo szybko na klawiaturze."},
+        {"question": "Uso el ___ para hacer clic en el archivo.", "answer": "ratón", "translation": "Używam myszki, żeby kliknąć w plik."},
+        {"question": "La ___ del ordenador es muy grande y clara.", "answer": "pantalla", "translation": "Ekran komputera jest bardzo duży i wyraźny."},
+        {"question": "¿Dónde está la ___ azul con los contratos?", "answer": "carpeta", "translation": "Gdzie jest niebieska teczka z kontraktami?"},
+        {"question": "Tienes que ___ este documento en la parte de abajo.", "answer": "firmar", "translation": "Musisz podpisać ten dokument na dole."},
+        {"question": "Voy a ___ el transporte internacional hoy.", "answer": "organizar", "translation": "Zamierzam zorganizować dziś transport międzynarodowy."},
+        {"question": "He recibido un ___ urgente de aduanas.", "answer": "mensaje", "translation": "Otrzymałem pilną wiadomość z urzędu celnego."},
+        {"question": "Mis ___ de trabajo me ayudan mucho.", "answer": "compañeros", "translation": "Moi koledzy z pracy bardzo mi pomagają."},
+        {"question": "Necesito un ___ azul para tomar notas.", "answer": "bolígrafo", "translation": "Potrzebuję niebieskiego długopisu, żeby robić notatki."},
+        {"question": "El horario de ___ es de ocho a cuatro.", "answer": "trabajo", "translation": "Godziny pracy to od ósmej do czwartej."},
+        {"question": "La empresa envía ___ a toda Europa.", "answer": "productos", "translation": "Firma wysyła produkty na całą Europę."},
+        {"question": "El ___ ATA es necesario para cruzar la frontera.", "answer": "carnet", "translation": "Karnet ATA jest niezbędny do przekroczenia granicy."},
+        {"question": "El camión espera en el ___ logístico.", "answer": "almacén", "translation": "Ciężarówka czeka w magazynie logistycznym."},
+        {"question": "La feria de ___ en Leipzig empieza mañana.", "answer": "exposiciones", "translation": "Targi wystawowe w Lipsku zaczynają się jutro."},
+        {"question": "¿Puedes ___ el teléfono de la oficina, por favor?", "answer": "contestar", "translation": "Czy możesz odebrać telefon biurowy, proszę?"}
       ]
     }
   ]

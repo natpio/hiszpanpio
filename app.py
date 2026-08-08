@@ -13,7 +13,6 @@ def main():
     set_random_background_and_styles()
     
     st.sidebar.title("📚 Kurs A1 - Ultra Pro")
-    # DODANO NOWY TRYB W MENU
     mode = st.sidebar.radio("Widok:", ["🎓 Moduły Kursu", "🧠 Tryb Powtórek (Fiszki)", "📖 Tablice Czasowników", "📊 Dashboard Analityczny"])
     st.sidebar.markdown("---")
     
@@ -189,13 +188,20 @@ def main():
                     if col.button(label, use_container_width=True): process_answer(q_val)
 
     # -------------------------------------
-    # TRYB 3: TABLICE CZASOWNIKÓW (NOWOŚĆ)
+    # TRYB 3: TABLICE CZASOWNIKÓW 
     # -------------------------------------
     elif mode == "📖 Tablice Czasowników":
         st.title("📖 Tablice Odmian Czasowników")
-        st.write("Twój podręczny niezbędnik gramatyczny. Szybka ściągawka z najważniejszych hiszpańskich czasowników na poziomie A1.")
+        st.write("Twój podręczny niezbędnik gramatyczny. Szybka ściągawka z najważniejszych hiszpańskich czasowników.")
         
-        tab1, tab2, tab3, tab4 = st.tabs(["📏 Regularne (-ar, -er, -ir)", "🔥 Kluczowe Nieregularne", "🔄 Zwrotne", "⭐ Specjalne (Gustar / Ir a)"])
+        # DODANO NOWĄ ZAKŁADKĘ DLA CZASÓW PRZESZŁYCH
+        tab1, tab2, tab3, tab4, tab5 = st.tabs([
+            "📏 Regularne (-ar, -er, -ir)", 
+            "🔥 Kluczowe Nieregularne", 
+            "🔄 Zwrotne", 
+            "⭐ Specjalne (Gustar / Ir a)", 
+            "⏳ Czas Przeszły (Perf.)"
+        ])
         
         with tab1:
             st.subheader("Czasowniki Regularne (Presente de Indicativo)")
@@ -255,6 +261,34 @@ def main():
             st.markdown("""
             * **Tengo que** + bezokolicznik -> *Ja muszę...* (Osobisty obowiązek)
             * **Hay que** + bezokolicznik -> *Trzeba...* (Ogólna zasada, forma bezosobowa)
+            """)
+            
+        with tab5:
+            st.subheader("Czas Przeszły (Pretérito Perfecto)")
+            st.write("Używany do mówienia o bliskiej przeszłości i doświadczeniach życiowych. Składa się z posiłkowego **HABER** i imiesłowu biernego.")
+            st.markdown("""
+            #### 1. Odmiana czasownika posiłkowego HABER
+            | Yo | Tú | Él/Ella/Usted | Nosotros/as | Vosotros/as | Ellos/Ellas/Ustedes |
+            | :--- | :--- | :--- | :--- | :--- | :--- |
+            | **he** | **has** | **ha** | **hemos** | **habéis** | **han** |
+
+            #### 2. Tworzenie regularnych imiesłowów
+            * Czasowniki na **-AR** ➡️ dodajemy **-ado** (np. trabajar ➡️ **trabajado**)
+            * Czasowniki na **-ER** / **-IR** ➡️ dodajemy **-ido** (np. comer ➡️ **comido**, vivir ➡️ **vivido**)
+
+            #### 3. Najważniejsze imiesłowy NIEREGULARNE 🔥
+            *Zamiast regularnych końcówek, te słowa mają własną, specjalną formę, którą trzeba zapamiętać.*
+            | Bezokolicznik | Znaczenie | Forma nieregularna |
+            | :--- | :--- | :--- |
+            | **Abrir** | otwierać | **abierto** (otwarty) |
+            | **Decir** | mówić | **dicho** (powiedziany) |
+            | **Escribir** | pisać | **escrito** (napisany) |
+            | **Hacer** | robić | **hecho** (zrobiony) |
+            | **Poner** | kłaść | **puesto** (położony) |
+            | **Romper** | psuć / łamać | **roto** (zepsuty / złamany) |
+            | **Ser** | być | **sido** (był) |
+            | **Ver** | widzieć | **visto** (widziany) |
+            | **Volver** | wracać | **vuelto** (wrócił) |
             """)
 
     # -------------------------------------

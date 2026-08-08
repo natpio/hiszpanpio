@@ -1,0 +1,123 @@
+{
+  "lesson_metadata": {
+    "id": "A1_10",
+    "level": "A1",
+    "title": "Pogoda, miesiące i plany (Czas przyszły)"
+  },
+  "sections": [
+    {
+      "id": "sec_01",
+      "type": "dialog",
+      "title": "Diálogo: Planes para julio",
+      "content": [
+        {"speaker": "Natalia", "text": "¿Cuándo vamos a empezar nuestras vacaciones?"},
+        {"speaker": "Piotr", "text": "Vamos a salir el uno de julio. El viaje por Estados Unidos va a ser increíble."},
+        {"speaker": "Natalia", "text": "¿Qué tiempo hace allí en verano? ¿Hace mucho calor?"},
+        {"speaker": "Piotr", "text": "Sí, hace sol y mucho calor. Es perfecto para conducir un Nissan Pathfinder por el país."},
+        {"speaker": "Natalia", "text": "¿Y qué vas a hacer hoy? Está lloviendo a cántaros."},
+        {"speaker": "Piotr", "text": "Hoy voy a descansar. Voy a volar en el Flight Simulator 2024 en la PS5."}
+      ]
+    },
+    {
+      "id": "sec_02",
+      "type": "vocabulary",
+      "title": "Vocabulario (Pogoda i czas)",
+      "items": [
+        {"es": "El tiempo", "pl": "Pogoda (lub czas)"},
+        {"es": "¿Qué tiempo hace?", "pl": "Jaka jest pogoda?"},
+        {"es": "Hace buen tiempo", "pl": "Jest ładna pogoda"},
+        {"es": "Hace mal tiempo", "pl": "Jest brzydka pogoda"},
+        {"es": "Hace sol", "pl": "Świeci słońce"},
+        {"es": "Hace calor", "pl": "Jest gorąco"},
+        {"es": "Hace frío", "pl": "Jest zimno"},
+        {"es": "Hace viento", "pl": "Wieje wiatr"},
+        {"es": "Llueve (Llover)", "pl": "Pada deszcz"},
+        {"es": "Nieva (Nevar)", "pl": "Pada śnieg"},
+        {"es": "La nube / Está nublado", "pl": "Chmura / Jest pochmurnie"},
+        {"es": "El mes", "pl": "Miesiąc"},
+        {"es": "Enero / Febrero", "pl": "Styczeń / Luty"},
+        {"es": "Marzo / Abril", "pl": "Marzec / Kwiecień"},
+        {"es": "Mayo / Junio", "pl": "Maj / Czerwiec"},
+        {"es": "Julio / Agosto", "pl": "Lipiec / Sierpień"},
+        {"es": "Septiembre / Octubre", "pl": "Wrzesień / Październik"},
+        {"es": "Noviembre / Diciembre", "pl": "Listopad / Grudzień"},
+        {"es": "La primavera", "pl": "Wiosna"},
+        {"es": "El verano", "pl": "Lato"},
+        {"es": "El otoño", "pl": "Jesień"},
+        {"es": "El invierno", "pl": "Zima"},
+        {"es": "Las vacaciones", "pl": "Wakacje"},
+        {"es": "El plan", "pl": "Plan"}
+      ]
+    },
+    {
+      "id": "sec_03",
+      "type": "grammar",
+      "title": "Gramatyka: Plany na przyszłość (IR A + infinitivo)",
+      "content": "Aby wyrazić plany na najbliższą przyszłość, Hiszpanie rzadko używają klasycznego czasu przyszłego. Zamiast tego stosują bardzo prostą konstrukcję: odmieniony czasownik IR (iść/jechać) + przyimek A + bezokolicznik. Np. 'Voy a viajar' (Zamierzam podróżować). 'Vamos a comer' (Będziemy jeść / Zamierzamy zjeść)."
+    },
+    {
+      "id": "sec_04",
+      "type": "exercises",
+      "title": "Ejercicios (Ćwiczenia 1-25)",
+      "items": [
+        {"question": "Yo ___ a estudiar español hoy.", "answer": "voy", "translation": "Zamierzam dzisiaj uczyć się hiszpańskiego."},
+        {"question": "¿Tú ___ a trabajar mañana?", "answer": "vas", "translation": "Zamierzasz jutro pracować?"},
+        {"question": "Nosotros ___ a viajar a Chicago.", "answer": "vamos", "translation": "Zamierzamy pojechać do Chicago."},
+        {"question": "Ellos ___ a comprar un coche nuevo.", "answer": "van", "translation": "Oni zamierzają kupić nowy samochód."},
+        {"question": "Mi mujer ___ a cocinar esta noche.", "answer": "va", "translation": "Moja żona zamierza dzisiaj gotować."},
+        {"question": "¿Qué tiempo ___ hoy?", "answer": "hace", "translation": "Jaka jest dzisiaj pogoda?"},
+        {"question": "En verano hace mucho ___.", "answer": "calor", "translation": "Latem jest bardzo gorąco."},
+        {"question": "En invierno hace mucho ___.", "answer": "frío", "translation": "Zimą jest bardzo zimno."},
+        {"question": "Lleva paraguas porque ___.", "answer": "llueve", "translation": "Weź parasol, bo pada deszcz."},
+        {"question": "En enero siempre ___ en la montaña.", "answer": "nieva", "translation": "W styczniu zawsze pada śnieg w górach."},
+        {"question": "Hace ___ tiempo, podemos salir.", "answer": "buen", "translation": "Jest ładna pogoda, możemy wyjść."},
+        {"question": "Está ___, no puedo ver el sol.", "answer": "nublado", "translation": "Jest pochmurnie, nie widzę słońca."},
+        {"question": "Hace mucho ___ hoy, los árboles se mueven.", "answer": "viento", "translation": "Dzisiaj bardzo wieje, drzewa się ruszają."},
+        {"question": "El primer mes del año es ___.", "answer": "enero", "translation": "Pierwszym miesiącem roku jest styczeń."},
+        {"question": "Las vacaciones empiezan el uno de ___.", "answer": "julio", "translation": "Wakacje zaczynają się pierwszego lipca."},
+        {"question": "Voy a usar la picadora Serie 6 para hacer ___.", "answer": "salchichas", "translation": "Zamierzam użyć maszynki Serie 6, żeby zrobić kiełbasy."},
+        {"question": "El mes de ___ tiene veintiocho días.", "answer": "febrero", "translation": "Miesiąc luty ma dwadzieścia osiem dni."},
+        {"question": "En ___ empieza la primavera.", "answer": "marzo", "translation": "W marcu zaczyna się wiosna."},
+        {"question": "El mes de ___ es muy lluvioso.", "answer": "abril", "translation": "Kwiecień jest bardzo deszczowy."},
+        {"question": "En ___ terminan las clases.", "answer": "junio", "translation": "W czerwcu kończą się zajęcia (szkoła)."},
+        {"question": "En ___ hace mucho sol en España.", "answer": "agosto", "translation": "W sierpniu w Hiszpanii jest dużo słońca."},
+        {"question": "Las hojas caen en ___.", "answer": "otoño", "translation": "Liście spadają jesienią."},
+        {"question": "Vamos a viajar en un ___ muy grande.", "answer": "SUV", "translation": "Zamierzamy podróżować bardzo dużym SUV-em."},
+        {"question": "Me gusta volar en el ___ de vuelo en la PS5.", "answer": "simulador", "translation": "Lubię latać w symulatorze lotu na PS5."},
+        {"question": "El último mes del año es ___.", "answer": "diciembre", "translation": "Ostatnim miesiącem roku jest grudzień."}
+      ]
+    },
+    {
+      "id": "sec_05",
+      "type": "exercises",
+      "title": "Ejercicios (Ćwiczenia 26-50)",
+      "items": [
+        {"question": "Este fin de semana voy ___ descansar.", "answer": "a", "translation": "W ten weekend zamierzam odpocząć."},
+        {"question": "¿Vas a ___ la PlayStation esta noche?", "answer": "jugar", "translation": "Zamierzasz grać na PlayStation dzisiaj wieczorem?"},
+        {"question": "Vamos a ___ un coche para las vacaciones.", "answer": "alquilar", "translation": "Zamierzamy wynająć samochód na wakacje."},
+        {"question": "Hoy hace ___ tiempo, llueve mucho.", "answer": "mal", "translation": "Dzisiaj jest brzydka pogoda, bardzo pada."},
+        {"question": "A mí me gusta cuando hace ___.", "answer": "sol", "translation": "Lubię, kiedy świeci słońce."},
+        {"question": "Mañana ___ a hacer buen tiempo.", "answer": "va", "translation": "Jutro będzie (zamierza być) ładna pogoda."},
+        {"question": "En ___ celebramos el día de todos los santos (11).", "answer": "noviembre", "translation": "W listopadzie obchodzimy Dzień Wszystkich Świętych."},
+        {"question": "Halloween se celebra en ___.", "answer": "octubre", "translation": "Halloween obchodzi się w październiku."},
+        {"question": "La vuelta al colegio es en ___.", "answer": "septiembre", "translation": "Powrót do szkoły jest we wrześniu."},
+        {"question": "Hace calor, vamos a la ___.", "answer": "playa", "translation": "Jest gorąco, idziemy na plażę."},
+        {"question": "En ___ hace frío y nieva.", "answer": "invierno", "translation": "Zimą jest zimno i pada śnieg."},
+        {"question": "Me encantan las flores en ___.", "answer": "primavera", "translation": "Uwielbiam kwiaty wiosną."},
+        {"question": "Este ___ vamos de viaje largo.", "answer": "verano", "translation": "Tego lata jedziemy w długą podróż."},
+        {"question": "¿Tú ___ a comprar una picadora de carne nueva?", "answer": "vas", "translation": "Zamierzasz kupić nową maszynkę do mięsa?"},
+        {"question": "Ellos ___ a preparar el equipaje.", "answer": "van", "translation": "Oni zamierzają przygotować bagaż."},
+        {"question": "El avión ___ a aterrizar ahora.", "answer": "va", "translation": "Samolot zamierza teraz lądować."},
+        {"question": "Mis hijas ___ a dormir temprano hoy.", "answer": "van", "translation": "Moje córki zamierzają dzisiaj wcześnie spać."},
+        {"question": "Yo ___ a ver un partido del FC Barcelona.", "answer": "voy", "translation": "Zamierzam obejrzeć mecz FC Barcelony."},
+        {"question": "¿Qué ___ a hacer este fin de semana?", "answer": "vas", "translation": "Co zamierzasz robić w ten weekend?"},
+        {"question": "¿Vais a ___ a un restaurante hoy?", "answer": "ir", "translation": "Zamierzacie iść dzisiaj do restauracji?"},
+        {"question": "El vuelo para Ankara sale en ___ (06).", "answer": "junio", "translation": "Lot do Ankary wylatuje w czerwcu."},
+        {"question": "En el mes de ___ hace mucho calor (05).", "answer": "mayo", "translation": "W maju robi się bardzo gorąco."},
+        {"question": "Voy a usar mis ___ de realidad virtual para jugar.", "answer": "gafas", "translation": "Zamierzam użyć okularów VR do grania."},
+        {"question": "Para aterrizar en Poznań, ___ a girar a la izquierda.", "answer": "voy", "translation": "Aby wylądować w Poznaniu, zamierzam skręcić w lewo."},
+        {"question": "El viaje ___ a ser una gran aventura.", "answer": "va", "translation": "Podróż będzie (zamierza być) wielką przygodą."}
+      ]
+    }
+  ]
+}

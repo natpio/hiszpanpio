@@ -10,12 +10,12 @@
       "type": "dialog",
       "title": "Diálogo: ¿Qué estás haciendo ahora mismo?",
       "content": [
-        {"speaker": "Ana", "text": "¡Hola Piotr! Te llamo por teléfono. ¿Qué estás haciendo ahora mismo? ¿Estás trabajando en logística?"},
-        {"speaker": "Piotr", "text": "No, ahora estoy descansando. Estoy volando en el Flight Simulator 2024 en la consola."},
-        {"speaker": "Ana", "text": "¡Qué guay! ¿Y estás usando las gafas de realidad virtual?"},
-        {"speaker": "Piotr", "text": "Sí, me estoy preparando para la licencia de piloto privado. Estoy aterrizando en este momento, así que no puedo hablar mucho."},
-        {"speaker": "Ana", "text": "¿Y Natalia? ¿Qué está haciendo?"},
-        {"speaker": "Piotr", "text": "Ella está conduciendo. Estamos buscando un todoterreno grande, como un Pathfinder, para la familia."}
+        {"speaker": "Ana", "text": "¡Hola Piotr! Te llamo por teléfono. ¿Qué estás haciendo ahora mismo? ¿Estás trabajando en logística?", "translation": "Cześć Piotr! Dzwonię do ciebie. Co robisz w tym momencie? Pracujesz w logistyce?"},
+        {"speaker": "Piotr", "text": "No, ahora estoy descansando. Estoy volando en el Flight Simulator 2024 en la consola.", "translation": "Nie, teraz odpoczywam. Lecę w Flight Simulator 2024 na konsoli."},
+        {"speaker": "Ana", "text": "¡Qué guay! ¿Y estás usando las gafas de realidad virtual?", "translation": "Ale super! A używasz okularów wirtualnej rzeczywistości?"},
+        {"speaker": "Piotr", "text": "Sí, me estoy preparando para la licencia de piloto privado. Estoy aterrizando en este momento, así que no puedo hablar mucho.", "translation": "Tak, przygotowuję się do licencji pilota turystycznego. Ląduję w tym momencie, więc nie mogę za dużo mówić."},
+        {"speaker": "Ana", "text": "¿Y Natalia? ¿Qué está haciendo?", "translation": "A Natalia? Co robi?"},
+        {"speaker": "Piotr", "text": "Ella está conduciendo. Estamos buscando un todoterreno grande, como un Pathfinder, para la familia.", "translation": "Ona prowadzi. Szukamy dużego SUV-a, takiego jak Pathfinder, dla rodziny."}
       ]
     },
     {
@@ -45,7 +45,7 @@
       "id": "sec_03",
       "type": "grammar",
       "title": "Gramatyka: Estar + Gerundio (Czas ciągły)",
-      "content": "Aby opisać czynność trwającą w tym momencie, używamy odmienionego czasownika 'Estar' (estoy, estás, está, estamos, estáis, están) i imiesłowu czynnego (Gerundio). Dla czasowników na -ar końcówka to -ando (hablar -> hablando). Dla -er/-ir końcówka to -iendo (comer -> comiendo). Istnieją nieregularności: leer -> leyendo, dormir -> durmiendo."
+      "content": "Aby opisać czynność, która trwa **dokładnie w chwili mówienia** (teraz, w tym momencie), Hiszpanie używają konstrukcji składającej się z odmienionego czasownika **ESTAR** oraz imiesłowu czynnego **GERUNDIO** (odpowiednik angielskiego -ing).\n\n### Tworzenie Gerundio\n| Końcówka bezokolicznika | Końcówka Gerundio | Przykład |\n| :--- | :--- | :--- |\n| Czasowniki na **-AR** | **-ANDO** | trabajar -> trabaj**ando** (pracując) |\n| Czasowniki na **-ER** | **-IENDO** | comer -> com**iendo** (jedząc) |\n| Czasowniki na **-IR** | **-IENDO** | escribir -> escrib**iendo** (pisząc) |\n\n### Odmiana Estar + Gerundio\n| Osoba | Estar | Gerundio (Przykłady) |\n| :--- | :--- | :--- |\n| **Yo** | **estoy** | hablando *(Ja teraz rozmawiam)* |\n| **Tú** | **estás** | aterrizando *(Ty teraz lądujesz)* |\n| **Él/Ella** | **está** | volando *(On/Ona teraz leci)* |\n| **Nosotros**| **estamos**| conduciendo *(My teraz prowadzimy)* |\n| **Vosotros**| **estáis** | descansando *(Wy teraz odpoczywacie)* |\n| **Ellos** | **están** | usando *(Oni teraz używają)* |\n\n💡 **Wyjątki (Zmiana pisowni):** \n* leer -> **leyendo** (czytając)\n* dormir -> **durmiendo** (śpiąc)\n* decir -> **diciendo** (mówiąc)"
     },
     {
       "id": "sec_04",
@@ -75,8 +75,8 @@
         {"question": "La picadora de carne está ___ (hacer) ruido.", "answer": "haciendo", "translation": "Maszynka do mięsa robi teraz hałas."},
         {"question": "El chef está ___ (preparar) embutidos artesanales.", "answer": "preparando", "translation": "Szef kuchni przygotowuje teraz rzemieślnicze wędliny."},
         {"question": "Estoy ___ (estudiar) para mi examen de logística.", "answer": "estudiando", "translation": "Uczę się w tym momencie do egzaminu z logistyki."},
-        {"question": "¿Quién está ___ (conducir) el todoterreno?", "answer": "conducido", "translation": "Kto prowadzi teraz tego SUV-a? (conducir -> conduciendo)"},
-        {"question": "Perdón, la respuesta anterior es incorrecta, es ___.", "answer": "conduciendo", "translation": "Kto prowadzi... (poprawna forma: conduciendo)"}
+        {"question": "¿Quién está ___ (conducir) el todoterreno?", "answer": "conduciendo", "translation": "Kto prowadzi teraz tego SUV-a? (conducir -> conduciendo)"},
+        {"question": "¿Estás ___ (jugar) con tus hijas?", "answer": "jugando", "translation": "Bawisz się teraz ze swoimi córkami?"}
       ]
     },
     {

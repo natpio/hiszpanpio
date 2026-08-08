@@ -192,15 +192,17 @@ def main():
     # -------------------------------------
     elif mode == "📖 Tablice Czasowników":
         st.title("📖 Tablice Odmian Czasowników")
-        st.write("Twój podręczny niezbędnik gramatyczny. Szybka ściągawka z najważniejszych hiszpańskich czasowników.")
+        st.write("Twój podręczny niezbędnik gramatyczny. Szybka ściągawka z najważniejszych hiszpańskich zasad.")
         
-        # DODANO NOWĄ ZAKŁADKĘ DLA CZASÓW PRZESZŁYCH
-        tab1, tab2, tab3, tab4, tab5 = st.tabs([
-            "📏 Regularne (-ar, -er, -ir)", 
-            "🔥 Kluczowe Nieregularne", 
+        tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs([
+            "📏 Regularne", 
+            "🔥 Nieregularne", 
+            "🔀 Wymiana Samogł.",
             "🔄 Zwrotne", 
-            "⭐ Specjalne (Gustar / Ir a)", 
-            "⏳ Czas Przeszły (Perf.)"
+            "⏳ Przeszły (Perf.)",
+            "🏃 Gerundio",
+            "⭐ Specjalne",
+            "👈 Zaimki"
         ])
         
         with tab1:
@@ -219,7 +221,7 @@ def main():
         with tab2:
             st.subheader("Najważniejsze Czasowniki Nieregularne")
             st.markdown("""
-            | Osoba | SER (być - cechy stałe) | ESTAR (być - lokalizacja/stan) | TENER (mieć) | IR (iść/jechać) |
+            | Osoba | SER (być - cechy) | ESTAR (być - lokalizacja) | TENER (mieć) | IR (iść/jechać) |
             | :--- | :--- | :--- | :--- | :--- |
             | **Yo** | soy | estoy | tengo | voy |
             | **Tú** | eres | estás | tienes | vas |
@@ -228,8 +230,38 @@ def main():
             | **Vosotros/as** | sois | estáis | tenéis | vais |
             | **Ellos/Ellas/Ustedes**| son | están | tienen | van |
             """)
+            st.markdown("---")
+            st.markdown("#### Nieregularne TYLKO w 1. osobie (Dla 'Yo')")
+            st.write("W tych czasownikach tylko forma 'Ja' jest inna, reszta odmienia się w 100% regularnie.")
+            st.markdown("""
+            | Bezokolicznik | Forma 'Yo' (Ja) | Forma 'Tú' (Ty) | Znaczenie |
+            | :--- | :--- | :--- | :--- |
+            | **Hacer** | **hago** | haces | robić |
+            | **Salir** | **salgo** | sales | wychodzić |
+            | **Poner** | **pongo** | pones | kłaść / zakładać |
+            | **Saber** | **sé** | sabes | wiedzieć / umieć |
+            | **Dar** | **doy** | das | dawać |
+            """)
             
         with tab3:
+            st.subheader("Wymiana Samogłoskowa ('Zasada Buta')")
+            st.write("Wielu hiszpańskich czasowników dotyczy wymiana w rdzeniu (w środku słowa). Samogłoska wymienia się we wszystkich osobach **OPRÓCZ** 'nosotros' i 'vosotros'.")
+            st.markdown("""
+            #### 1. O ➡️ UE
+            * **Costar** (kosztować): yo c**ue**sto, tú c**ue**stas, él c**ue**sta, nosotros costamos, vosotros costáis, ellos c**ue**stan.
+            * **Volar** (latać): v**ue**lo, v**ue**las, v**ue**la, volamos, voláis, v**ue**lan.
+            * **Dormir** (spać): d**ue**rmo, d**ue**rmes...
+            
+            #### 2. E ➡️ IE
+            * **Querer** (chcieć): yo qu**ie**ro, tú qu**ie**res, él qu**ie**re, nosotros queremos, vosotros queréis, ellos qu**ie**ren.
+            * **Pensar** (myśleć): p**ie**nso, p**ie**nsas...
+            * **Empezar** (zaczynać): emp**ie**zo, emp**ie**zas...
+            
+            #### 3. E ➡️ I
+            * **Pedir** (prosić / zamawiać): p**i**do, p**i**des, p**i**de, pedimos, pedís, p**i**den.
+            """)
+            
+        with tab4:
             st.subheader("Czasowniki Zwrotne (z cząstką 'się')")
             st.write("Zaimek zwrotny wędruje ZAWSZE przed odmieniony czasownik.")
             st.markdown("""
@@ -243,29 +275,9 @@ def main():
             | **Ellos/Ellas/Ustedes**| **se** | levantan |
             """)
             
-        with tab4:
-            st.subheader("Konstrukcje Specjalne")
-            st.markdown("#### 1. Czasownik GUSTAR (Lubić / Smakować)")
-            st.markdown("""
-            *Dosłownie: 'Coś sprawia mi przyjemność'. Dopasowujemy końcówkę do tego, **co** lubimy, a nie kto lubi.*
-            * **(A mí) me gusta** + l. poj. (np. *la sopa*) / bezokolicznik (np. *viajar*)
-            * **(A ti) te gustan** + l. mnoga (np. *los tomates*)
-            * Inne zaimki: **le** (jemu/jej), **nos** (nam), **os** (wam), **les** (im).
-            """)
-            st.markdown("#### 2. Plany na przyszłość: IR + A + Bezokolicznik")
-            st.markdown("""
-            * **Voy a trabajar.** - Zamierzam pracować.
-            * **Vamos a comer.** - Zamierzamy jeść.
-            """)
-            st.markdown("#### 3. Obowiązek: TENER QUE vs HAY QUE")
-            st.markdown("""
-            * **Tengo que** + bezokolicznik -> *Ja muszę...* (Osobisty obowiązek)
-            * **Hay que** + bezokolicznik -> *Trzeba...* (Ogólna zasada, forma bezosobowa)
-            """)
-            
         with tab5:
             st.subheader("Czas Przeszły (Pretérito Perfecto)")
-            st.write("Używany do mówienia o bliskiej przeszłości i doświadczeniach życiowych. Składa się z posiłkowego **HABER** i imiesłowu biernego.")
+            st.write("Składa się z posiłkowego **HABER** i imiesłowu biernego.")
             st.markdown("""
             #### 1. Odmiana czasownika posiłkowego HABER
             | Yo | Tú | Él/Ella/Usted | Nosotros/as | Vosotros/as | Ellos/Ellas/Ustedes |
@@ -277,7 +289,6 @@ def main():
             * Czasowniki na **-ER** / **-IR** ➡️ dodajemy **-ido** (np. comer ➡️ **comido**, vivir ➡️ **vivido**)
 
             #### 3. Najważniejsze imiesłowy NIEREGULARNE 🔥
-            *Zamiast regularnych końcówek, te słowa mają własną, specjalną formę, którą trzeba zapamiętać.*
             | Bezokolicznik | Znaczenie | Forma nieregularna |
             | :--- | :--- | :--- |
             | **Abrir** | otwierać | **abierto** (otwarty) |
@@ -289,6 +300,72 @@ def main():
             | **Ser** | być | **sido** (był) |
             | **Ver** | widzieć | **visto** (widziany) |
             | **Volver** | wracać | **vuelto** (wrócił) |
+            """)
+            
+        with tab6:
+            st.subheader("Czas Ciągły (Estar + Gerundio)")
+            st.write("Używamy go do opisania czynności, która dzieje się **dokładnie w tej chwili**.")
+            st.markdown("""
+            #### 1. Tworzenie Gerundio
+            | Końcówka bezokolicznika | Końcówka Gerundio | Przykład |
+            | :--- | :--- | :--- |
+            | **-AR** | **-ando** | trabajar ➡️ trabaj**ando** |
+            | **-ER / -IR** | **-iendo** | comer ➡️ com**iendo** |
+            
+            #### 2. Najważniejsze wyjątki (Zmiana pisowni)
+            * **Leer** (czytać) ➡️ **leyendo**
+            * **Dormir** (spać) ➡️ **durmiendo**
+            * **Decir** (mówić) ➡️ **diciendo**
+            * **Pedir** (zamawiać) ➡️ **pidiendo**
+            
+            #### 3. Przykłady z odmienionym ESTAR
+            * *Yo **estoy volando** en el simulador.* (Właśnie teraz lecę w symulatorze).
+            * *Natalia **está conduciendo**.* (Natalia w tym momencie prowadzi).
+            """)
+            
+        with tab7:
+            st.subheader("Konstrukcje Specjalne")
+            st.markdown("#### 1. HAY vs ESTAR")
+            st.markdown("""
+            Najczęstszy problem! Kiedy użyć którego "jest"?
+            | HAY (Istnienie - "tam jest coś") | ESTAR (Lokalizacja - "to coś jest tu") |
+            | :--- | :--- |
+            | Rzeczy nieznane, nowe w rozmowie | Rzeczy konkretne, znane rozmówcy |
+            | Z rodzajnikami nieokreślonymi: **un, una, unos, unas** | Z rodzajnikami określonymi: **el, la, los, las** |
+            | Z liczbami: **dos, tres, muchos** | Z zaimkami dzierżawczymi: **mi, tu, su** |
+            | *Hay una mesa* (Jest jakiś stół) | *La mesa está aquí* (Ten stół jest tutaj) |
+            """)
+            
+            st.markdown("#### 2. Czasownik GUSTAR (Lubić / Smakować)")
+            st.markdown("""
+            *Dosłownie: 'Coś sprawia mi przyjemność'. Dopasowujemy końcówkę do tego, **co** lubimy, a nie kto lubi.*
+            * **(A mí) me gusta** + l. poj. (np. *la carne*) / bezokolicznik (np. *comer*)
+            * **(A ti) te gustan** + l. mnoga (np. *los tomates*)
+            * Inne zaimki: **le** (jemu/jej), **nos** (nam), **os** (wam), **les** (im).
+            """)
+            st.markdown("#### 3. Plany na przyszłość: IR + A + Bezokolicznik")
+            st.markdown("""
+            * **Voy a trabajar.** - Zamierzam pracować.
+            * **Vamos a comer.** - Zamierzamy jeść.
+            """)
+            st.markdown("#### 4. Obowiązek: TENER QUE vs HAY QUE")
+            st.markdown("""
+            * **Tengo que** + bezokolicznik -> *Ja muszę...* (Osobisty obowiązek)
+            * **Hay que** + bezokolicznik -> *Trzeba...* (Ogólna zasada, forma bezosobowa)
+            """)
+            
+        with tab8:
+            st.subheader("Zaimki Wskazujące (Ten, Ta, Ci, Te)")
+            st.write("Używamy ich, by wskazać przedmioty znajdujące się **blisko** nas.")
+            st.markdown("""
+            | Liczba | Rodzaj Męski | Rodzaj Żeński |
+            | :--- | :--- | :--- |
+            | **Pojedyncza (Ten/Ta)** | **este** (np. *este coche* - ten samochód) | **esta** (np. *esta maleta* - ta walizka) |
+            | **Mnoga (Ci/Te)** | **estos** (np. *estos zapatos* - te buty) | **estas** (np. *estas chicas* - te dziewczyny) |
+            
+            💡 **Uwaga na wyjątek:** Słowo *este* często myli się z *esto*.
+            * **Este** używamy z rzeczownikiem męskim (*Este ordenador* - Ten komputer).
+            * **Esto** to forma neutralna, używana gdy nie znamy nazwy przedmiotu, na który patrzymy (*¿Qué es esto?* - Co to jest?).
             """)
 
     # -------------------------------------

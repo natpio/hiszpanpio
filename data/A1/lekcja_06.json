@@ -10,10 +10,10 @@
       "type": "dialog",
       "title": "Diálogo: Un día normal",
       "content": [
-        {"speaker": "Ana", "text": "¿A qué hora te levantas normalmente por la mañana?"},
-        {"speaker": "Piotr", "text": "Me levanto a las siete, me ducho, tomo un café y empiezo a trabajar."},
-        {"speaker": "Ana", "text": "¿Y por la tarde? ¿Qué haces en tu tiempo libre?"},
-        {"speaker": "Piotr", "text": "Por la tarde juego al simulador de vuelo en la PlayStation o salgo a pasear."}
+        {"speaker": "Ana", "text": "¿A qué hora te levantas normalmente por la mañana?", "translation": "O której godzinie zazwyczaj wstajesz rano?"},
+        {"speaker": "Piotr", "text": "Me levanto a las siete, me ducho, tomo un café y empiezo a trabajar.", "translation": "Wstaję o siódmej, biorę prysznic, piję kawę i zaczynam pracować."},
+        {"speaker": "Ana", "text": "¿Y por la tarde? ¿Qué haces en tu tiempo libre?", "translation": "A po południu? Co robisz w wolnym czasie?"},
+        {"speaker": "Piotr", "text": "Por la tarde juego al simulador de vuelo en la PlayStation o salgo a pasear.", "translation": "Po południu gram w symulator lotu na PlayStation albo wychodzę na spacer."}
       ]
     },
     {
@@ -36,7 +36,7 @@
       "id": "sec_03",
       "type": "grammar",
       "title": "Gramatyka: Czasowniki zwrotne",
-      "content": "Czasowniki zwrotne (z końcówką -se) wyrażają czynności wykonywane na sobie. Przy odmianie zaimek (me, te, se, nos, os, se) wędruje przed czasownik: 'Yo me levanto' (Ja wstaję)."
+      "content": "Czasowniki zwrotne to te, które w języku polskim mają cząstkę **'się'** (np. myć się, budzić się). W języku hiszpańskim w bezokoliczniku mają one na końcu **-se** (np. levantar**se**). \n\nPodczas odmiany zaimek zwrotny wędruje **przed** odmieniony czasownik.\n\n### Odmiana czasownika LEVANTARSE (Wstawać)\n\n| Osoba | Zaimek | Czasownik | Tłumaczenie |\n| :--- | :--- | :--- | :--- |\n| **Yo** | **me** | levanto | (Ja) wstaję |\n| **Tú** | **te** | levantas | (Ty) wstajesz |\n| **Él/Ella/Usted** | **se** | levanta | (On/Ona/Pan) wstaje |\n| **Nosotros** | **nos** | levantamos| (My) wstajemy |\n| **Vosotros** | **os** | levantáis | (Wy) wstajecie |\n| **Ellos/Ellas/Ustedes**| **se** | levantan | (Oni/Państwo) wstają |\n\n💡 **Przykłady:**\n* ***Me** lavo los dientes.* (Myję zęby - dosłownie: Myję sobie zęby).\n* *¿A qué hora **te** acuestas?* (O której godzinie kładziesz się spać?)"
     },
     {
       "id": "sec_04",

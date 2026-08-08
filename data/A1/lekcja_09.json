@@ -1,0 +1,123 @@
+{
+  "lesson_metadata": {
+    "id": "A1_09",
+    "level": "A1",
+    "title": "Miasto, transport i kierunki (Czasownik IR)"
+  },
+  "sections": [
+    {
+      "id": "sec_01",
+      "type": "dialog",
+      "title": "Diálogo: ¿Cómo llego a la feria?",
+      "content": [
+        {"speaker": "Piotr", "text": "Disculpe, ¿cómo puedo llegar a la feria de exposiciones? Conduzco un camión de doce toneladas y no puedo ir por el centro."},
+        {"speaker": "Policía", "text": "Tiene que seguir todo recto por esta gran avenida."},
+        {"speaker": "Piotr", "text": "¿Y después de la rotonda?"},
+        {"speaker": "Policía", "text": "En la rotonda, tome la segunda salida y luego gire a la derecha. La feria está muy cerca."},
+        {"speaker": "Piotr", "text": "Muchas gracias por la ayuda."}
+      ]
+    },
+    {
+      "id": "sec_02",
+      "type": "vocabulary",
+      "title": "Vocabulario (Miasto i Transport)",
+      "items": [
+        {"es": "La ciudad", "pl": "Miasto"},
+        {"es": "El centro", "pl": "Centrum"},
+        {"es": "La calle", "pl": "Ulica"},
+        {"es": "La plaza", "pl": "Plac"},
+        {"es": "La avenida", "pl": "Aleja"},
+        {"es": "La rotonda", "pl": "Rondo"},
+        {"es": "La intersección / El cruce", "pl": "Skrzyżowanie"},
+        {"es": "El semáforo", "pl": "Sygnalizacja świetlna"},
+        {"es": "El coche", "pl": "Samochód"},
+        {"es": "El camión", "pl": "Ciężarówka"},
+        {"es": "El autobús", "pl": "Autobus"},
+        {"es": "El tren", "pl": "Pociąg"},
+        {"es": "El avión", "pl": "Samolot"},
+        {"es": "La estación", "pl": "Stacja / Dworzec"},
+        {"es": "El aeropuerto", "pl": "Lotnisko"},
+        {"es": "La parada", "pl": "Przystanek"},
+        {"es": "A la derecha", "pl": "W prawo / Po prawej"},
+        {"es": "A la izquierda", "pl": "W lewo / Po lewej"},
+        {"es": "Todo recto", "pl": "Prosto"},
+        {"es": "Cerca (de)", "pl": "Blisko"},
+        {"es": "Lejos (de)", "pl": "Daleko"},
+        {"es": "Conducir", "pl": "Prowadzić (pojazd)"},
+        {"es": "Girar", "pl": "Skręcać"},
+        {"es": "Seguir", "pl": "Kontynuować / Podążać"},
+        {"es": "Ir", "pl": "Iść / Jechać"}
+      ]
+    },
+    {
+      "id": "sec_03",
+      "type": "grammar",
+      "title": "Gramatyka: Czasownik IR (Iść / Jechać) oraz przyimki",
+      "content": "Czasownik 'IR' jest całkowicie nieregularny: yo voy, tú vas, él va, nosotros vamos, vosotros vais, ellos van. Pamiętaj o dwóch kluczowych zasadach! Kiedy mówimy DOKĄD jedziemy, używamy przyimka 'A' (Voy a Madrid = Jadę do Madrytu). Kiedy mówimy CZYM jedziemy, używamy przyimka 'EN' (Voy en coche = Jadę samochodem). Wyjątek: iść pieszo to 'ir a pie'."
+    },
+    {
+      "id": "sec_04",
+      "type": "exercises",
+      "title": "Ejercicios (Ćwiczenia 1-25)",
+      "items": [
+        {"question": "Yo ___ a la oficina todos los días.", "answer": "voy", "translation": "Ja chodzę/jeżdżę do biura codziennie."},
+        {"question": "¿Adónde ___ tú ahora?", "answer": "vas", "translation": "Dokąd ty teraz idziesz?"},
+        {"question": "El camión ___ al almacén logístico.", "answer": "va", "translation": "Ciężarówka jedzie do magazynu logistycznego."},
+        {"question": "Nosotros ___ al aeropuerto de Poznań.", "answer": "vamos", "translation": "My jedziemy na lotnisko w Poznaniu."},
+        {"question": "Ellos ___ a la estación de tren.", "answer": "van", "translation": "Oni idą na stację kolejową."},
+        {"question": "Para ir al centro, voy ___ autobús.", "answer": "en", "translation": "Żeby pojechać do centrum, jadę autobusem."},
+        {"question": "Mañana viajamos ___ avión a Estados Unidos.", "answer": "en", "translation": "Jutro podróżujemy samolotem do Stanów Zjednoczonych."},
+        {"question": "Me gusta mucho ir ___ coche.", "answer": "en", "translation": "Bardzo lubię jeździć samochodem."},
+        {"question": "El museo está cerca, vamos ___ pie.", "answer": "a", "translation": "Muzeum jest blisko, idziemy pieszo."},
+        {"question": "Siga todo ___ por esta calle.", "answer": "recto", "translation": "Niech Pan idzie cały czas prosto tą ulicą."},
+        {"question": "Gire a la ___ en el semáforo.", "answer": "derecha", "translation": "Skręć w prawo na światłach."},
+        {"question": "La farmacia está a la ___ del banco.", "answer": "izquierda", "translation": "Apteka jest po lewej stronie banku."},
+        {"question": "La parada de autobús está muy ___ de mi casa.", "answer": "cerca", "translation": "Przystanek autobusowy jest bardzo blisko mojego domu."},
+        {"question": "El aeropuerto está muy ___ del centro.", "answer": "lejos", "translation": "Lotnisko jest bardzo daleko od centrum."},
+        {"question": "Hay mucho ___ en esta avenida hoy.", "answer": "tráfico", "translation": "Dzisiaj na tej alei jest duży ruch (korki)."},
+        {"question": "¿Dónde está la ___ de trenes?", "answer": "estación", "translation": "Gdzie jest stacja pociągów?"},
+        {"question": "Tengo que ___ un camión de doce toneladas.", "answer": "conducir", "translation": "Muszę prowadzić dwunastotonową ciężarówkę."},
+        {"question": "El ___ vuela muy rápido en el simulador.", "answer": "avión", "translation": "Samolot leci bardzo szybko w symulatorze."},
+        {"question": "Tome la primera salida en la ___.", "answer": "rotonda", "translation": "Weź pierwszy zjazd na rondzie."},
+        {"question": "Cruza la ___ con cuidado.", "answer": "calle", "translation": "Przejdź przez ulicę ostrożnie."},
+        {"question": "La catedral está en la ___ principal.", "answer": "plaza", "translation": "Katedra znajduje się na głównym placu."},
+        {"question": "Paso por el ___ todos los días para ir al trabajo.", "answer": "cruce", "translation": "Przejeżdżam przez skrzyżowanie codziennie, jadąc do pracy."},
+        {"question": "El semáforo está en rojo, no puedes ___.", "answer": "seguir", "translation": "Światło jest czerwone, nie możesz jechać dalej."},
+        {"question": "Los domingos no hay tráfico en la ___.", "answer": "ciudad", "translation": "W niedziele nie ma ruchu w mieście."},
+        {"question": "Buscamos una ___ de taxis.", "answer": "parada", "translation": "Szukamy postoju (przystanku) taksówek."}
+      ]
+    },
+    {
+      "id": "sec_05",
+      "type": "exercises",
+      "title": "Ejercicios (Ćwiczenia 26-50)",
+      "items": [
+        {"question": "Voy ___ supermercado a comprar comida.", "answer": "al", "translation": "Idę do supermarketu kupić jedzenie."},
+        {"question": "Vamos ___ la playa en verano.", "answer": "a", "translation": "Jedziemy na plażę latem."},
+        {"question": "¿Vas a viajar ___ tren o en autobús?", "answer": "en", "translation": "Będziesz podróżować pociągiem czy autobusem?"},
+        {"question": "Mi familia y yo ___ de excursión.", "answer": "vamos", "translation": "Moja rodzina i ja jedziemy na wycieczkę."},
+        {"question": "¿Ustedes ___ al centro comercial?", "answer": "van", "translation": "Państwo jadą do centrum handlowego?"},
+        {"question": "El conductor del ___ está cansado.", "answer": "camión", "translation": "Kierowca ciężarówki jest zmęczony."},
+        {"question": "El ___ es blanco y muy cómodo.", "answer": "coche", "translation": "Samochód jest biały i bardzo wygodny."},
+        {"question": "Mi hermano quiere ser piloto de ___.", "answer": "avión", "translation": "Mój brat chce być pilotem samolotu."},
+        {"question": "Siempre ___ a la derecha en este semáforo.", "answer": "giro", "translation": "Zawsze skręcam w prawo na tym świetle."},
+        {"question": "Tienes que ___ todo recto hasta la plaza.", "answer": "seguir", "translation": "Musisz iść cały czas prosto aż do placu."},
+        {"question": "Me gusta ___ por la noche cuando no hay coches.", "answer": "conducir", "translation": "Lubię prowadzić w nocy, kiedy nie ma samochodów."},
+        {"question": "La oficina de turismo está ___ del monumento.", "answer": "cerca", "translation": "Biuro turystyczne jest blisko pomnika."},
+        {"question": "Vivo ___ de mi trabajo, necesito el coche.", "answer": "lejos", "translation": "Mieszkam daleko od pracy, potrzebuję samochodu."},
+        {"question": "En el centro hay muchas ___ estrechas.", "answer": "calles", "translation": "W centrum jest dużo wąskich uliczek."},
+        {"question": "Paseamos por la ___ cerca del río.", "answer": "avenida", "translation": "Spacerujemy aleją obok rzeki."},
+        {"question": "Los autobuses paran en la ___.", "answer": "estación", "translation": "Autobusy zatrzymują się na dworcu."},
+        {"question": "¿Dónde hay una ___ de metro?", "answer": "parada", "translation": "Gdzie jest przystanek metra?"},
+        {"question": "En esta ciudad el ___ público es muy bueno.", "answer": "transporte", "translation": "W tym mieście transport publiczny jest bardzo dobry."},
+        {"question": "Por favor, lléveme al ___ internacional.", "answer": "aeropuerto", "translation": "Proszę mnie zawieźć na międzynarodowe lotnisko."},
+        {"question": "Al llegar a la ___, toma la tercera salida.", "answer": "rotonda", "translation": "Dojeżdżając do ronda, weź trzeci zjazd."},
+        {"question": "Mira el ___, está en verde.", "answer": "semáforo", "translation": "Spójrz na sygnalizację, jest zielone."},
+        {"question": "Nos encontramos en la ___ Mayor.", "answer": "plaza", "translation": "Spotkamy się na głównym placu (Plaza Mayor)."},
+        {"question": "Cuidado en el ___, es peligroso.", "answer": "cruce", "translation": "Uważaj na skrzyżowaniu, jest niebezpieczne."},
+        {"question": "¿Adónde ___ tus amigos esta noche?", "answer": "van", "translation": "Dokąd idą twoi znajomi dzisiaj wieczorem?"},
+        {"question": "Yo no ___ a la fiesta, estoy cansado.", "answer": "voy", "translation": "Ja nie idę na imprezę, jestem zmęczony."}
+      ]
+    }
+  ]
+}

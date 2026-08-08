@@ -10,11 +10,11 @@
       "type": "dialog",
       "title": "Diálogo: Después de las vacaciones y el trabajo",
       "content": [
-        {"speaker": "Ana", "text": "¡Hola Piotr! ¿Qué tal este año? ¿Has viajado mucho?"},
-        {"speaker": "Piotr", "text": "Sí, este verano ha sido increíble. Mi mujer, mis hijas y yo hemos estado en Estados Unidos, hemos visitado Chicago."},
-        {"speaker": "Ana", "text": "¡Qué viaje tan largo! ¿Y en el trabajo? ¿Ya has organizado la logística para las ferias en Europa?"},
-        {"speaker": "Piotr", "text": "Sí, esta semana hemos preparado los documentos y el carnet ATA para Ankara. También he reservado un camión de doce toneladas que está en su totalidad a nuestra disposición."},
-        {"speaker": "Ana", "text": "Vaya, has trabajado mucho hoy. Tienes que descansar."}
+        {"speaker": "Ana", "text": "¡Hola Piotr! ¿Qué tal este año? ¿Has viajado mucho?", "translation": "Cześć Piotr! Jak tam w tym roku? Dużo podróżowałeś?"},
+        {"speaker": "Piotr", "text": "Sí, este verano ha sido increíble. Mi mujer, mis hijas y yo hemos estado en Estados Unidos, hemos visitado Chicago.", "translation": "Tak, to lato było niesamowite. Moja żona, moje córki i ja byliśmy w Stanach Zjednoczonych, odwiedziliśmy Chicago."},
+        {"speaker": "Ana", "text": "¡Qué viaje tan largo! ¿Y en el trabajo? ¿Ya has organizado la logística para las ferias en Europa?", "translation": "Co za długa podróż! A w pracy? Zorganizowałeś już logistykę na targi w Europie?"},
+        {"speaker": "Piotr", "text": "Sí, esta semana hemos preparado los documentos y el carnet ATA para Ankara. También he reservado un camión de doce toneladas que está en su totalidad a nuestra disposición.", "translation": "Tak, w tym tygodniu przygotowaliśmy dokumenty i karnet ATA do Ankary. Zarezerwowałem też dwunastotonową ciężarówkę, która jest w całości do naszej dyspozycji."},
+        {"speaker": "Ana", "text": "Vaya, has trabajado mucho hoy. Tienes que descansar.", "translation": "O rany, dużo dzisiaj pracowałeś. Musisz odpocząć."}
       ]
     },
     {
@@ -44,7 +44,7 @@
       "id": "sec_03",
       "type": "grammar",
       "title": "Gramatyka: Pretérito Perfecto",
-      "content": "Pretérito Perfecto to czas przeszły używany do wydarzeń, które mają związek z teraźniejszością (np. z określeniami: hoy, esta semana, ya). Tworzymy go łącząc odmieniony czasownik 'haber' (he, has, ha, hemos, habéis, han) + imiesłów (participio). Regularne końcówki: -ar -> -ado (hablado, trabajado), -er/-ir -> -ido (comido, vivido). Wyjątki: hacer -> hecho (zrobiony), ver -> visto (zobaczony), escribir -> escrito (napisany), abrir -> abierto (otwarty)."
+      "content": "Czasu **Pretérito Perfecto** używamy, aby opisać wydarzenia z niedalekiej przeszłości (które mają związek z teraźniejszością, np. *dzisiaj, w tym tygodniu, w tym roku*) oraz doświadczenia życiowe (*czy kiedykolwiek...?*).\n\n### Konstrukcja\nSkłada się z odmienionego czasownika posiłkowego **HABER** oraz imiesłowu (Participio).\n\n| Osoba | Odmiana HABER | Tworzenie imiesłowu (Participio) |\n| :--- | :--- | :--- |\n| **Yo** | **he** | Czasowniki na **-AR** dostają końcówkę **-ADO** (np. hablar -> **hablado**) |\n| **Tú** | **has** | Czasowniki na **-ER / -IR** dostają końcówkę **-IDO** (np. comer -> **comido**) |\n| **Él/Ella/Usted** | **ha** | ... |\n| **Nosotros** | **hemos**| *Przykład:* (Nosotros) **hemos trabajado** (Pracowaliśmy) |\n| **Vosotros** | **habéis**| *Przykład:* (Yo) **he vivido** (Mieszkałem/Żyłem) |\n| **Ellos/Ellas/Ustedes**| **han** | ... |\n\n### Najważniejsze wyjątki (Nieregularne imiesłowy)\nNiektóre czasowniki nie mają końcówki -ado/-ido. Trzeba nauczyć się ich na pamięć:\n* **hacer** (robić) -> **hecho** (zrobiony)\n* **ver** (widzieć) -> **visto** (widziany)\n* **escribir** (pisać) -> **escrito** (napisany)\n* **abrir** (otwierać) -> **abierto** (otwarty)\n* **poner** (kłaść) -> **puesto** (położony)\n* **decir** (mówić) -> **dicho** (powiedziany)\n* **ser** (być) -> **sido** (był)"
     },
     {
       "id": "sec_04",
@@ -84,7 +84,7 @@
       "title": "Ejercicios (Ćwiczenia 26-50)",
       "items": [
         {"question": "Esta tarde he ___ en el simulador de vuelo.", "answer": "jugado", "translation": "Dziś po południu grałem na symulatorze lotu."},
-        {"question": "¿Has ___ el carnet ATA para Turquía?", "answer": "preparado", "translation": "Przygotowałe tiết karnet ATA do Turcji?"},
+        {"question": "¿Has ___ el carnet ATA para Turquía?", "answer": "preparado", "translation": "Przygotowałeś karnet ATA do Turcji?"},
         {"question": "Hoy hemos ___ (vender) muchas camisetas.", "answer": "vendido", "translation": "Dzisiaj sprzedaliśmy dużo koszulek."},
         {"question": "Todavía no he ___ (entender) el problema con la aduana.", "answer": "entendido", "translation": "Jeszcze nie zrozumiałem problemu z cłem."},
         {"question": "¿Habéis ___ (visitar) Madrid alguna vez?", "answer": "visitado", "translation": "Czy kiedykolwiek odwiedziliście Madryt?"},

@@ -10,11 +10,11 @@
       "type": "dialog",
       "title": "Diálogo: ¿Cómo llego a la feria?",
       "content": [
-        {"speaker": "Piotr", "text": "Disculpe, ¿cómo puedo llegar a la feria de exposiciones? Conduzco un camión de doce toneladas y no puedo ir por el centro."},
-        {"speaker": "Policía", "text": "Tiene que seguir todo recto por esta gran avenida."},
-        {"speaker": "Piotr", "text": "¿Y después de la rotonda?"},
-        {"speaker": "Policía", "text": "En la rotonda, tome la segunda salida y luego gire a la derecha. La feria está muy cerca."},
-        {"speaker": "Piotr", "text": "Muchas gracias por la ayuda."}
+        {"speaker": "Piotr", "text": "Disculpe, ¿cómo puedo llegar a la feria de exposiciones? Conduzco un camión de doce toneladas y no puedo ir por el centro.", "translation": "Przepraszam, jak mogę dojechać na targi wystawowe? Prowadzę dwunastotonową ciężarówkę i nie mogę jechać przez centrum."},
+        {"speaker": "Policía", "text": "Tiene que seguir todo recto por esta gran avenida.", "translation": "Musi pan jechać cały czas prosto tą dużą aleją."},
+        {"speaker": "Piotr", "text": "¿Y después de la rotonda?", "translation": "A po rondzie?"},
+        {"speaker": "Policía", "text": "En la rotonda, tome la segunda salida y luego gire a la derecha. La feria está muy cerca.", "translation": "Na rondzie proszę zjechać drugim zjazdem, a potem skręcić w prawo. Targi są bardzo blisko."},
+        {"speaker": "Piotr", "text": "Muchas gracias por la ayuda.", "translation": "Bardzo dziękuję za pomoc."}
       ]
     },
     {
@@ -53,7 +53,7 @@
       "id": "sec_03",
       "type": "grammar",
       "title": "Gramatyka: Czasownik IR (Iść / Jechać) oraz przyimki",
-      "content": "Czasownik 'IR' jest całkowicie nieregularny: yo voy, tú vas, él va, nosotros vamos, vosotros vais, ellos van. Pamiętaj o dwóch kluczowych zasadach! Kiedy mówimy DOKĄD jedziemy, używamy przyimka 'A' (Voy a Madrid = Jadę do Madrytu). Kiedy mówimy CZYM jedziemy, używamy przyimka 'EN' (Voy en coche = Jadę samochodem). Wyjątek: iść pieszo to 'ir a pie'."
+      "content": "Czasownik **IR** (iść / jechać) jest całkowicie nieregularny i trzeba się go nauczyć na pamięć.\n\n### Odmiana czasownika IR\n| Osoba | Odmiana | Tłumaczenie |\n| :--- | :--- | :--- |\n| **Yo** | **voy** | idę / jadę |\n| **Tú** | **vas** | idziesz / jedziesz |\n| **Él/Ella/Usted** | **va** | idzie / jedzie |\n| **Nosotros** | **vamos** | idziemy / jedziemy |\n| **Vosotros** | **vais** | idziecie / jedziecie |\n| **Ellos/Ellas/Ustedes**| **van** | idą / jadą |\n\n### Najważniejsza zasada kierunków (A vs EN)\n1. Kiedy mówimy **DOKĄD** się udajemy (cel podróży), używamy przyimka **A** (np. *Voy **a** Madrid* - Jadę do Madrytu).\n2. Kiedy mówimy **CZYM** się poruszamy (środek transportu), używamy przyimka **EN** (np. *Voy **en** camión* - Jadę ciężarówką).\n\n⚠️ **Wyjątek:** Iść pieszo to *ir a pie* (nie używamy 'en')."
     },
     {
       "id": "sec_04",

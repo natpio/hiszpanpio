@@ -8,14 +8,25 @@ from utils import (
     calculate_sm2, set_random_background_and_styles, trigger_js_confetti
 )
 
-st.set_page_config(page_title="Kurs Hiszpańskiego A1", page_icon="🇪🇸", layout="wide")
+st.set_page_config(page_title="Kurs Hiszpańskiego Ultra Pro", page_icon="🇪🇸", layout="wide")
 
 def main():
     set_random_background_and_styles()
     
-    st.sidebar.title("📚 Kurs A1 - Ultra Pro")
+    # 1. DYNAMICZNE WYKRYWANIE POZIOMÓW
+    data_dir = "data"
+    available_levels = [d for d in os.listdir(data_dir) if os.path.isdir(os.path.join(data_dir, d))]
+    available_levels.sort() # np. ['A1', 'A2']
     
-    # ZAKTUALIZOWANE MENU
+    if not available_levels:
+        st.error("Brak folderów z danymi (np. data/A1). Utwórz strukturę plików.")
+        return
+
+    st.sidebar.title("📚 Kurs Hiszpańskiego")
+    selected_level = st.sidebar.selectbox("Wybierz poziom:", available_levels)
+    st.sidebar.markdown(f"**Obecnie przerabiasz: {selected_level}**")
+    st.sidebar.markdown("---")
+    
     mode = st.sidebar.radio("Widok:", [
         "🎓 Moduły Kursu", 
         "🧠 Tryb Powtórek (SM-2)", 
@@ -25,8 +36,18 @@ def main():
     ])
     st.sidebar.markdown("---")
     
-    lesson_dir = os.path.join("data", "A1")
+    # Pobieranie plików dla WYBRANEGO poziomu
+    lesson_dir = os.path.join(data_dir, selected_level)
     lesson_files = sorted([f for f in os.listdir(lesson_dir) if f.endswith('.json')]) if os.path.exists(lesson_dir) else []
+    
+    # Pobieranie WSZYSTKICH lekcji dla trybów globalnych (Fiszki, Dashboard)
+    all_lessons_data = []
+    for lvl in available_levels:
+        lvl_dir = os.path.join(data_dir, lvl)
+        for f in os.listdir(lvl_dir):
+            if f.endswith('.json'):
+                all_lessons_data.append(load_lesson(lvl, f))
+
     progress = get_progress_data()
 
     # -------------------------------------
@@ -34,11 +55,11 @@ def main():
     # -------------------------------------
     if mode == "🎓 Moduły Kursu":
         if not lesson_files:
-            st.warning("Brak plików lekcji w folderze data/A1.")
+            st.warning(f"Brak plików lekcji w folderze {selected_level}.")
             return
 
         selected_file = st.sidebar.selectbox("Wybierz lekcję", lesson_files)
-        lesson = load_lesson(selected_file)
+        lesson = load_lesson(selected_level, selected_file)
         
         st.sidebar.markdown("### Struktura lekcji")
         completed_sections = [s['id'] for s in lesson['sections'] if progress.get(f"{lesson['lesson_metadata']['id']}_{s['id']}", False)]
@@ -49,7 +70,7 @@ def main():
         
         st.sidebar.markdown(f"**Postęp lekcji:** {len(completed_sections)}/{len(lesson['sections'])} ukończonych")
 
-        st.title(lesson['lesson_metadata']['title'])
+        st.title(f"[{selected_level}] {lesson['lesson_metadata']['title']}")
         st.header(current_section['title'])
         
         if current_section['type'] == 'dialog':
@@ -143,23 +164,20 @@ def main():
     # -------------------------------------
     elif mode == "🧠 Tryb Powtórek (SM-2)":
         st.title("🧠 Globalny Tryb Powtórek (SM-2)")
-        st.write("Algorytm dba o to, byś powtarzał słówka i zdania z lukami w idealnym momencie.")
+        st.write("Algorytm dba o to, byś powtarzał słówka i zdania z lukami w idealnym momencie. Pobiera wiedzę ze wszystkich odblokowanych poziomów!")
         today_str = datetime.now().strftime("%Y-%m-%d")
         due_cards = []
         
-        for f in lesson_files:
-            l_data = load_lesson(f)
+        for l_data in all_lessons_data:
             l_id = l_data['lesson_metadata']['id']
             for s in l_data['sections']:
                 if progress.get(f"{l_id}_{s['id']}", False):
-                    # Pobieranie słownictwa
                     if s['type'] == 'vocabulary':
                         for item in s['items']:
                             vocab_key = f"vocab_{l_id}_{item['es']}"
                             card_data = progress.get(vocab_key)
                             if not card_data or card_data['next_review'] <= today_str:
                                 due_cards.append({'key': vocab_key, 'front': item['pl'], 'back': item['es']})
-                    # Pobieranie ZDAŃ z lukami
                     elif s['type'] == 'exercises':
                         for i, ex in enumerate(s['items']):
                             ex_key = f"ex_card_{l_id}_{s['id']}_{i}"
@@ -211,15 +229,14 @@ def main():
                     if col.button(label, use_container_width=True): process_answer(q_val)
 
     # -------------------------------------
-    # TRYB 3: TRENER SŁÓWEK (NOWOŚĆ)
+    # TRYB 3: TRENER SŁÓWEK
     # -------------------------------------
     elif mode == "🏋️ Trener Słówek (Losowe 20)":
         st.title("🏋️ Szybki Trening Słówek")
-        st.write("Idealne na 5 minut przerwy! Aplikacja wylosuje 20 słówek ze wszystkich zakończonych przez Ciebie sekcji. Te powtórki nie wpływają na algorytm SuperMemo.")
+        st.write("Idealne na 5 minut przerwy! Aplikacja wylosuje 20 słówek ze wszystkich zakończonych przez Ciebie sekcji.")
         
         unlocked_words = []
-        for f in lesson_files:
-            l_data = load_lesson(f)
+        for l_data in all_lessons_data:
             l_id = l_data['lesson_metadata']['id']
             for s in l_data['sections']:
                 if s['type'] == 'vocabulary' and progress.get(f"{l_id}_{s['id']}", False):
@@ -464,16 +481,19 @@ def main():
         total_sections, completed_sections_count = 0, 0
         lesson_progress_summary = []
         
-        for f in lesson_files:
-            l_data = load_lesson(f)
+        for l_data in all_lessons_data:
             l_total = len(l_data['sections'])
             l_done = sum(1 for s in l_data['sections'] if progress.get(f"{l_data['lesson_metadata']['id']}_{s['id']}", False))
             total_sections += l_total
             completed_sections_count += l_done
             pct = int((l_done / l_total) * 100) if l_total > 0 else 0
-            lesson_progress_summary.append({"Lekcja": l_data['lesson_metadata']['title'], "Ukończono (%)": pct, "Zaliczone": f"{l_done}/{l_total}"})
+            lesson_progress_summary.append({
+                "Poziom": l_data['lesson_metadata']['level'], 
+                "Lekcja": l_data['lesson_metadata']['title'], 
+                "Ukończono (%)": pct, 
+                "Zaliczone": f"{l_done}/{l_total}"
+            })
 
-        # Oddzielne statystyki dla słówek i zdań w SM-2
         words_in_learning = sum(1 for key in progress if key.startswith("vocab_"))
         ex_in_learning = sum(1 for key in progress if key.startswith("ex_card_"))
 
@@ -485,7 +505,7 @@ def main():
 
         st.markdown("---")
         for item in lesson_progress_summary:
-            st.write(f"**{item['Lekcja']}** — {item['Zaliczone']} sekcji")
+            st.write(f"**[{item['Poziom']}] {item['Lekcja']}** — {item['Zaliczone']} sekcji")
             st.progress(item['Ukończono (%)'])
 
 if __name__ == "__main__":

@@ -1,0 +1,115 @@
+{
+  "lesson_metadata": {
+    "id": "A1_13",
+    "level": "A1",
+    "title": "W locie i w trasie (Czas ciągły Estar + Gerundio)"
+  },
+  "sections": [
+    {
+      "id": "sec_01",
+      "type": "dialog",
+      "title": "Diálogo: ¿Qué estás haciendo ahora mismo?",
+      "content": [
+        {"speaker": "Ana", "text": "¡Hola Piotr! Te llamo por teléfono. ¿Qué estás haciendo ahora mismo? ¿Estás trabajando en logística?"},
+        {"speaker": "Piotr", "text": "No, ahora estoy descansando. Estoy volando en el Flight Simulator 2024 en la consola."},
+        {"speaker": "Ana", "text": "¡Qué guay! ¿Y estás usando las gafas de realidad virtual?"},
+        {"speaker": "Piotr", "text": "Sí, me estoy preparando para la licencia de piloto privado. Estoy aterrizando en este momento, así que no puedo hablar mucho."},
+        {"speaker": "Ana", "text": "¿Y Natalia? ¿Qué está haciendo?"},
+        {"speaker": "Piotr", "text": "Ella está conduciendo. Estamos buscando un todoterreno grande, como un Pathfinder, para la familia."}
+      ]
+    },
+    {
+      "id": "sec_02",
+      "type": "vocabulary",
+      "title": "Vocabulario (Akcja, lotnictwo i pojazdy)",
+      "items": [
+        {"es": "Ahora mismo", "pl": "W tym momencie / Właśnie teraz"},
+        {"es": "¿Qué estás haciendo?", "pl": "Co (teraz) robisz?"},
+        {"es": "Volar", "pl": "Latać"},
+        {"es": "Aterrizar", "pl": "Lądować"},
+        {"es": "Despegar", "pl": "Startować (o samolocie)"},
+        {"es": "El piloto", "pl": "Pilot"},
+        {"es": "La licencia", "pl": "Licencja"},
+        {"es": "Las gafas (de realidad virtual)", "pl": "Okulary (VR)"},
+        {"es": "El mando / El joystick", "pl": "Kontroler / Joystick"},
+        {"es": "El todoterreno / El SUV", "pl": "Samochód terenowy / SUV"},
+        {"es": "Buscando", "pl": "Szukając (od buscar)"},
+        {"es": "Conduciendo", "pl": "Prowadząc (od conducir)"},
+        {"es": "Leyendo", "pl": "Czytając (od leer)"},
+        {"es": "Durmiendo", "pl": "Śpiąc (od dormir)"},
+        {"es": "Comiendo", "pl": "Jedząc (od comer)"},
+        {"es": "Trabajando", "pl": "Pracując (od trabajar)"}
+      ]
+    },
+    {
+      "id": "sec_03",
+      "type": "grammar",
+      "title": "Gramatyka: Estar + Gerundio (Czas ciągły)",
+      "content": "Aby opisać czynność trwającą w tym momencie, używamy odmienionego czasownika 'Estar' (estoy, estás, está, estamos, estáis, están) i imiesłowu czynnego (Gerundio). Dla czasowników na -ar końcówka to -ando (hablar -> hablando). Dla -er/-ir końcówka to -iendo (comer -> comiendo). Istnieją nieregularności: leer -> leyendo, dormir -> durmiendo."
+    },
+    {
+      "id": "sec_04",
+      "type": "exercises",
+      "title": "Ejercicios (Ćwiczenia 1-25)",
+      "items": [
+        {"question": "Yo ___ trabajando en la oficina ahora mismo.", "answer": "estoy", "translation": "Pracuję teraz w biurze."},
+        {"question": "¿Qué ___ haciendo tú?", "answer": "estás", "translation": "Co ty teraz robisz?"},
+        {"question": "Natalia ___ conduciendo el coche.", "answer": "está", "translation": "Natalia prowadzi (w tej chwili) samochód."},
+        {"question": "Nosotros ___ buscando un todoterreno familiar.", "answer": "estamos", "translation": "Szukamy (właśnie) rodzinnego SUV-a."},
+        {"question": "Mis hijas ___ durmiendo en su habitación.", "answer": "están", "translation": "Moje córki śpią w swoim pokoju."},
+        {"question": "Estoy ___ (hablar) por teléfono con el cliente.", "answer": "hablando", "translation": "Rozmawiam w tym momencie przez telefon z klientem."},
+        {"question": "El avión está ___ (aterrizar) en el aeropuerto de Poznań.", "answer": "aterrizando", "translation": "Samolot w tym momencie ląduje na lotnisku w Poznaniu."},
+        {"question": "Estoy ___ (volar) en el simulador en la PlayStation 5.", "answer": "volando", "translation": "Lecę właśnie w symulatorze na PlayStation 5."},
+        {"question": "Los conductores están ___ (cargar) el camión de doce toneladas.", "answer": "cargando", "translation": "Kierowcy załadowują teraz 12-tonową ciężarówkę."},
+        {"question": "¿Estás ___ (comer) la ensalada?", "answer": "comiendo", "translation": "Jesz teraz sałatkę?"},
+        {"question": "El piloto está ___ (despegar) ahora.", "answer": "despegando", "translation": "Pilot teraz startuje."},
+        {"question": "Estoy ___ (leer) un libro sobre la licencia PPL.", "answer": "leyendo", "translation": "Czytam teraz książkę o licencji PPL. (uwaga: leer -> leyendo)"},
+        {"question": "Estáis ___ (escribir) un correo electrónico muy largo.", "answer": "escribiendo", "translation": "Piszecie właśnie bardzo długiego maila."},
+        {"question": "Me ___ poniendo las gafas de realidad virtual.", "answer": "estoy", "translation": "Zakładam właśnie okulary VR."},
+        {"question": "Estamos ___ (mirar) las fotos de Estados Unidos.", "answer": "mirando", "translation": "Oglądamy w tym momencie zdjęcia ze Stanów Zjednoczonych."},
+        {"question": "El coche está ___ (funcionar) muy bien.", "answer": "funcionando", "translation": "Samochód działa teraz bardzo dobrze."},
+        {"question": "La jefa está ___ (organizar) la feria de Leipzig.", "answer": "organizando", "translation": "Szefowa organizuje w tej chwili targi w Lipsku."},
+        {"question": "Estoy ___ (usar) el joystick Thrustmaster.", "answer": "usando", "translation": "Używam teraz joysticka Thrustmaster."},
+        {"question": "¿Estás ___ (descansar) en el sofá?", "answer": "descansando", "translation": "Odpoczywasz teraz na sofie?"},
+        {"question": "Mi familia está ___ (viajar) por carretera.", "answer": "viajando", "translation": "Moja rodzina podróżuje w tym momencie drogą."},
+        {"question": "La picadora de carne está ___ (hacer) ruido.", "answer": "haciendo", "translation": "Maszynka do mięsa robi teraz hałas."},
+        {"question": "El chef está ___ (preparar) embutidos artesanales.", "answer": "preparando", "translation": "Szef kuchni przygotowuje teraz rzemieślnicze wędliny."},
+        {"question": "Estoy ___ (estudiar) para mi examen de logística.", "answer": "estudiando", "translation": "Uczę się w tym momencie do egzaminu z logistyki."},
+        {"question": "¿Quién está ___ (conducir) el todoterreno?", "answer": "conducido", "translation": "Kto prowadzi teraz tego SUV-a? (conducir -> conduciendo)"},
+        {"question": "Perdón, la respuesta anterior es incorrecta, es ___.", "answer": "conduciendo", "translation": "Kto prowadzi... (poprawna forma: conduciendo)"}
+      ]
+    },
+    {
+      "id": "sec_05",
+      "type": "exercises",
+      "title": "Ejercicios (Ćwiczenia 26-50)",
+      "items": [
+        {"question": "¿Estás ___ (escuchar) las instrucciones del control aéreo?", "answer": "escuchando", "translation": "Słuchasz teraz instrukcji kontroli lotów?"},
+        {"question": "El camión está ___ (llegar) a la aduana turca.", "answer": "llegando", "translation": "Ciężarówka dojeżdża właśnie do tureckiego urzędu celnego."},
+        {"question": "Estamos ___ (comprar) billetes de avión.", "answer": "comprando", "translation": "Kupujemy teraz bilety lotnicze."},
+        {"question": "Están ___ (buscar) mi equipaje perdido en el aeropuerto.", "answer": "buscando", "translation": "Szukają w tym momencie mojego zgubionego bagażu na lotnisku."},
+        {"question": "Estoy ___ (aprender) a programar en Python.", "answer": "aprendiendo", "translation": "Uczę się teraz programować w Pythonie."},
+        {"question": "¿Qué estás ___ (beber)? ¿Es café?", "answer": "bebiendo", "translation": "Co teraz pijesz? Czy to kawa?"},
+        {"question": "El restaurante está ___ (cerrar) las puertas.", "answer": "cerrando", "translation": "Restauracja zamyka właśnie drzwi."},
+        {"question": "Estamos ___ (abrir) la nueva oficina en Madrid.", "answer": "abriendo", "translation": "Otwieramy właśnie nowe biuro w Madrycie."},
+        {"question": "Estoy ___ (vivir) un sueño.", "answer": "viviendo", "translation": "Żyję teraz jak we śnie."},
+        {"question": "Las niñas están ___ (jugar) en el jardín.", "answer": "jugando", "translation": "Dziewczynki bawią się w tym momencie w ogrodzie."},
+        {"question": "El perro está ___ (dormir) bajo la mesa.", "answer": "durmiendo", "translation": "Pies śpi teraz pod stołem. (uwaga: dormir -> durmiendo)"},
+        {"question": "Te estoy ___ (decir) la verdad.", "answer": "diciendo", "translation": "Mówię ci teraz prawdę. (uwaga: decir -> diciendo)"},
+        {"question": "Estamos ___ (pedir) comida en el restaurante.", "answer": "pidiendo", "translation": "Zamawiamy właśnie jedzenie w restauracji. (uwaga: pedir -> pidiendo)"},
+        {"question": "Estoy ___ (pensar) en comprar un Nissan Pathfinder.", "answer": "pensando", "translation": "Myślę teraz o zakupie Nissana Pathfindera."},
+        {"question": "El pasajero está ___ (pagar) el billete.", "answer": "pagando", "translation": "Pasażer płaci teraz za bilet."},
+        {"question": "Los aviones están ___ (volar) muy alto.", "answer": "volando", "translation": "Samoloty lecą teraz bardzo wysoko."},
+        {"question": "¿Estás ___ (ver) la televisión?", "answer": "viendo", "translation": "Oglądasz teraz telewizję?"},
+        {"question": "Mi compañero está ___ (enviar) los correos.", "answer": "enviando", "translation": "Mój kolega wysyła w tym momencie maile."},
+        {"question": "Me estoy ___ (lavar) las manos.", "answer": "lavando", "translation": "Myję sobie właśnie ręce."},
+        {"question": "Se están ___ (vestir) para la fiesta.", "answer": "vistiendo", "translation": "Oni ubierają się teraz na imprezę."},
+        {"question": "Estoy ___ (cruzar) la intersección con cuidado.", "answer": "cruzando", "translation": "Przejeżdżam właśnie przez skrzyżowanie ostrożnie."},
+        {"question": "El sol está ___ (brillar) mucho hoy.", "answer": "brillando", "translation": "Słońce świeci dziś bardzo mocno."},
+        {"question": "Estamos ___ (caminar) por la playa.", "answer": "caminando", "translation": "Spacerujemy w tym momencie po plaży."},
+        {"question": "La lluvia está ___ (caer) muy fuerte.", "answer": "cayendo", "translation": "Deszcz pada teraz bardzo mocno. (caer -> cayendo)"},
+        {"question": "¡Silencio, por favor! Estoy ___ (aterrizar).", "answer": "aterrizando", "translation": "Cisza, proszę! Ląduję w tym momencie."}
+      ]
+    }
+  ]
+}

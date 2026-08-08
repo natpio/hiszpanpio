@@ -2,7 +2,6 @@ import streamlit as st
 import os
 from datetime import datetime, timedelta
 
-# Importujemy nasze własne moduły!
 from utils import (
     load_lesson, get_progress_data, save_progress_data, 
     calculate_sm2, set_random_background_and_styles, trigger_js_confetti
@@ -44,16 +43,61 @@ def main():
         st.title(lesson['lesson_metadata']['title'])
         st.header(current_section['title'])
         
+        # --- NOWOŚĆ: TŁUMACZENIA DIALOGÓW ---
         if current_section['type'] == 'dialog':
             for line in current_section['content']:
-                st.write(f"**{line['speaker']}**: {line['text']}")
+                st.markdown(f"**{line['speaker']}**: {line['text']}")
+                if 'translation' in line:
+                    st.caption(f"*{line['translation']}*")
                 
+        # --- NOWOŚĆ: MINI-FISZKI PRZED ZAKOŃCZENIEM ---
         elif current_section['type'] == 'vocabulary':
+            st.write("### Spis słówek")
             for item in current_section['items']:
                 st.write(f"✅ **{item['es']}** - {item['pl']}")
+            
+            st.markdown("---")
+            st.subheader("🧠 Trening nowych słówek")
+            st.write("Zanim przejdziesz dalej, przećwicz nowe słownictwo na szybkich fiszkach!")
+            
+            vocab_key = f"vocab_idx_{lesson['lesson_metadata']['id']}_{current_section['id']}"
+            if vocab_key not in st.session_state:
+                st.session_state[vocab_key] = 0
+            
+            if 'vocab_show_answer' not in st.session_state:
+                st.session_state.vocab_show_answer = False
+
+            idx = st.session_state[vocab_key]
+            vocab_items = current_section['items']
+            
+            if idx < len(vocab_items):
+                active_word = vocab_items[idx]
+                st.progress(idx / len(vocab_items), text=f"Fiszka {idx+1} z {len(vocab_items)}")
                 
+                st.markdown(f"<div class='flashcard-front'>{active_word['pl']}</div>", unsafe_allow_html=True)
+                
+                if not st.session_state.vocab_show_answer:
+                    if st.button("Pokaż hiszpańskie tłumaczenie", key="show_es", use_container_width=True):
+                        st.session_state.vocab_show_answer = True
+                        st.rerun()
+                else:
+                    st.markdown(f"<div class='flashcard-back'>{active_word['es']}</div>", unsafe_allow_html=True)
+                    if st.button("Następne słówko ➡️", key="next_es", use_container_width=True):
+                        st.session_state[vocab_key] += 1
+                        st.session_state.vocab_show_answer = False
+                        st.rerun()
+            else:
+                st.progress(100, text="Zakończono trening!")
+                st.success("Brawo! Przećwiczyłeś wszystkie nowe słówka.")
+                if st.button("🔄 Przećwicz ponownie (Opcjonalnie)"):
+                    st.session_state[vocab_key] = 0
+                    st.session_state.vocab_show_answer = False
+                    st.rerun()
+                
+        # --- NOWOŚĆ: GRAMATYKA MARKDOWN ---
         elif current_section['type'] == 'grammar':
-            st.info(current_section['content'])
+            # st.markdown obsługuje teraz bogate tabele i pogrubienia prosto z JSON-a
+            st.markdown(current_section['content'])
                 
         elif current_section['type'] == 'exercises':
             st.write("Wypełnij luki i naciśnij Enter, aby sprawdzić odpowiedź.")
@@ -68,16 +112,25 @@ def main():
 
         st.markdown("---")
         prog_key = f"{lesson['lesson_metadata']['id']}_{current_section['id']}"
+        
+        # BLOKADA: Przycisk zaliczenia słownictwa pojawia się dopiero po przejściu Mini-Fiszek
+        can_finish = True
+        if current_section['type'] == 'vocabulary':
+            if st.session_state.get(f"vocab_idx_{lesson['lesson_metadata']['id']}_{current_section['id']}", 0) < len(current_section['items']):
+                can_finish = False
+                st.info("💡 Przeklikaj wszystkie fiszki powyżej, aby odblokować przycisk zakończenia sekcji.")
+
         if not progress.get(prog_key, False):
-            if st.button("Zakończ tę sekcję", use_container_width=True):
-                progress[prog_key] = True
-                save_progress_data(progress)
-                trigger_js_confetti()
-                st.rerun()
+            if can_finish:
+                if st.button("Zakończ tę sekcję", use_container_width=True):
+                    progress[prog_key] = True
+                    save_progress_data(progress)
+                    trigger_js_confetti()
+                    st.rerun()
         else:
             st.success("🎉 Sekcja ukończona!")
             if current_section['type'] == 'vocabulary':
-                st.info("💡 Słówka z tej sekcji zostały odblokowane do powtórek!")
+                st.info("💡 Słówka z tej sekcji zostały odblokowane do globalnych powtórek SuperMemo!")
 
     # -------------------------------------
     # TRYB 2: FISZKI (SUPERMEMO)

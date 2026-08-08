@@ -13,7 +13,8 @@ def main():
     set_random_background_and_styles()
     
     st.sidebar.title("📚 Kurs A1 - Ultra Pro")
-    mode = st.sidebar.radio("Widok:", ["🎓 Moduły Kursu", "🧠 Tryb Powtórek (Fiszki)", "📊 Dashboard Analityczny"])
+    # DODANO NOWY TRYB W MENU
+    mode = st.sidebar.radio("Widok:", ["🎓 Moduły Kursu", "🧠 Tryb Powtórek (Fiszki)", "📖 Tablice Czasowników", "📊 Dashboard Analityczny"])
     st.sidebar.markdown("---")
     
     lesson_dir = os.path.join("data", "A1")
@@ -43,14 +44,12 @@ def main():
         st.title(lesson['lesson_metadata']['title'])
         st.header(current_section['title'])
         
-        # --- NOWOŚĆ: TŁUMACZENIA DIALOGÓW ---
         if current_section['type'] == 'dialog':
             for line in current_section['content']:
                 st.markdown(f"**{line['speaker']}**: {line['text']}")
                 if 'translation' in line:
                     st.caption(f"*{line['translation']}*")
                 
-        # --- NOWOŚĆ: MINI-FISZKI PRZED ZAKOŃCZENIEM ---
         elif current_section['type'] == 'vocabulary':
             st.write("### Spis słówek")
             for item in current_section['items']:
@@ -94,9 +93,7 @@ def main():
                     st.session_state.vocab_show_answer = False
                     st.rerun()
                 
-        # --- NOWOŚĆ: GRAMATYKA MARKDOWN ---
         elif current_section['type'] == 'grammar':
-            # st.markdown obsługuje teraz bogate tabele i pogrubienia prosto z JSON-a
             st.markdown(current_section['content'])
                 
         elif current_section['type'] == 'exercises':
@@ -113,7 +110,6 @@ def main():
         st.markdown("---")
         prog_key = f"{lesson['lesson_metadata']['id']}_{current_section['id']}"
         
-        # BLOKADA: Przycisk zaliczenia słownictwa pojawia się dopiero po przejściu Mini-Fiszek
         can_finish = True
         if current_section['type'] == 'vocabulary':
             if st.session_state.get(f"vocab_idx_{lesson['lesson_metadata']['id']}_{current_section['id']}", 0) < len(current_section['items']):
@@ -193,7 +189,76 @@ def main():
                     if col.button(label, use_container_width=True): process_answer(q_val)
 
     # -------------------------------------
-    # TRYB 3: DASHBOARD ANALITYCZNY
+    # TRYB 3: TABLICE CZASOWNIKÓW (NOWOŚĆ)
+    # -------------------------------------
+    elif mode == "📖 Tablice Czasowników":
+        st.title("📖 Tablice Odmian Czasowników")
+        st.write("Twój podręczny niezbędnik gramatyczny. Szybka ściągawka z najważniejszych hiszpańskich czasowników na poziomie A1.")
+        
+        tab1, tab2, tab3, tab4 = st.tabs(["📏 Regularne (-ar, -er, -ir)", "🔥 Kluczowe Nieregularne", "🔄 Zwrotne", "⭐ Specjalne (Gustar / Ir a)"])
+        
+        with tab1:
+            st.subheader("Czasowniki Regularne (Presente de Indicativo)")
+            st.markdown("""
+            | Osoba (Zaimek) | -AR (np. **trabajar** - pracować) | -ER (np. **comer** - jeść) | -IR (np. **vivir** - mieszkać/żyć) |
+            | :--- | :--- | :--- | :--- |
+            | **Yo** (Ja) | trabaj**o** | com**o** | viv**o** |
+            | **Tú** (Ty) | trabaj**as** | com**es** | viv**es** |
+            | **Él/Ella/Usted** (On/Ona/Pan/i) | trabaj**a** | com**e** | viv**e** |
+            | **Nosotros/as** (My) | trabaj**amos** | com**emos** | viv**imos** |
+            | **Vosotros/as** (Wy) | trabaj**áis** | com**éis** | viv**ís** |
+            | **Ellos/Ellas/Ustedes** (Oni/One/Państwo)| trabaj**an** | com**en** | viv**en** |
+            """)
+            
+        with tab2:
+            st.subheader("Najważniejsze Czasowniki Nieregularne")
+            st.markdown("""
+            | Osoba | SER (być - cechy stałe) | ESTAR (być - lokalizacja/stan) | TENER (mieć) | IR (iść/jechać) |
+            | :--- | :--- | :--- | :--- | :--- |
+            | **Yo** | soy | estoy | tengo | voy |
+            | **Tú** | eres | estás | tienes | vas |
+            | **Él/Ella/Usted** | es | está | tiene | va |
+            | **Nosotros/as** | somos | estamos | tenemos | vamos |
+            | **Vosotros/as** | sois | estáis | tenéis | vais |
+            | **Ellos/Ellas/Ustedes**| son | están | tienen | van |
+            """)
+            
+        with tab3:
+            st.subheader("Czasowniki Zwrotne (z cząstką 'się')")
+            st.write("Zaimek zwrotny wędruje ZAWSZE przed odmieniony czasownik.")
+            st.markdown("""
+            | Osoba | Zaimek | LEVANTARSE (budzić się / wstawać) |
+            | :--- | :--- | :--- |
+            | **Yo** | **me** | levanto |
+            | **Tú** | **te** | levantas |
+            | **Él/Ella/Usted** | **se** | levanta |
+            | **Nosotros/as** | **nos** | levantamos |
+            | **Vosotros/as** | **os** | levantáis |
+            | **Ellos/Ellas/Ustedes**| **se** | levantan |
+            """)
+            
+        with tab4:
+            st.subheader("Konstrukcje Specjalne")
+            st.markdown("#### 1. Czasownik GUSTAR (Lubić / Smakować)")
+            st.markdown("""
+            *Dosłownie: 'Coś sprawia mi przyjemność'. Dopasowujemy końcówkę do tego, **co** lubimy, a nie kto lubi.*
+            * **(A mí) me gusta** + l. poj. (np. *la sopa*) / bezokolicznik (np. *viajar*)
+            * **(A ti) te gustan** + l. mnoga (np. *los tomates*)
+            * Inne zaimki: **le** (jemu/jej), **nos** (nam), **os** (wam), **les** (im).
+            """)
+            st.markdown("#### 2. Plany na przyszłość: IR + A + Bezokolicznik")
+            st.markdown("""
+            * **Voy a trabajar.** - Zamierzam pracować.
+            * **Vamos a comer.** - Zamierzamy jeść.
+            """)
+            st.markdown("#### 3. Obowiązek: TENER QUE vs HAY QUE")
+            st.markdown("""
+            * **Tengo que** + bezokolicznik -> *Ja muszę...* (Osobisty obowiązek)
+            * **Hay que** + bezokolicznik -> *Trzeba...* (Ogólna zasada, forma bezosobowa)
+            """)
+
+    # -------------------------------------
+    # TRYB 4: DASHBOARD ANALITYCZNY
     # -------------------------------------
     elif mode == "📊 Dashboard Analityczny":
         st.title("📊 Dashboard Analityczny Kursu")

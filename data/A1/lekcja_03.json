@@ -10,12 +10,12 @@
       "type": "dialog",
       "title": "Diálogo: En la recepción del hotel (W recepcji hotelu)",
       "content": [
-        {"speaker": "Recepcionista", "text": "Buenos días. ¿Cuál es su nombre y apellido, por favor?"},
-        {"speaker": "Piotr", "text": "Buenos días. Me llamo Piotr y mi apellido es Dukiel."},
-        {"speaker": "Recepcionista", "text": "Perfecto, aquí está su reserva. ¿Cuál es su número de teléfono?"},
-        {"speaker": "Piotr", "text": "Es el seis, cero, dos... cuatro, cinco, nueve..."},
-        {"speaker": "Recepcionista", "text": "¿Y su correo electrónico?"},
-        {"speaker": "Piotr", "text": "Es p.dukiel arroba correo punto com."}
+        {"speaker": "Recepcionista", "text": "Buenos días. ¿Cuál es su nombre y apellido, por favor?", "translation": "Dzień dobry. Jakie jest Pana imię i nazwisko, proszę?"},
+        {"speaker": "Piotr", "text": "Buenos días. Me llamo Piotr y mi apellido es Dukiel.", "translation": "Dzień dobry. Nazywam się Piotr, a moje nazwisko to Dukiel."},
+        {"speaker": "Recepcionista", "text": "Perfecto, aquí está su reserva. ¿Cuál es su número de teléfono?", "translation": "Doskonale, oto Pana rezerwacja. Jaki jest Pana numer telefonu?"},
+        {"speaker": "Piotr", "text": "Es el seis, cero, dos... cuatro, cinco, nueve...", "translation": "To sześć, zero, dwa... cztery, pięć, dziewięć..."},
+        {"speaker": "Recepcionista", "text": "¿Y su correo electrónico?", "translation": "A Pana adres e-mail?"},
+        {"speaker": "Piotr", "text": "Es p.dukiel arroba correo punto com.", "translation": "To p.dukiel małpa correo kropka com."}
       ]
     },
     {
@@ -37,7 +37,7 @@
       "id": "sec_03",
       "type": "grammar",
       "title": "Gramatyka: Zaimki pytające i kontakt",
-      "content": "Zaimki pytające w hiszpańskim ZAWSZE mają akcent graficzny (tyldę). Zwróć uwagę, że pytając o dane kontaktowe (jak numer czy e-mail) używamy słowa '¿Cuál?' (Który/Jaki jest z wielu możliwych?), a nie '¿Qué?'."
+      "content": "Zaimki pytające w języku hiszpańskim **ZAWSZE** mają akcent graficzny (tyldę). Co ważne, w Hiszpanii używamy odwróconego znaku zapytania na początku zdania (¿).\n\n### Najważniejsze zaimki pytające\n\n| Zaimek | Tłumaczenie | Przykład użycia |\n| :--- | :--- | :--- |\n| **¿Cómo?** | Jak? | *¿Cómo te llamas?* (Jak się nazywasz?) |\n| **¿Dónde?** | Gdzie? | *¿Dónde vives?* (Gdzie mieszkasz?) |\n| **¿De dónde?**| Skąd? | *¿De dónde eres?* (Skąd jesteś?) |\n| **¿Qué?** | Co? / Jaki? | *¿Qué haces?* (Co robisz?) |\n| **¿Cuál?** | Jaki? / Który? | *¿Cuál es tu correo?* (Jaki jest twój e-mail?) |\n| **¿Cuántos?** | Ile? | *¿Cuántos años tienes?* (Ile masz lat?) |\n\n⚠️ **Różnica między ¿Qué? a ¿Cuál?**\nKiedy pytamy o dane kontaktowe (numer telefonu, e-mail, adres), zawsze używamy **¿Cuál?**. Traktujemy to tak, jakbyśmy wybierali jedną odpowiedź z nieskończonej puli możliwości na świecie (Który z numerów na świecie jest twój?). Użycie *¿Qué es tu número?* jest błędem!"
     },
     {
       "id": "sec_04",

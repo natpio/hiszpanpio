@@ -6,8 +6,8 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 # --- 1. OBSŁUGA DANYCH ---
-def load_lesson(filename):
-    with open(os.path.join("data", "A1", filename), "r", encoding="utf-8") as f:
+def load_lesson(level, filename):
+    with open(os.path.join("data", level, filename), "r", encoding="utf-8") as f:
         return json.load(f)
 
 def get_progress_data():

@@ -10,10 +10,10 @@
       "type": "dialog",
       "title": "Diálogo: Mirando fotos",
       "content": [
-        {"speaker": "Ana", "text": "Oye, ¿quién es esta chica rubia en la foto?"},
-        {"speaker": "Piotr", "text": "Es mi mujer, Natalia. Y estas dos niñas son nuestras hijas."},
-        {"speaker": "Ana", "text": "¡Qué guapas! ¿Y este hombre alto con gafas y barba?"},
-        {"speaker": "Piotr", "text": "Es mi hermano mayor. Es muy inteligente y trabajador."}
+        {"speaker": "Ana", "text": "Oye, ¿quién es esta chica rubia en la foto?", "translation": "Słuchaj, kim jest ta jasnowłosa dziewczyna na zdjęciu?"},
+        {"speaker": "Piotr", "text": "Es mi mujer, Natalia. Y estas dos niñas son nuestras hijas.", "translation": "To moja żona, Natalia. A te dwie dziewczynki to nasze córki."},
+        {"speaker": "Ana", "text": "¡Qué guapas! ¿Y este hombre alto con gafas y barba?", "translation": "Ale ładne! A ten wysoki mężczyzna w okularach i z brodą?"},
+        {"speaker": "Piotr", "text": "Es mi hermano mayor. Es muy inteligente y trabajador.", "translation": "To mój starszy brat. Jest bardzo inteligentny i pracowity."}
       ]
     },
     {
@@ -37,7 +37,7 @@
       "id": "sec_03",
       "type": "grammar",
       "title": "Gramatyka: SER, TENER, LLEVAR",
-      "content": "Do opisu osób używamy trzech czasowników. SER (być) do cech stałych i charakteru. TENER (mieć) do części ciała (włosy, oczy). LLEVAR (nosić) do dodatków (okulary, broda)."
+      "content": "Do opisywania wyglądu i charakteru osób w języku hiszpańskim używamy aż trzech różnych czasowników, w zależności od tego, o jakiej cesze mówimy.\n\n### Kiedy użyć którego czasownika?\n\n| Czasownik | Znaczenie | Zastosowanie | Przykłady |\n| :--- | :--- | :--- | :--- |\n| **SER** | Być | Cechy stałe, charakter, budowa ciała. | *Es alto* (Jest wysoki). *Es rubio* (Jest blondynem). *Es inteligente* (Jest inteligentny). |\n| **TENER** | Mieć | Cechy fizyczne, części ciała (oczy, włosy). | *Tiene los ojos azules* (Ma niebieskie oczy). *Tiene el pelo corto* (Ma krótkie włosy). |\n| **LLEVAR** | Nosić | Dodatki, zarost, okulary, ubrania. (To co można 'zdjąć'). | *Lleva gafas* (Nosi okulary). *Lleva barba y bigote* (Nosi brodę i wąsy). |\n\n💡 **Uwaga:** Po polsku mówimy 'on jest łysy' (ser) lub 'on ma brodę' (tener). W Hiszpanii powiemy raczej 'on nosi brodę' (*lleva barba*)."
     },
     {
       "id": "sec_04",

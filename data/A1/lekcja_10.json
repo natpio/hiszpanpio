@@ -10,12 +10,12 @@
       "type": "dialog",
       "title": "Diálogo: Planes para julio",
       "content": [
-        {"speaker": "Natalia", "text": "¿Cuándo vamos a empezar nuestras vacaciones?"},
-        {"speaker": "Piotr", "text": "Vamos a salir el uno de julio. El viaje por Estados Unidos va a ser increíble."},
-        {"speaker": "Natalia", "text": "¿Qué tiempo hace allí en verano? ¿Hace mucho calor?"},
-        {"speaker": "Piotr", "text": "Sí, hace sol y mucho calor. Es perfecto para conducir un Nissan Pathfinder por el país."},
-        {"speaker": "Natalia", "text": "¿Y qué vas a hacer hoy? Está lloviendo a cántaros."},
-        {"speaker": "Piotr", "text": "Hoy voy a descansar. Voy a volar en el Flight Simulator 2024 en la PS5."}
+        {"speaker": "Natalia", "text": "¿Cuándo vamos a empezar nuestras vacaciones?", "translation": "Kiedy zamierzamy zacząć nasze wakacje?"},
+        {"speaker": "Piotr", "text": "Vamos a salir el uno de julio. El viaje por Estados Unidos va a ser increíble.", "translation": "Wyjeżdżamy pierwszego lipca. Podróż po Stanach Zjednoczonych będzie niesamowita."},
+        {"speaker": "Natalia", "text": "¿Qué tiempo hace allí en verano? ¿Hace mucho calor?", "translation": "Jaka jest tam pogoda latem? Jest bardzo gorąco?"},
+        {"speaker": "Piotr", "text": "Sí, hace sol y mucho calor. Es perfecto para conducir un Nissan Pathfinder por el país.", "translation": "Tak, świeci słońce i jest bardzo gorąco. To idealne warunki do prowadzenia Nissana Pathfindera po kraju."},
+        {"speaker": "Natalia", "text": "¿Y qué vas a hacer hoy? Está lloviendo a cántaros.", "translation": "A co zamierzasz robić dzisiaj? Leje jak z cebra."},
+        {"speaker": "Piotr", "text": "Hoy voy a descansar. Voy a volar en el Flight Simulator 2024 en la PS5.", "translation": "Dzisiaj zamierzam odpocząć. Będę latać w Flight Simulator 2024 na PS5."}
       ]
     },
     {
@@ -53,7 +53,7 @@
       "id": "sec_03",
       "type": "grammar",
       "title": "Gramatyka: Plany na przyszłość (IR A + infinitivo)",
-      "content": "Aby wyrazić plany na najbliższą przyszłość, Hiszpanie rzadko używają klasycznego czasu przyszłego. Zamiast tego stosują bardzo prostą konstrukcję: odmieniony czasownik IR (iść/jechać) + przyimek A + bezokolicznik. Np. 'Voy a viajar' (Zamierzam podróżować). 'Vamos a comer' (Będziemy jeść / Zamierzamy zjeść)."
+      "content": "Aby wyrazić plany na najbliższą przyszłość, Hiszpanie rzadko używają klasycznego czasu przyszłego. Zamiast tego stosują bardzo prostą konstrukcję: odmieniony czasownik **IR** (iść/jechać) + przyimek **A** + **bezokolicznik** (czasownik w podstawowej formie).\n\n### Konstrukcja: IR A + Infinitivo\n\n| Osoba | Odmiana IR | Przyimek | Bezokolicznik | Tłumaczenie |\n| :--- | :--- | :--- | :--- | :--- |\n| **Yo** | **voy** | **a** | viajar | *(Ja) zamierzam podróżować* |\n| **Tú** | **vas** | **a** | comer | *(Ty) zamierzasz jeść* |\n| **Él/Ella/Usted** | **va** | **a** | conducir | *(On/Ona/Pan) zamierza prowadzić* |\n| **Nosotros** | **vamos** | **a** | descansar | *(My) zamierzamy odpocząć* |\n| **Vosotros** | **vais** | **a** | jugar | *(Wy) zamierzacie grać* |\n| **Ellos/Ellas** | **van** | **a** | salir | *(Oni) zamierzają wyjść* |\n\n💡 **Przydatne zwroty pogodowe (z użyciem HACER - robić):**\n* *Hace sol.* (Świeci słońce - dosł. robi słońce)\n* *Hace calor / frío.* (Jest gorąco / zimno)\n* *Hace buen / mal tiempo.* (Jest ładna / brzydka pogoda)"
     },
     {
       "id": "sec_04",

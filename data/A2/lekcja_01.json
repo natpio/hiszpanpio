@@ -1,1 +1,113 @@
-
+{
+  "lesson_metadata": {
+    "id": "A2_01",
+    "level": "A2",
+    "title": "Przygody na trasie (Pretérito Indefinido - regularne)"
+  },
+  "sections": [
+    {
+      "id": "sec_01",
+      "type": "dialog",
+      "title": "Diálogo: El gran viaje",
+      "content": [
+        {"speaker": "Ana", "text": "¡Hola Piotr! ¿Qué tal el viaje por Estados Unidos en julio?", "translation": "Cześć Piotr! Jak tam podróż po Stanach Zjednoczonych w lipcu?"},
+        {"speaker": "Piotr", "text": "¡Fue increíble! Alquilamos un coche muy grande y viajamos por Chicago, Des Moines y Wisconsin Dells.", "translation": "Było niesamowicie! Wynajęliśmy bardzo duży samochód i podróżowaliśmy po Chicago, Des Moines i Wisconsin Dells."},
+        {"speaker": "Ana", "text": "¿Y descansasteis un poco durante la ruta?", "translation": "A odpoczęliście trochę podczas trasy?"},
+        {"speaker": "Piotr", "text": "Sí, claro. Comimos mucha comida típica, paseamos por las ciudades y compramos algunos recuerdos para la familia.", "translation": "Tak, jasne. Jedliśmy dużo typowego jedzenia, spacerowaliśmy po miastach i kupiliśmy trochę pamiątek dla rodziny."},
+        {"speaker": "Ana", "text": "Me alegro mucho. Yo el año pasado trabajé todo el verano.", "translation": "Bardzo się cieszę. Ja w zeszłym roku pracowałam całe lato."}
+      ]
+    },
+    {
+      "id": "sec_02",
+      "type": "vocabulary",
+      "title": "Vocabulario (Czas przeszły i podróże)",
+      "items": [
+        {"es": "Ayer / Anteayer", "pl": "Wczoraj / Przedwczoraj"},
+        {"es": "El año pasado", "pl": "W zeszłym roku"},
+        {"es": "El mes pasado", "pl": "W zeszłym miesiącu"},
+        {"es": "La semana pasada", "pl": "W zeszłym tygodniu"},
+        {"es": "En julio / En 2025", "pl": "W lipcu / W 2025 roku"},
+        {"es": "La carretera / La ruta", "pl": "Droga (szosa) / Trasa"},
+        {"es": "Alquilar", "pl": "Wynajmować"},
+        {"es": "Pasear", "pl": "Spacerować"},
+        {"es": "Visitar", "pl": "Odwiedzać / Zwiedzać"},
+        {"es": "Comprar", "pl": "Kupować"},
+        {"es": "Descansar", "pl": "Odpoczywać"},
+        {"es": "Trabajar", "pl": "Pracować"},
+        {"es": "Comer / Beber", "pl": "Jeść / Pić"},
+        {"es": "Escribir", "pl": "Pisać"},
+        {"es": "Vivir", "pl": "Żyć / Mieszkać"}
+      ]
+    },
+    {
+      "id": "sec_03",
+      "type": "grammar",
+      "title": "Gramatyka: Pretérito Indefinido (Czas Przeszły Dokonany)",
+      "content": "Czas **Pretérito Indefinido** to absolutny fundament opowiadania historii. Używamy go do opisywania czynności, które **zakończyły się w określonym momencie w przeszłości** i nie mają już żadnego związku z teraźniejszością.\n\n### Indefinido vs Perfecto (Złota reguła)\n* **Pretérito Perfecto** (np. *he viajado*): Używamy z określeniami łączącymi się z \"teraz\" (np. *hoy* - dzisiaj, *esta semana* - w tym tygodniu, *este año* - w tym roku).\n* **Pretérito Indefinido** (np. *viajé*): Używamy z odciętą, zamkniętą przeszłością (np. *ayer* - wczoraj, *el año pasado* - w zeszłym roku, *en julio* - w lipcu).\n\n### Odmiana czasowników regularnych\nAby odmienić czasownik, odcinamy końcówkę bezokolicznika (-ar, -er, -ir) i dodajemy nowe końcówki. Zwróć uwagę, że czasowniki na **-ER** i **-IR** mają **identyczne** końcówki!\n\n| Osoba | -AR (np. **viajar** - podróżować) | -ER (np. **comer** - jeść) | -IR (np. **escribir** - pisać) |\n| :--- | :--- | :--- | :--- |\n| **Yo** | viaj**é** | com**í** | escrib**í** |\n| **Tú** | viaj**aste** | com**iste** | escrib**iste** |\n| **Él/Ella/Usted** | viaj**ó** | com**ió** | escrib**ió** |\n| **Nosotros/as** | viaj**amos** | com**imos** | escrib**imos** |\n| **Vosotros/as** | viaj**asteis** | com**isteis** | escrib**isteis** |\n| **Ellos/Ellas/Ustedes**| viaj**aron** | com**ieron** | escrib**ieron** |\n\n⚠️ **Kluczowe uwagi do zapamiętania:**\n1. Zawsze akcentujemy i wymawiamy mocniej formy z tyldą (np. *viaj**é***, *viaj**ó***). Pomyłka akcentu to pomyłka czasu! (np. *hablo* to 'ja mówię', a *habló* to 'on powiedział').\n2. Forma dla *nosotros* w czasownikach na -AR i -IR jest **taka sama jak w czasie teraźniejszym** (np. *hoy viajamos*, *ayer viajamos*). Kontekst zdania podpowiada, o jaki czas chodzi."
+    },
+    {
+      "id": "sec_04",
+      "type": "exercises",
+      "title": "Ejercicios (Ćwiczenia 1-25)",
+      "items": [
+        {"question": "Ayer yo ___ (viajar) a Madrid por trabajo.", "answer": "viajé", "translation": "Wczoraj pojechałem (podróżowałem) do Madrytu w celach zawodowych."},
+        {"question": "En julio nosotros ___ (visitar) Estados Unidos.", "answer": "visitamos", "translation": "W lipcu odwiedziliśmy Stany Zjednoczone."},
+        {"question": "¿Tú ___ (comprar) la picadora de carne ayer?", "answer": "compraste", "translation": "Kupiłeś wczoraj tę maszynkę do mięsa?"},
+        {"question": "El año pasado ella ___ (vivir) en Chicago.", "answer": "vivió", "translation": "W zeszłym roku ona mieszkała w Chicago."},
+        {"question": "Nosotros ___ (comer) en un restaurante muy bueno ayer.", "answer": "comimos", "translation": "Wczoraj zjedliśmy w bardzo dobrej restauracji."},
+        {"question": "La semana pasada ellos ___ (escribir) un informe largo.", "answer": "escribieron", "translation": "W zeszłym tygodniu oni napisali długi raport."},
+        {"question": "Anteayer yo ___ (descansar) en el sofá toda la tarde.", "answer": "descansé", "translation": "Przedwczoraj odpoczywałem na kanapie całe popołudnie."},
+        {"question": "¿A qué hora ___ (tú - salir) del trabajo ayer?", "answer": "saliste", "translation": "O której godzinie wyszedłeś wczoraj z pracy?"},
+        {"question": "Él ___ (beber) mucho café durante el viaje.", "answer": "bebió", "translation": "On wypił dużo kawy podczas podróży."},
+        {"question": "Nosotros ___ (alquilar) un Nissan Pathfinder para la ruta.", "answer": "alquilamos", "translation": "Wynajęliśmy Nissana Pathfindera na trasę."},
+        {"question": "Vosotros ___ (trabajar) mucho el mes pasado.", "answer": "trabajasteis", "translation": "Wy pracowaliście dużo w zeszłym miesiącu."},
+        {"question": "Ayer por la noche yo ___ (pasear) por la ciudad.", "answer": "paseé", "translation": "Wczoraj wieczorem spacerowałem po mieście."},
+        {"question": "Las niñas ___ (dormir) bien durante el vuelo.", "answer": "durmieron", "translation": "Dziewczynki spały dobrze podczas lotu. (Uwaga: dormir to wyjątek e->ue/o->u w 3 os., więc tu: durmieron)."},
+        {"question": "El camión de doce toneladas ___ (llegar) ayer a la aduana.", "answer": "llegó", "translation": "Ciężarówka o ładowności 12 ton dojechała wczoraj do urzędu celnego."},
+        {"question": "En 2025 nosotros ___ (organizar) muchas ferias.", "answer": "organizamos", "translation": "W 2025 roku zorganizowaliśmy dużo targów."},
+        {"question": "Yo ___ (hablar) con el cliente la semana pasada.", "answer": "hablé", "translation": "Rozmawiałem z klientem w zeszłym tygodniu."},
+        {"question": "¿Vosotros ___ (visitar) Des Moines en vuestro viaje?", "answer": "visitasteis", "translation": "Odwiedziliście Des Moines w waszej podróży?"},
+        {"question": "El conductor ___ (descansar) dos horas en la estación.", "answer": "descansó", "translation": "Kierowca odpoczywał dwie godziny na stacji."},
+        {"question": "Ayer ella ___ (comprar) recuerdos para la familia.", "answer": "compró", "translation": "Wczoraj ona kupiła pamiątki dla rodziny."},
+        {"question": "Nosotros ___ (aprender) mucho en ese proyecto.", "answer": "aprendimos", "translation": "Dużo się nauczyliśmy przy tamtym projekcie."},
+        {"question": "¿Tú ___ (escribir) el correo electrónico ayer?", "answer": "escribiste", "translation": "Napisałeś ten e-mail wczoraj?"},
+        {"question": "Yo ___ (correr) cinco kilómetros el martes.", "answer": "corrí", "translation": "Przebiegłem pięć kilometrów we wtorek."},
+        {"question": "Ellos ___ (vender) su coche viejo el año pasado.", "answer": "vendieron", "translation": "Oni sprzedali swój stary samochód w zeszłym roku."},
+        {"question": "¿Qué ___ (vosotros - comer) en Wisconsin Dells?", "answer": "comisteis", "translation": "Co jedliście w Wisconsin Dells?"},
+        {"question": "El mes pasado nosotros ___ (viajar) por carretera.", "answer": "viajamos", "translation": "W zeszłym miesiącu podróżowaliśmy drogą (szosą)."}
+      ]
+    },
+    {
+      "id": "sec_05",
+      "type": "exercises",
+      "title": "Ejercicios (Ćwiczenia 26-50)",
+      "items": [
+        {"question": "Ayer yo no ___ (trabajar), me quedé en casa.", "answer": "trabajé", "translation": "Wczoraj nie pracowałem, zostałem w domu."},
+        {"question": "El avión ___ (despegar) muy temprano por la mañana.", "answer": "despegó", "translation": "Samolot wystartował bardzo wcześnie rano."},
+        {"question": "¿Tú ___ (recibir) los documentos del carnet ATA?", "answer": "recibiste", "translation": "Otrzymałeś dokumenty karnetu ATA?"},
+        {"question": "En julio nosotros ___ (pasar) tres semanas en EE.UU.", "answer": "pasamos", "translation": "W lipcu spędziliśmy trzy tygodnie w USA."},
+        {"question": "Ella ___ (abrir) la puerta del garaje ayer.", "answer": "abrió", "translation": "Ona otworzyła wczoraj drzwi garażowe."},
+        {"question": "Nosotros ___ (entender) el problema rápidamente.", "answer": "entendimos", "translation": "Szybko zrozumieliśmy problem."},
+        {"question": "Yo ___ (jugar) al Flight Simulator anoche.", "answer": "jugué", "translation": "Grałem wczoraj w nocy w Flight Simulator. (Uwaga: zmiana g->gu w 1. os. dla zachowania dźwięku)."},
+        {"question": "El equipo ___ (funcionar) perfectamente durante la exposición.", "answer": "funcionó", "translation": "Sprzęt działał idealnie podczas wystawy."},
+        {"question": "¿Vosotros ___ (beber) cerveza o vino en la cena?", "answer": "bebisteis", "translation": "Piliście piwo czy wino na kolacji?"},
+        {"question": "Ayer mi hermano ___ (llamar) por teléfono.", "answer": "llamó", "translation": "Wczoraj mój brat zadzwonił przez telefon."},
+        {"question": "Nosotros ___ (terminar) el proyecto el mes pasado.", "answer": "terminamos", "translation": "Skończyliśmy projekt w zeszłym miesiącu."},
+        {"question": "Yo ___ (estudiar) mucho para la licencia de piloto.", "answer": "estudié", "translation": "Dużo się uczyłem do licencji pilota."},
+        {"question": "¿Tú ___ (vivir) en Madrid en el año 2020?", "answer": "viviste", "translation": "Mieszkałeś w Madrycie w roku 2020?"},
+        {"question": "Los clientes ___ (comprar) muchas salchichas artesanales.", "answer": "compraron", "translation": "Klienci kupili dużo rzemieślniczych kiełbas."},
+        {"question": "El sábado pasado yo ___ (limpiar) toda la casa.", "answer": "limpié", "translation": "W zeszłą sobotę posprzątałem cały dom."},
+        {"question": "Anteayer nosotros ___ (comer) paella.", "answer": "comimos", "translation": "Przedwczoraj jedliśmy paellę."},
+        {"question": "Ellos no ___ (responder) a mi correo de ayer.", "answer": "respondieron", "translation": "Oni nie odpowiedzieli na mój wczorajszy mail."},
+        {"question": "¿A qué hora ___ (vosotros - llegar) al aeropuerto?", "answer": "llegasteis", "translation": "O której godzinie dotarliście na lotnisko?"},
+        {"question": "El año pasado yo ___ (decidir) cambiar de coche.", "answer": "decidí", "translation": "W zeszłym roku zdecydowałem się zmienić samochód."},
+        {"question": "Ella ___ (preparar) la degustación la semana pasada.", "answer": "preparó", "translation": "Ona przygotowała degustację w zeszłym tygodniu."},
+        {"question": "¿Vosotros ___ (ver) el partido en la televisión ayer?", "answer": "visteis", "translation": "Oglądaliście wczoraj mecz w telewizji? (Wyjątek ver: bez akcentów w Indefinido)."},
+        {"question": "Nosotros ___ (salir) del restaurante muy tarde.", "answer": "salimos", "translation": "Wyszliśmy z restauracji bardzo późno."},
+        {"question": "Ayer yo ___ (usar) el nuevo software de inteligencia artificial.", "answer": "usé", "translation": "Wczoraj użyłem nowego oprogramowania sztucznej inteligencji."},
+        {"question": "El camión ___ (cargar) el material en Alemania.", "answer": "cargó", "translation": "Ciężarówka załadowała materiał w Niemczech."},
+        {"question": "¿Tú ___ (preguntar) por la dirección en la rotonda?", "answer": "preguntaste", "translation": "Zapytałeś o kierunek na rondzie?"}
+      ]
+    }
+  ]
+}

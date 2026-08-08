@@ -5,14 +5,12 @@ import os
 # Konfiguracja strony
 st.set_page_config(page_title="Kurs Hiszpańskiego A1", layout="wide")
 
-# Funkcje pomocnicze
 def load_lesson(filename):
     with open(os.path.join("data", "A1", filename), "r", encoding="utf-8") as f:
         return json.load(f)
 
 def get_progress_data():
     if 'user_progress' not in st.session_state:
-        # Wczytujemy z pliku lub tworzymy pusty słownik
         if os.path.exists("data/user_progress.json"):
             with open("data/user_progress.json", "r") as f:
                 st.session_state.user_progress = json.load(f)
@@ -28,67 +26,107 @@ def save_progress_data(data):
 def main():
     st.sidebar.title("📚 Kurs A1 - Ultra Pro")
     
-    # 1. Wybór lekcji
+    # Wybór trybu: Lekcje lub Dashboard Analityczny
+    mode = st.sidebar.radio("Widok:", ["🎓 Moduły Kursu", "📊 Dashboard Analityczny"])
+    st.sidebar.markdown("---")
+    
     lesson_files = [f for f in os.listdir("data/A1") if f.endswith('.json')]
     lesson_files.sort()
-    selected_file = st.sidebar.selectbox("Wybierz lekcję", lesson_files)
-    lesson = load_lesson(selected_file)
     progress = get_progress_data()
-    
-    # 2. Dynamiczne Menu Boczne z Licznikami
-    st.sidebar.markdown("---")
-    st.sidebar.subheader("Struktura lekcji")
-    
-    # Liczenie ukończonych sekcji
-    completed_sections = [s['id'] for s in lesson['sections'] if progress.get(f"{lesson['lesson_metadata']['id']}_{s['id']}", False)]
-    
-    section_options = []
-    for s in lesson['sections']:
-        is_done = progress.get(f"{lesson['lesson_metadata']['id']}_{s['id']}", False)
-        section_options.append((s['title'], "✅" if is_done else "⭕"))
-    
-    selected_name = st.sidebar.radio("Sekcje:", [opt[0] for opt in section_options])
-    current_section = next(s for s in lesson['sections'] if s['title'] == selected_name)
-    
-    # Wyświetlanie postępu w menu
-    st.sidebar.markdown(f"**Postęp lekcji:** {len(completed_sections)}/{len(lesson['sections'])} ukończonych")
 
-    # 3. Renderowanie treści głównej
-    st.title(lesson['lesson_metadata']['title'])
-    st.header(current_section['title'])
-    
-    # Obsługa bloków treści
-    if current_section['type'] == 'dialog':
-        for line in current_section['content']:
-            st.write(f"**{line['speaker']}**: {line['text']}")
-            
-    elif current_section['type'] == 'vocabulary':
-        for item in current_section['items']:
-            st.write(f"✅ **{item['es']}** - {item['pl']}")
-            
-    elif current_section['type'] == 'grammar':
-        st.info(current_section['content'])
+    if mode == "🎓 Moduły Kursu":
+        selected_file = st.sidebar.selectbox("Wybierz lekcję", lesson_files)
+        lesson = load_lesson(selected_file)
         
-    elif current_section['type'] == 'exercises':
-        for i, ex in enumerate(current_section['items']):
-            with st.expander(f"Ćwiczenie {i+1}: {ex['translation']}"):
-                ans = st.text_input(ex['question'], key=f"ex_{i}")
-                if ans:
-                    if ans.strip().lower() == ex['answer'].lower():
-                        st.success("¡Perfecto!")
-                    else:
-                        st.error(f"❌ Poprawnie: {ex['answer']}")
+        st.sidebar.markdown("### Struktura lekcji")
+        
+        completed_sections = [s['id'] for s in lesson['sections'] if progress.get(f"{lesson['lesson_metadata']['id']}_{s['id']}", False)]
+        
+        section_options = []
+        for s in lesson['sections']:
+            is_done = progress.get(f"{lesson['lesson_metadata']['id']}_{s['id']}", False)
+            section_options.append((s['title'], "✅" if is_done else "⭕"))
+        
+        selected_name = st.sidebar.radio("Sekcje:", [opt[0] for opt in section_options])
+        current_section = next(s for s in lesson['sections'] if s['title'] == selected_name)
+        
+        st.sidebar.markdown(f"**Postęp lekcji:** {len(completed_sections)}/{len(lesson['sections'])} ukończonych")
 
-    # 4. Przycisk zaliczenia sekcji
-    st.markdown("---")
-    prog_key = f"{lesson['lesson_metadata']['id']}_{current_section['id']}"
-    if not progress.get(prog_key, False):
-        if st.button("Zakończ tę sekcję"):
-            progress[prog_key] = True
-            save_progress_data(progress)
-            st.rerun()
-    else:
-        st.success("Sekcja ukończona!")
+        # Renderowanie treści głównej
+        st.title(lesson['lesson_metadata']['title'])
+        st.header(current_section['title'])
+        
+        if current_section['type'] == 'dialog':
+            for line in current_section['content']:
+                st.write(f"**{line['speaker']}**: {line['text']}")
+                
+        elif current_section['type'] == 'vocabulary':
+            for item in current_section['items']:
+                st.write(f"✅ **{item['es']}** - {item['pl']}")
+                
+        elif current_section['type'] == 'grammar':
+            st.info(current_section['content'])
+            
+        elif current_section['type'] == 'exercises':
+            for i, ex in enumerate(current_section['items']):
+                with st.expander(f"Ćwiczenie {i+1}: {ex['translation']}"):
+                    ans = st.text_input(ex['question'], key=f"ex_{selected_file}_{current_section['id']}_{i}")
+                    if ans:
+                        if ans.strip().lower() == ex['answer'].lower():
+                            st.success("¡Perfecto!")
+                        else:
+                            st.error(f"❌ Poprawnie: {ex['answer']}")
+
+        # Przycisk zaliczenia sekcji
+        st.markdown("---")
+        prog_key = f"{lesson['lesson_metadata']['id']}_{current_section['id']}"
+        if not progress.get(prog_key, False):
+            if st.button("Zakończ tę sekcję"):
+                progress[prog_key] = True
+                save_progress_data(progress)
+                st.rerun()
+        else:
+            st.success("Sekcja ukończona!")
+
+    elif mode == "📊 Dashboard Analityczny":
+        st.title("📊 Dashboard Analityczny Kursu")
+        st.write("Statystyki Twoich postępów w nauce języka hiszpańskiego.")
+        
+        total_sections = 0
+        completed_sections_count = 0
+        
+        lesson_progress_summary = []
+        
+        for f in lesson_files:
+            l_data = load_lesson(f)
+            l_id = l_data['lesson_metadata']['id']
+            l_title = l_data['lesson_metadata']['title']
+            
+            l_total = len(l_data['sections'])
+            l_done = sum(1 for s in l_data['sections'] if progress.get(f"{l_id}_{s['id']}", False))
+            
+            total_sections += l_total
+            completed_sections_count += l_done
+            
+            pct = int((l_done / l_total) * 100) if l_total > 0 else 0
+            lesson_progress_summary.append({"Lekcja": l_title, "Ukończono (%)": pct, "Zaliczone": f"{l_done}/{l_total}"})
+
+        # Metryki główne
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.metric("Ukończone sekcje", f"{completed_sections_count} / {total_sections}")
+        with col2:
+            global_pct = int((completed_sections_count / total_sections) * 100) if total_sections > 0 else 0
+            st.metric("Ogólny postęp kursu", f"{global_pct}%")
+        with col3:
+            st.metric("Aktywne moduły", len(lesson_files))
+
+        st.markdown("---")
+        st.subheader("📈 Postęp w poszczególnych lekcjach")
+        
+        for item in lesson_progress_summary:
+            st.write(f"**{item['Lekcja']}** — {item['Zaliczone']} sekcji")
+            st.progress(item['Ukończono (%)'])
 
 if __name__ == "__main__":
     main()

@@ -10,11 +10,11 @@
       "type": "dialog",
       "title": "Diálogo: Comprando ropa para el viaje",
       "content": [
-        {"speaker": "Piotr", "text": "Natalia, mira esta camiseta blanca. Es perfecta para nuestro viaje por Estados Unidos."},
-        {"speaker": "Natalia", "text": "Me gusta. ¿Cuánto cuesta?"},
-        {"speaker": "Piotr", "text": "Cuesta veinte euros. Es bastante barata. Voy a comprar dos para nuestras hijas también."},
-        {"speaker": "Natalia", "text": "Buena idea. Yo necesito comprar unos zapatos cómodos y una chaqueta gris, porque a veces hace viento."},
-        {"speaker": "Piotr", "text": "Vale. ¿Dónde están los probadores? Quiero probarme estos pantalones negros."}
+        {"speaker": "Piotr", "text": "Natalia, mira esta camiseta blanca. Es perfecta para nuestro viaje por Estados Unidos.", "translation": "Natalia, spójrz na tę białą koszulkę. Jest idealna na naszą podróż po Stanach Zjednoczonych."},
+        {"speaker": "Natalia", "text": "Me gusta. ¿Cuánto cuesta?", "translation": "Podoba mi się. Ile kosztuje?"},
+        {"speaker": "Piotr", "text": "Cuesta veinte euros. Es bastante barata. Voy a comprar dos para nuestras hijas también.", "translation": "Kosztuje dwadzieścia euro. Jest dość tania. Zamierzam kupić też dwie dla naszych córek."},
+        {"speaker": "Natalia", "text": "Buena idea. Yo necesito comprar unos zapatos cómodos y una chaqueta gris, porque a veces hace viento.", "translation": "Dobry pomysł. Ja muszę kupić wygodne buty i szarą kurtkę, bo czasami wieje wiatr."},
+        {"speaker": "Piotr", "text": "Vale. ¿Dónde están los probadores? Quiero probarme estos pantalones negros.", "translation": "W porządku. Gdzie są przymierzalnie? Chcę przymierzyć te czarne spodnie."}
       ]
     },
     {
@@ -49,8 +49,8 @@
     {
       "id": "sec_03",
       "type": "grammar",
-      "title": "Gramatyka: Zaimki wskazujące (Este, Esta) i czasownik Costar",
-      "content": "Gdy pokazujemy na coś z bliska, używamy 'este' (ten), 'esta' (ta), 'estos' (ci/te) lub 'estas' (te żeńskie). Np. 'esta camiseta' (ta koszulka). Czasownik 'costar' (kosztować) jest nieregularny (o wymienia się na ue): cuesta (l. poj.) lub cuestan (l. mn.)."
+      "title": "Gramatyka: Zaimki wskazujące i czasownik Costar",
+      "content": "W języku hiszpańskim **zaimki wskazujące** (ten, ta, ci, te) muszą zgadzać się w rodzaju (męski/żeński) i liczbie (pojedyncza/mnoga) z rzeczownikiem, na który wskazują. Używamy ich, gdy pokazujemy na coś, co znajduje się blisko nas.\n\n### Zaimki wskazujące (Blisko - Ten/Ta/Ci/Te)\n\n| | Rodzaj męski | Rodzaj żeński |\n| :--- | :--- | :--- |\n| **Liczba pojedyncza** | **este** (ten) - np. *este zapato* | **esta** (ta) - np. *esta camiseta* |\n| **Liczba mnoga** | **estos** (ci/te) - np. *estos pantalones* | **estas** (te) - np. *estas chaquetas* |\n\n### Czasownik COSTAR (Kosztować)\nCzasownik ten jest nieregularny (litera **o** wymienia się na **ue**). W kontekście zakupów używamy go najczęściej tylko w trzeciej osobie liczby pojedynczej lub mnogiej:\n* **Cuesta** (kosztuje) - dla jednej rzeczy (np. *Esta camisa cuesta mucho.*)\n* **Cuestan** (kosztują) - dla wielu rzeczy (np. *Estos zapatos cuestan poco.*)"
     },
     {
       "id": "sec_04",

@@ -10,11 +10,11 @@
       "type": "dialog",
       "title": "Diálogo: ¿Dónde están mis cosas?",
       "content": [
-        {"speaker": "Piotr", "text": "Natalia, ¿dónde están las llaves del coche blanco?"},
-        {"speaker": "Natalia", "text": "Están en el salón, encima de la mesa pequeña, al lado del sofá."},
-        {"speaker": "Piotr", "text": "Aquí no hay nada... ¡Ah, sí! Están debajo del cojín."},
-        {"speaker": "Natalia", "text": "¿Y dónde está la picadora de carne nueva? La necesito."},
-        {"speaker": "Piotr", "text": "Está en la cocina, dentro del armario grande a la derecha del horno."}
+        {"speaker": "Piotr", "text": "Natalia, ¿dónde están las llaves del coche blanco?", "translation": "Natalia, gdzie są klucze do białego samochodu?"},
+        {"speaker": "Natalia", "text": "Están en el salón, encima de la mesa pequeña, al lado del sofá.", "translation": "Są w salonie, na małym stole, obok sofy."},
+        {"speaker": "Piotr", "text": "Aquí no hay nada... ¡Ah, sí! Están debajo del cojín.", "translation": "Tutaj nic nie ma... Ach, tak! Są pod poduszką."},
+        {"speaker": "Natalia", "text": "¿Y dónde está la picadora de carne nueva? La necesito.", "translation": "A gdzie jest ta nowa maszynka do mięsa? Potrzebuję jej."},
+        {"speaker": "Piotr", "text": "Está en la cocina, dentro del armario grande a la derecha del horno.", "translation": "Jest w kuchni, wewnątrz dużej szafy po prawej stronie piekarnika."}
       ]
     },
     {
@@ -37,7 +37,7 @@
       "id": "sec_03",
       "type": "grammar",
       "title": "Gramatyka: HAY vs ESTAR",
-      "content": "Używamy 'HAY' dla rzeczy nieokreślonych (np. 'En el salón hay una mesa' - W salonie JEST jakaś mesa). Używamy 'ESTAR' dla rzeczy konkretnych (np. 'La mesa está en el salón' - TA mesa znajduje się w salonie)."
+      "content": "Oba te słowa tłumaczymy na polski jako 'jest' lub 'znajduje się', ale w hiszpańskim używamy ich w zupełnie różnych sytuacjach.\n\n### Różnice i zasady użycia\n\n| HAY (Jest / Znajduje się) | ESTAR (Jest / Znajduje się) |\n| :--- | :--- |\n| Oznacza, że coś **w ogóle istnieje** w danej przestrzeni. Mówimy o rzeczach nieznanych, nowych dla rozmówcy. | Oznacza konkretną **lokalizację** znanej nam rzeczy. Mówimy o obiektach, o których już wspominaliśmy. |\n| Używamy z rodzajnikami nieokreślonymi: **un, una, unos, unas**. | Używamy z rodzajnikami określonymi: **el, la, los, las**. |\n| Używamy z liczbami: **dos, tres, muchos**. | Używamy z zaimkami dzierżawczymi: **mi, tu, su**. |\n| **Brak rodzajnika** (np. *Hay leche* - Jest mleko). | Używamy z imionami i nazwami własnymi (np. *Piotr está aquí*). |\n\n💡 **Przykłady dla porównania:**\n* *En el salón **hay una** mesa.* (W salonie jest [jakiś] stół - informujemy o jego istnieniu).\n* ***La** mesa **está** en el salón.* ([Ten konkretny] stół znajduje się w salonie - odpowiadamy na pytanie, gdzie on stoi)."
     },
     {
       "id": "sec_04",

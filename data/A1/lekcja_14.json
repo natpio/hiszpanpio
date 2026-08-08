@@ -1,0 +1,118 @@
+{
+  "lesson_metadata": {
+    "id": "A1_14",
+    "level": "A1",
+    "title": "Na lotnisku i zagubiony bagaż (Tener que)"
+  },
+  "sections": [
+    {
+      "id": "sec_01",
+      "type": "dialog",
+      "title": "Diálogo: Problemas en la terminal",
+      "content": [
+        {"speaker": "Empleado", "text": "Buenos días. ¿En qué puedo ayudarle?"},
+        {"speaker": "Piotr", "text": "Buenos días. He volado desde Chicago y mi equipaje no está en la cinta. Creo que lo he perdido."},
+        {"speaker": "Empleado", "text": "Lo siento mucho. Tiene que rellenar este formulario con sus datos. ¿Cómo es su maleta?"},
+        {"speaker": "Piotr", "text": "Es una maleta grande. Pero tengo una buena noticia: tiene una etiqueta de localización dentro."},
+        {"speaker": "Empleado", "text": "¿Y qué dice el rastreador en su teléfono?"},
+        {"speaker": "Piotr", "text": "Dice que la maleta está aquí en Varsovia, dentro de la zona de clasificación del aeropuerto Chopin."},
+        {"speaker": "Empleado", "text": "¡Perfecto! Entonces tenemos que llamar a los técnicos para recuperarla pronto."}
+      ]
+    },
+    {
+      "id": "sec_02",
+      "type": "vocabulary",
+      "title": "Vocabulario (Lotnisko i problemy)",
+      "items": [
+        {"es": "El aeropuerto", "pl": "Lotnisko"},
+        {"es": "El vuelo / Volar", "pl": "Lot / Latać"},
+        {"es": "El equipaje / La maleta", "pl": "Bagaż / Walizka"},
+        {"es": "La cinta de equipaje", "pl": "Taśma bagażowa"},
+        {"es": "Objetos perdidos", "pl": "Biuro rzeczy znalezionych / Zagubiony bagaż"},
+        {"es": "Perder (Perdido)", "pl": "Zgubić (Zgubiony)"},
+        {"es": "El rastreador", "pl": "Lokalizator / Tracker"},
+        {"es": "La etiqueta de localización", "pl": "Tag lokalizacyjny"},
+        {"es": "La terminal", "pl": "Terminal"},
+        {"es": "La zona de clasificación", "pl": "Sortownia"},
+        {"es": "El pasaporte / El documento", "pl": "Paszport / Dokument"},
+        {"es": "La tarjeta de embarque", "pl": "Karta pokładowa"},
+        {"es": "El control de seguridad", "pl": "Kontrola bezpieczeństwa"},
+        {"es": "El formulario", "pl": "Formularz"},
+        {"es": "Rellenar", "pl": "Wypełniać"},
+        {"es": "Recuperar", "pl": "Odzyskać"},
+        {"es": "Tener que", "pl": "Musieć (osobiście)"},
+        {"es": "Hay que", "pl": "Trzeba (bezosobowo)"}
+      ]
+    },
+    {
+      "id": "sec_03",
+      "type": "grammar",
+      "title": "Gramatyka: Obowiązki (Tener que + Infinitivo)",
+      "content": "Aby powiedzieć, że MUSISZ coś zrobić, używasz odmienionego czasownika 'Tener' (tengo, tienes, tiene, tenemos, tenéis, tienen), dodajesz słówko 'que' i czasownik w bezokoliczniku. Np. 'Tengo que buscar mi maleta' (Muszę poszukać mojej walizki). Jeśli mówisz, że 'trzeba' coś zrobić ogólnie, używasz bezosobowego 'Hay que' (np. 'Hay que rellenar el formulario' - Trzeba wypełnić formularz)."
+    },
+    {
+      "id": "sec_04",
+      "type": "exercises",
+      "title": "Ejercicios (Ćwiczenia 1-25)",
+      "items": [
+        {"question": "Yo ___ que ir al aeropuerto ahora.", "answer": "tengo", "translation": "Muszę teraz jechać na lotnisko."},
+        {"question": "¿Tú ___ que trabajar este fin de semana?", "answer": "tienes", "translation": "Czy musisz pracować w ten weekend?"},
+        {"question": "Piotr ___ que rellenar un formulario para su equipaje.", "answer": "tiene", "translation": "Piotr musi wypełnić formularz dotyczący jego bagażu."},
+        {"question": "Nosotros ___ que esperar el vuelo a Chicago.", "answer": "tenemos", "translation": "Musimy poczekać na lot do Chicago."},
+        {"question": "Vosotros ___ que pasar por el control de seguridad.", "answer": "tenéis", "translation": "Musicie przejść przez kontrolę bezpieczeństwa."},
+        {"question": "Los pasajeros ___ que mostrar el pasaporte.", "answer": "tienen", "translation": "Pasażerowie muszą pokazać paszport."},
+        {"question": "No encuentro mi maleta en la ___ de equipaje.", "answer": "cinta", "translation": "Nie znajduję mojej walizki na taśmie bagażowej."},
+        {"question": "Creo que he ___ mi pasaporte en el avión.", "answer": "perdido", "translation": "Chyba zgubiłem paszport w samolocie."},
+        {"question": "Para recuperar el equipaje, ___ que hablar con el empleado.", "answer": "tengo", "translation": "Żeby odzyskać bagaż, muszę porozmawiać z pracownikiem."},
+        {"question": "En el aeropuerto, ___ que (trzeba) estar dos horas antes.", "answer": "hay", "translation": "Na lotnisku trzeba być dwie godziny wcześniej."},
+        {"question": "Tengo una ___ de localización en mi mochila.", "answer": "etiqueta", "translation": "Mam tag lokalizacyjny w moim plecaku."},
+        {"question": "El ___ en mi teléfono dice que la maleta está aquí.", "answer": "rastreador", "translation": "Lokalizator w moim telefonie mówi, że walizka jest tutaj."},
+        {"question": "La maleta negra está en la zona de ___.", "answer": "clasificación", "translation": "Czarna walizka jest w sortowni."},
+        {"question": "Por favor, tiene que ___ este documento con sus datos.", "answer": "rellenar", "translation": "Proszę, musi pan wypełnić ten dokument swoimi danymi."},
+        {"question": "¿Dónde está la oficina de objetos ___?", "answer": "perdidos", "translation": "Gdzie jest biuro rzeczy znalezionych/zagubionych?"},
+        {"question": "¿Puedo ver su ___ de embarque, por favor?", "answer": "tarjeta", "translation": "Czy mogę zobaczyć pana kartę pokładową?"},
+        {"question": "El vuelo ha llegado a la ___ número dos.", "answer": "terminal", "translation": "Lot przyleciał na terminal numer dwa."},
+        {"question": "Tengo ___ llamar a mi mujer para decirle que estoy bien.", "answer": "que", "translation": "Muszę zadzwonić do żony, żeby powiedzieć, że nic mi nie jest."},
+        {"question": "Para viajar a Estados Unidos, ___ que tener visado o ESTA.", "answer": "tienes", "translation": "Żeby podróżować do USA, musisz mieć wizę lub ESTA."},
+        {"question": "El camión con el equipo de la feria ___ que salir hoy.", "answer": "tiene", "translation": "Ciężarówka ze sprzętem z targów musi wyjechać dzisiaj."},
+        {"question": "___ que (trzeba) revisar la aplicación WiFiman de Ubiquiti.", "answer": "Hay", "translation": "Trzeba sprawdzić aplikację WiFiman od Ubiquiti."},
+        {"question": "¿Dónde ___ (musimy) cargar los embutidos para el evento?", "answer": "tenemos", "translation": "Gdzie musimy załadować wędliny na to wydarzenie?"},
+        {"question": "El vuelo desde Varsovia ___ retraso.", "answer": "tiene", "translation": "Lot z Warszawy ma opóźnienie."},
+        {"question": "Los técnicos ___ que reparar la cinta.", "answer": "tienen", "translation": "Technicy muszą naprawić taśmę."},
+        {"question": "¿A qué hora ___ que aterrizar el avión?", "answer": "tiene", "translation": "O której godzinie samolot musi wylądować?"}
+      ]
+    },
+    {
+      "id": "sec_05",
+      "type": "exercises",
+      "title": "Ejercicios (Ćwiczenia 26-50)",
+      "items": [
+        {"question": "Usted ___ que pagar por el exceso de equipaje.", "answer": "tiene", "translation": "Musi Pan zapłacić za nadbagaż."},
+        {"question": "Tengo un ___ para rastrear mis cosas valiosas.", "answer": "rastreador", "translation": "Mam lokalizator, żeby śledzić moje cenne rzeczy."},
+        {"question": "Mi ___ es grande, pesada y de color negro.", "answer": "maleta", "translation": "Moja walizka jest duża, ciężka i czarna."},
+        {"question": "Después del vuelo, siempre ___ que descansar.", "answer": "tengo", "translation": "Po locie zawsze muszę odpocząć."},
+        {"question": "¿Tienes ___ descargar el material del camión ahora?", "answer": "que", "translation": "Musisz teraz rozładować materiał z ciężarówki?"},
+        {"question": "Tenemos que organizar la logística para la ___ en Alemania.", "answer": "feria", "translation": "Musimy zorganizować logistykę na targi w Niemczech."},
+        {"question": "¿Quién ___ que rellenar este formulario aduanero?", "answer": "tiene", "translation": "Kto musi wypełnić ten formularz celny?"},
+        {"question": "Yo no ___ que trabajar hoy, estoy de vacaciones.", "answer": "tengo", "translation": "Nie muszę dzisiaj pracować, jestem na wakacjach."},
+        {"question": "El equipaje de mano ___ que ir debajo del asiento.", "answer": "tiene", "translation": "Bagaż podręczny musi iść pod siedzenie."},
+        {"question": "En el aeropuerto de Chopin ___ mucha gente hoy.", "answer": "hay", "translation": "Na lotnisku Chopina jest dzisiaj dużo ludzi."},
+        {"question": "¿Tienes el ___ listo para el control policial?", "answer": "pasaporte", "translation": "Masz paszport gotowy do kontroli policyjnej?"},
+        {"question": "Tengo que ___ un coche en Chicago.", "answer": "alquilar", "translation": "Muszę wynająć samochód w Chicago."},
+        {"question": "El vuelo de vuelta es muy largo, ___ que dormir en el avión.", "answer": "tengo", "translation": "Lot powrotny jest bardzo długi, muszę spać w samolocie."},
+        {"question": "Para ser piloto, ___ que (trzeba) estudiar mucho.", "answer": "hay", "translation": "Żeby zostać pilotem, trzeba dużo się uczyć."},
+        {"question": "¿Habéis ___ vuestro equipaje en la cinta número cinco?", "answer": "visto", "translation": "Widzieliście wasz bagaż na taśmie numer pięć?"},
+        {"question": "El empleado del aeropuerto ___ que llamar al servicio técnico.", "answer": "tiene", "translation": "Pracownik lotniska musi zadzwonić do serwisu technicznego."},
+        {"question": "Nosotros ___ que buscar la terminal correcta.", "answer": "tenemos", "translation": "Musimy poszukać odpowiedniego terminala."},
+        {"question": "A veces ___ que (trzeba) tener mucha paciencia viajando.", "answer": "hay", "translation": "Czasami trzeba mieć dużo cierpliwości podróżując."},
+        {"question": "La ___ de seguridad en este aeropuerto es muy estricta.", "answer": "zona", "translation": "Strefa bezpieczeństwa na tym lotnisku jest bardzo rygorystyczna."},
+        {"question": "¿Ustedes ___ que facturar esta maleta tan grande?", "answer": "tienen", "translation": "Czy Państwo muszą odprawić (nadać) tę dużą walizkę?"},
+        {"question": "El conductor del camión ___ que mostrar el carnet ATA.", "answer": "tiene", "translation": "Kierowca ciężarówki musi pokazać karnet ATA."},
+        {"question": "Para recuperar el objeto, tengo que ir a la ___ tres.", "answer": "terminal", "translation": "Aby odzyskać przedmiot, muszę iść na terminal trzeci."},
+        {"question": "No me gusta ___ equipaje cuando viajo por trabajo.", "answer": "perder", "translation": "Nie lubię gubić bagażu, kiedy podróżuję w celach służbowych."},
+        {"question": "Mi teléfono ___ que tener batería para usar el rastreador.", "answer": "tiene", "translation": "Mój telefon musi mieć baterię, by użyć lokalizatora."},
+        {"question": "¡Al fin! He ___ mi maleta en la zona de clasificación.", "answer": "encontrado", "translation": "W końcu! Znalazłem moją walizkę w sortowni."}
+      ]
+    }
+  ]
+}

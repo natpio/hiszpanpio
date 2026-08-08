@@ -1,0 +1,120 @@
+{
+  "lesson_metadata": {
+    "id": "A1_11",
+    "level": "A1",
+    "title": "Zakupy, ubrania i kolory (Zaimki wskazujące)"
+  },
+  "sections": [
+    {
+      "id": "sec_01",
+      "type": "dialog",
+      "title": "Diálogo: Comprando ropa para el viaje",
+      "content": [
+        {"speaker": "Piotr", "text": "Natalia, mira esta camiseta blanca. Es perfecta para nuestro viaje por Estados Unidos."},
+        {"speaker": "Natalia", "text": "Me gusta. ¿Cuánto cuesta?"},
+        {"speaker": "Piotr", "text": "Cuesta veinte euros. Es bastante barata. Voy a comprar dos para nuestras hijas también."},
+        {"speaker": "Natalia", "text": "Buena idea. Yo necesito comprar unos zapatos cómodos y una chaqueta gris, porque a veces hace viento."},
+        {"speaker": "Piotr", "text": "Vale. ¿Dónde están los probadores? Quiero probarme estos pantalones negros."}
+      ]
+    },
+    {
+      "id": "sec_02",
+      "type": "vocabulary",
+      "title": "Vocabulario (Zakupy i ubrania)",
+      "items": [
+        {"es": "La tienda / El centro comercial", "pl": "Sklep / Centrum handlowe"},
+        {"es": "La ropa", "pl": "Ubrania / Odzież"},
+        {"es": "La camiseta", "pl": "Koszulka (T-shirt)"},
+        {"es": "La camisa", "pl": "Koszula"},
+        {"es": "El pantalón / Los pantalones", "pl": "Spodnie"},
+        {"es": "La chaqueta", "pl": "Kurtka / Marynarka"},
+        {"es": "El jersey", "pl": "Sweter"},
+        {"es": "Los zapatos", "pl": "Buty"},
+        {"es": "Las zapatillas", "pl": "Trampki / Buty sportowe"},
+        {"es": "El vestido / La falda", "pl": "Sukienka / Spódnica"},
+        {"es": "El abrigo", "pl": "Płaszcz"},
+        {"es": "Blanco / Negro", "pl": "Biały / Czarny"},
+        {"es": "Rojo / Azul", "pl": "Czerwony / Niebieski"},
+        {"es": "Verde / Amarillo", "pl": "Zielony / Żółty"},
+        {"es": "Gris / Marrón", "pl": "Szary / Brązowy"},
+        {"es": "Comprar / Pagar", "pl": "Kupować / Płacić"},
+        {"es": "Costar", "pl": "Kosztować"},
+        {"es": "¿Cuánto cuesta?", "pl": "Ile kosztuje?"},
+        {"es": "Barato / Caro", "pl": "Tani / Drogi"},
+        {"es": "La talla", "pl": "Rozmiar"},
+        {"es": "El probador", "pl": "Przymierzalnia"},
+        {"es": "Probarse", "pl": "Przymierzać (sobie)"}
+      ]
+    },
+    {
+      "id": "sec_03",
+      "type": "grammar",
+      "title": "Gramatyka: Zaimki wskazujące (Este, Esta) i czasownik Costar",
+      "content": "Gdy pokazujemy na coś z bliska, używamy 'este' (ten), 'esta' (ta), 'estos' (ci/te) lub 'estas' (te żeńskie). Np. 'esta camiseta' (ta koszulka). Czasownik 'costar' (kosztować) jest nieregularny (o wymienia się na ue): cuesta (l. poj.) lub cuestan (l. mn.)."
+    },
+    {
+      "id": "sec_04",
+      "type": "exercises",
+      "title": "Ejercicios (Ćwiczenia 1-25)",
+      "items": [
+        {"question": "Mira ___ camiseta blanca, es muy bonita.", "answer": "esta", "translation": "Spójrz na tę białą koszulkę, jest bardzo ładna."},
+        {"question": "___ zapatos negros son muy cómodos.", "answer": "Estos", "translation": "Te czarne buty są bardzo wygodne."},
+        {"question": "Me gusta ___ pantalón corto para el verano.", "answer": "este", "translation": "Podobają mi się te krótkie spodnie na lato."},
+        {"question": "___ chaquetas rojas son muy caras.", "answer": "Estas", "translation": "Te czerwone kurtki są bardzo drogie."},
+        {"question": "¿Cuánto ___ esta camiseta?", "answer": "cuesta", "translation": "Ile kosztuje ta koszulka?"},
+        {"question": "¿Cuánto ___ estos pantalones azules?", "answer": "cuestan", "translation": "Ile kosztują te niebieskie spodnie?"},
+        {"question": "El coche nuevo es muy ___.", "answer": "caro", "translation": "Nowy samochód jest bardzo drogi."},
+        {"question": "Compro esta falda porque es muy ___.", "answer": "barata", "translation": "Kupuję tę spódnicę, bo jest bardzo tania."},
+        {"question": "Voy a ___ unas zapatillas deportivas para correr.", "answer": "comprar", "translation": "Zamierzam kupić sportowe buty do biegania."},
+        {"question": "¿Dónde están los ___? Quiero probarme la ropa.", "answer": "probadores", "translation": "Gdzie są przymierzalnie? Chcę przymierzyć ubrania."},
+        {"question": "Necesito una talla más grande, esta ___ es pequeña.", "answer": "talla", "translation": "Potrzebuję większego rozmiaru, ten rozmiar jest mały."},
+        {"question": "Para el viaje a Chicago voy a hacer una ___ especial.", "answer": "camiseta", "translation": "Na wycieczkę do Chicago zamierzam zrobić specjalną koszulkę."},
+        {"question": "En la boda llevo un traje y una ___ blanca.", "answer": "camisa", "translation": "Na weselu noszę garnitur i białą koszulę."},
+        {"question": "Hace frío, ponte un ___ gordo.", "answer": "jersey", "translation": "Jest zimno, załóż gruby sweter."},
+        {"question": "Las niñas llevan ___ verdes idénticos.", "answer": "vestidos", "translation": "Dziewczynki noszą identyczne zielone sukienki."},
+        {"question": "El tomate es de color ___.", "answer": "rojo", "translation": "Pomidor jest koloru czerwonego."},
+        {"question": "El cielo es de color ___.", "answer": "azul", "translation": "Niebo jest koloru niebieskiego."},
+        {"question": "Las plantas son de color ___.", "answer": "verde", "translation": "Rośliny są koloru zielonego."},
+        {"question": "El sol es ___.", "answer": "amarillo", "translation": "Słońce jest żółte."},
+        {"question": "Quiero comprar un coche ___ como un Nissan.", "answer": "blanco", "translation": "Chcę kupić biały samochód jak Nissan."},
+        {"question": "Siempre visto de color ___ porque es elegante.", "answer": "negro", "translation": "Zawsze ubieram się na czarno, bo to eleganckie."},
+        {"question": "No veo bien, necesito mis ___ de sol.", "answer": "gafas", "translation": "Nie widzę dobrze, potrzebuję moich okularów przeciwsłonecznych."},
+        {"question": "Mi hija pequeña tiene una chaqueta ___.", "answer": "gris", "translation": "Moja mała córka ma szarą kurtkę."},
+        {"question": "¿Te vas a ___ esta camisa azul?", "answer": "probar", "translation": "Będziesz przymierzać tę niebieską koszulę?"},
+        {"question": "La ropa en esta ___ es de buena calidad.", "answer": "tienda", "translation": "Ubrania w tym sklepie są dobrej jakości."}
+      ]
+    },
+    {
+      "id": "sec_05",
+      "type": "exercises",
+      "title": "Ejercicios (Ćwiczenia 26-50)",
+      "items": [
+        {"question": "Quiero pagar con ___ de crédito.", "answer": "tarjeta", "translation": "Chcę zapłacić kartą kredytową."},
+        {"question": "¿Se puede ___ en efectivo aquí?", "answer": "pagar", "translation": "Czy można tu płacić gotówką?"},
+        {"question": "___ vestido rojo cuesta cuarenta euros.", "answer": "Este", "translation": "Ta czerwona sukienka kosztuje czterdzieści euro."},
+        {"question": "Me gustan ___ zapatillas blancas para jugar al fútbol.", "answer": "estas", "translation": "Podobają mi się te białe buty sportowe do gry w piłkę."},
+        {"question": "Tengo que comprar un ___ caliente para el invierno.", "answer": "abrigo", "translation": "Muszę kupić ciepły płaszcz na zimę."},
+        {"question": "Los osos en el bosque son de color ___.", "answer": "marrón", "translation": "Niedźwiedzie w lesie są koloru brązowego."},
+        {"question": "Para el trabajo logístico llevo ___ cómodos.", "answer": "zapatos", "translation": "Do pracy logistycznej noszę wygodne buty."},
+        {"question": "¿Te gustan ___ pantalones azules?", "answer": "estos", "translation": "Podobają ci się te niebieskie spodnie?"},
+        {"question": "Esa maleta negra ___ cien euros.", "answer": "cuesta", "translation": "Tamta czarna walizka kosztuje sto euro."},
+        {"question": "El ___ comercial está muy lleno los sábados.", "answer": "centro", "translation": "Centrum handlowe jest bardzo pełne w soboty."},
+        {"question": "Para hacer chorizos uso carne ___.", "answer": "roja", "translation": "Do robienia kiełbas chorizo używam czerwonego mięsa."},
+        {"question": "En el simulador, mi avión es ___ con líneas azules.", "answer": "blanco", "translation": "W symulatorze mój samolot jest biały z niebieskimi liniami."},
+        {"question": "¿Cuál es tu ___ de pantalón? ¿La 42?", "answer": "talla", "translation": "Jaki jest twój rozmiar spodni? 42?"},
+        {"question": "Me ___ estos zapatos negros de cuero.", "answer": "gustan", "translation": "Podobają mi się te czarne skórzane buty."},
+        {"question": "No tengo dinero, no puedo ___ este reloj.", "answer": "comprar", "translation": "Nie mam pieniędzy, nie mogę kupić tego zegarka."},
+        {"question": "Esa camisa me queda pequeña. Necesito la ___ L.", "answer": "talla", "translation": "Tamta koszula jest na mnie mała. Potrzebuję rozmiaru L."},
+        {"question": "Esta chaqueta ___ muy bien, me la llevo.", "answer": "queda", "translation": "Ta kurtka leży bardzo dobrze, biorę ją."},
+        {"question": "En verano siempre llevo ___ corta porque hace calor.", "answer": "manga", "translation": "Latem zawsze noszę krótki rękaw, bo jest gorąco."},
+        {"question": "Cuidado, estas zapatillas son muy ___.", "answer": "caras", "translation": "Uważaj, te trampki są bardzo drogie."},
+        {"question": "Las rebajas de enero son muy ___, todo es barato.", "answer": "buenas", "translation": "Wyprzedaże w styczniu są bardzo dobre, wszystko jest tanie."},
+        {"question": "Para ir al trabajo me pongo el ___ gris.", "answer": "traje", "translation": "Do pracy zakładam szary garnitur."},
+        {"question": "Me voy a ___ la camisa roja en el probador.", "answer": "probar", "translation": "Idę przymierzyć czerwoną koszulę w przymierzalni."},
+        {"question": "¿Cuánto ___ todas estas cosas juntas?", "answer": "cuestan", "translation": "Ile kosztują wszystkie te rzeczy razem?"},
+        {"question": "A Natalia le gusta ___ falda verde.", "answer": "esta", "translation": "Natalii podoba się ta zielona spódnica."},
+        {"question": "Yo prefiero ___ pantalones marrones.", "answer": "estos", "translation": "Ja wolę te brązowe spodnie."}
+      ]
+    }
+  ]
+}

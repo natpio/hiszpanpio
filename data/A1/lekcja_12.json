@@ -1,0 +1,114 @@
+{
+  "lesson_metadata": {
+    "id": "A1_12",
+    "level": "A1",
+    "title": "Moje podróże i praca (Czas Pretérito Perfecto)"
+  },
+  "sections": [
+    {
+      "id": "sec_01",
+      "type": "dialog",
+      "title": "Diálogo: Después de las vacaciones y el trabajo",
+      "content": [
+        {"speaker": "Ana", "text": "¡Hola Piotr! ¿Qué tal este año? ¿Has viajado mucho?"},
+        {"speaker": "Piotr", "text": "Sí, este verano ha sido increíble. Mi mujer, mis hijas y yo hemos estado en Estados Unidos, hemos visitado Chicago."},
+        {"speaker": "Ana", "text": "¡Qué viaje tan largo! ¿Y en el trabajo? ¿Ya has organizado la logística para las ferias en Europa?"},
+        {"speaker": "Piotr", "text": "Sí, esta semana hemos preparado los documentos y el carnet ATA para Ankara. También he reservado un camión de doce toneladas que está en su totalidad a nuestra disposición."},
+        {"speaker": "Ana", "text": "Vaya, has trabajado mucho hoy. Tienes que descansar."}
+      ]
+    },
+    {
+      "id": "sec_02",
+      "type": "vocabulary",
+      "title": "Vocabulario (Podróże i logistyka)",
+      "items": [
+        {"es": "El viaje / El vuelo", "pl": "Podróż / Lot"},
+        {"es": "La feria (comercial)", "pl": "Targi (branżowe)"},
+        {"es": "El evento / La exposición", "pl": "Wydarzenie / Wystawa"},
+        {"es": "El camión (de doce toneladas)", "pl": "Ciężarówka (dwunastotonowa)"},
+        {"es": "El conductor / El chófer", "pl": "Kierowca"},
+        {"es": "El equipaje / La maleta", "pl": "Bagaż / Walizka"},
+        {"es": "El documento", "pl": "Dokument"},
+        {"es": "La aduana", "pl": "Urząd celny / Cło"},
+        {"es": "Organizar / Preparar", "pl": "Organizować / Przygotowywać"},
+        {"es": "Reservar / Cargar", "pl": "Rezerwować / Załadować"},
+        {"es": "Descargar", "pl": "Rozładować (np. sprzęt)"},
+        {"es": "Hoy", "pl": "Dzisiaj"},
+        {"es": "Esta semana / Este mes", "pl": "W tym tygodniu / W tym miesiącu"},
+        {"es": "Este año / Este verano", "pl": "W tym roku / Tego lata"},
+        {"es": "Ya / Todavía no", "pl": "Już / Jeszcze nie"},
+        {"es": "Alguna vez", "pl": "Kiedyś / Zdarzyło ci się (w pytaniach)"}
+      ]
+    },
+    {
+      "id": "sec_03",
+      "type": "grammar",
+      "title": "Gramatyka: Pretérito Perfecto",
+      "content": "Pretérito Perfecto to czas przeszły używany do wydarzeń, które mają związek z teraźniejszością (np. z określeniami: hoy, esta semana, ya). Tworzymy go łącząc odmieniony czasownik 'haber' (he, has, ha, hemos, habéis, han) + imiesłów (participio). Regularne końcówki: -ar -> -ado (hablado, trabajado), -er/-ir -> -ido (comido, vivido). Wyjątki: hacer -> hecho (zrobiony), ver -> visto (zobaczony), escribir -> escrito (napisany), abrir -> abierto (otwarty)."
+    },
+    {
+      "id": "sec_04",
+      "type": "exercises",
+      "title": "Ejercicios (Ćwiczenia 1-25)",
+      "items": [
+        {"question": "Yo ___ trabajado mucho hoy en la oficina.", "answer": "he", "translation": "Dużo dzisiaj pracowałem w biurze."},
+        {"question": "¿Tú ___ preparado los documentos para la aduana?", "answer": "has", "translation": "Czy przygotowałeś dokumenty do urzędu celnego?"},
+        {"question": "El camión ya ___ llegado a la feria en Múnich.", "answer": "ha", "translation": "Ciężarówka już dojechała na targi w Monachium."},
+        {"question": "Natalia y yo ___ estado en Estados Unidos este año.", "answer": "hemos", "translation": "Natalia i ja byliśmy w Stanach Zjednoczonych w tym roku."},
+        {"question": "¿Vosotros ___ visto mi coche blanco?", "answer": "habéis", "translation": "Widzieliście mój biały samochód?"},
+        {"question": "Ellos ___ descargado todo el equipo audiovisual.", "answer": "han", "translation": "Oni rozładowali cały sprzęt audiowizualny."},
+        {"question": "Esta semana he ___ (organizar) el transporte internacional.", "answer": "organizado", "translation": "W tym tygodniu zorganizowałem transport międzynarodowy."},
+        {"question": "Hoy hemos ___ (comer) en un restaurante muy bueno.", "answer": "comido", "translation": "Dzisiaj zjedliśmy w bardzo dobrej restauracji."},
+        {"question": "Mis hijas han ___ (dormir) durante todo el vuelo.", "answer": "dormido", "translation": "Moje córki spały przez cały lot."},
+        {"question": "Todavía no he ___ (hablar) con el conductor.", "answer": "hablado", "translation": "Jeszcze nie rozmawiałem z kierowcą."},
+        {"question": "¿Ya has ___ (hacer) la reserva del hotel?", "answer": "hecho", "translation": "Czy już zrobiłeś rezerwację hotelu? (uwaga: wyjątek)"},
+        {"question": "Esta mañana he ___ (escribir) cinco correos.", "answer": "escrito", "translation": "Dziś rano napisałem pięć maili. (uwaga: wyjątek)"},
+        {"question": "El jefe ha ___ (abrir) la nueva oficina.", "answer": "abierto", "translation": "Szef otworzył nowe biuro. (uwaga: wyjątek)"},
+        {"question": "No he ___ (ver) el correo electrónico todavía.", "answer": "visto", "translation": "Nie widziałem jeszcze maila. (uwaga: wyjątek)"},
+        {"question": "¿Has conducido ___ vez un coche tan grande?", "answer": "alguna", "translation": "Prowadziłeś kiedyś tak duży samochód?"},
+        {"question": "Sí, ___ conducido una furgoneta grande.", "answer": "he", "translation": "Tak, prowadziłem dużego vana."},
+        {"question": "La feria en Leipzig ha ___ (ser) un éxito.", "answer": "sido", "translation": "Targi w Lipsku były sukcesem."},
+        {"question": "He organizado un ___ de 12 toneladas para nosotros.", "answer": "camión", "translation": "Zorganizowałem dla nas 12-tonową ciężarówkę."},
+        {"question": "El vehículo está totalmente a nuestra ___.", "answer": "disposición", "translation": "Pojazd jest w całości do naszej dyspozycji."},
+        {"question": "¿Ya habéis ___ (cargar) el material en París?", "answer": "cargado", "translation": "Czy załadowaliście już materiał w Paryżu?"},
+        {"question": "Este mes he ___ mucha carne artesanal.", "answer": "comprado", "translation": "W tym miesiącu kupiłem dużo rzemieślniczego mięsa."},
+        {"question": "He usado la picadora para hacer ___ esta semana.", "answer": "salchichas", "translation": "Użyłem maszynki, żeby zrobić w tym tygodniu kiełbasy."},
+        {"question": "El vuelo ha ___ (llegar) a Chicago con retraso.", "answer": "llegado", "translation": "Lot do Chicago przyleciał z opóźnieniem."},
+        {"question": "Hoy hemos ___ (empezar) a planear el viaje.", "answer": "empezado", "translation": "Dzisiaj zaczęliśmy planować podróż."},
+        {"question": "Yo no he ___ (ir) a la oficina hoy.", "answer": "ido", "translation": "Nie poszedłem dzisiaj do biura."}
+      ]
+    },
+    {
+      "id": "sec_05",
+      "type": "exercises",
+      "title": "Ejercicios (Ćwiczenia 26-50)",
+      "items": [
+        {"question": "Esta tarde he ___ en el simulador de vuelo.", "answer": "jugado", "translation": "Dziś po południu grałem na symulatorze lotu."},
+        {"question": "¿Has ___ el carnet ATA para Turquía?", "answer": "preparado", "translation": "Przygotowałe tiết karnet ATA do Turcji?"},
+        {"question": "Hoy hemos ___ (vender) muchas camisetas.", "answer": "vendido", "translation": "Dzisiaj sprzedaliśmy dużo koszulek."},
+        {"question": "Todavía no he ___ (entender) el problema con la aduana.", "answer": "entendido", "translation": "Jeszcze nie zrozumiałem problemu z cłem."},
+        {"question": "¿Habéis ___ (visitar) Madrid alguna vez?", "answer": "visitado", "translation": "Czy kiedykolwiek odwiedziliście Madryt?"},
+        {"question": "La reunión ya ha ___ (terminar).", "answer": "terminado", "translation": "Spotkanie już się skończyło."},
+        {"question": "Esta semana he ___ mucho sobre teoría de aviación.", "answer": "leído", "translation": "W tym tygodniu dużo czytałem o teorii lotnictwa."},
+        {"question": "Las maletas ya ___ llegado al aeropuerto.", "answer": "han", "translation": "Walizki już dotarły na lotnisko."},
+        {"question": "Mi familia y yo ___ pasado un mes fantástico.", "answer": "hemos", "translation": "Moja rodzina i ja spędziliśmy fantastyczny miesiąc."},
+        {"question": "He ___ (buscar) un SUV más grande para la familia.", "answer": "buscado", "translation": "Szukałem większego SUV-a dla rodziny."},
+        {"question": "Hoy me he ___ (levantar) a las seis.", "answer": "levantado", "translation": "Dziś wstałem o szóstej. (uwaga na me przed czasownikiem posiłkowym!)"},
+        {"question": "¿Te has ___ (duchar) con agua fría hoy?", "answer": "duchado", "translation": "Brałeś dziś prysznic w zimnej wodzie?"},
+        {"question": "Se han ___ (vestir) muy rápido para salir.", "answer": "vestido", "translation": "Ubrali się bardzo szybko do wyjścia."},
+        {"question": "Nos hemos ___ (quedar) en casa este fin de semana.", "answer": "quedado", "translation": "Zostaliśmy w domu w ten weekend."},
+        {"question": "El proyecto en Python ha ___ (funcionar) perfectamente.", "answer": "funcionado", "translation": "Projekt w Pythonie zadziałał perfekcyjnie."},
+        {"question": "He ___ (crear) una aplicación web muy útil.", "answer": "creado", "translation": "Stworzyłem bardzo użyteczną aplikację internetową."},
+        {"question": "¿Ha ___ (llover) mucho esta semana?", "answer": "llovido", "translation": "Czy w tym tygodniu dużo padało?"},
+        {"question": "Hoy no ha ___ sol, está muy nublado.", "answer": "hecho", "translation": "Dzisiaj nie było (zrobiło) słońca, jest bardzo pochmurnie."},
+        {"question": "¿Alguna vez has ___ (perder) tu equipaje en el aeropuerto?", "answer": "perdido", "translation": "Czy kiedykolwiek zgubiłeś bagaż na lotnisku?"},
+        {"question": "El conductor no ha ___ (encontrar) la dirección.", "answer": "encontrado", "translation": "Kierowca nie znalazł adresu."},
+        {"question": "Hemos ___ (comprar) un ordenador nuevo para el trabajo.", "answer": "comprado", "translation": "Kupiliśmy nowy komputer do pracy."},
+        {"question": "He ___ (leer) un artículo sobre la licencia PPL.", "answer": "leído", "translation": "Czytałem artykuł o licencji PPL."},
+        {"question": "¿Dónde has ___ (poner) las llaves del coche?", "answer": "puesto", "translation": "Gdzie położyłeś kluczyki do samochodu? (uwaga: wyjątek od poner)"},
+        {"question": "Te he ___ (decir) que el camión es de doce toneladas.", "answer": "dicho", "translation": "Powiedziałem ci, że ciężarówka jest dwunastotonowa. (uwaga: wyjątek od decir)"},
+        {"question": "Este viaje ha ___ (ser) una experiencia inolvidable.", "answer": "sido", "translation": "Ta podróż była niezapomnianym doświadczeniem."}
+      ]
+    }
+  ]
+}

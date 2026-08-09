@@ -73,34 +73,42 @@ def main():
         st.title(f"[{selected_level}] {lesson['lesson_metadata']['title']}")
         st.header(current_section['title'])
         
+        # --- DIALOG ---
         if current_section['type'] == 'dialog':
+            st.info("📖 **Zadanie:** Przeczytaj poniższy dialog i zapoznaj się z jego tłumaczeniem.")
             for line in current_section['content']:
                 st.markdown(f"**{line['speaker']}**: {line['text']}")
                 if 'translation' in line:
                     st.caption(f"*{line['translation']}*")
                 
+        # --- SŁOWNICTWO (TRENING) ---
         elif current_section['type'] == 'vocabulary':
+            vocab_items = current_section['items']
+            total_vocab = len(vocab_items)
+            vocab_key = f"vocab_idx_{lesson['lesson_metadata']['id']}_{current_section['id']}"
+            
+            # Wczytanie z pamięci w czasie rzeczywistym
+            if vocab_key not in st.session_state:
+                st.session_state[vocab_key] = progress.get(vocab_key, 0)
+                
+            idx = st.session_state[vocab_key]
+            
+            st.info(f"📊 **Postęp sekcji:** Przećwiczone słówka: **{idx} / {total_vocab}**")
+            
             st.write("### Spis słówek")
-            for item in current_section['items']:
+            for item in vocab_items:
                 st.write(f"✅ **{item['es']}** - {item['pl']}")
             
             st.markdown("---")
             st.subheader("🧠 Trening nowych słówek")
             st.write("Zanim przejdziesz dalej, przećwicz nowe słownictwo na szybkich fiszkach!")
             
-            vocab_key = f"vocab_idx_{lesson['lesson_metadata']['id']}_{current_section['id']}"
-            if vocab_key not in st.session_state:
-                st.session_state[vocab_key] = 0
-            
             if 'vocab_show_answer' not in st.session_state:
                 st.session_state.vocab_show_answer = False
 
-            idx = st.session_state[vocab_key]
-            vocab_items = current_section['items']
-            
-            if idx < len(vocab_items):
+            if idx < total_vocab:
                 active_word = vocab_items[idx]
-                st.progress(idx / len(vocab_items), text=f"Fiszka {idx+1} z {len(vocab_items)}")
+                st.progress(idx / total_vocab, text=f"Fiszka {idx+1} z {total_vocab}")
                 
                 st.markdown(f"<div class='flashcard-front'>{active_word['pl']}</div>", unsafe_allow_html=True)
                 
@@ -112,6 +120,9 @@ def main():
                     st.markdown(f"<div class='flashcard-back'>{active_word['es']}</div>", unsafe_allow_html=True)
                     if st.button("Następne słówko ➡️", key="next_es", use_container_width=True):
                         st.session_state[vocab_key] += 1
+                        # Zapis do bazy danych od razu po każdym słówku!
+                        progress[vocab_key] = st.session_state[vocab_key]
+                        save_progress_data(progress)
                         st.session_state.vocab_show_answer = False
                         st.rerun()
             else:
@@ -119,31 +130,65 @@ def main():
                 st.success("Brawo! Przećwiczyłeś wszystkie nowe słówka.")
                 if st.button("🔄 Przećwicz ponownie (Opcjonalnie)"):
                     st.session_state[vocab_key] = 0
+                    progress[vocab_key] = 0
+                    save_progress_data(progress)
                     st.session_state.vocab_show_answer = False
                     st.rerun()
                 
+        # --- GRAMATYKA ---
         elif current_section['type'] == 'grammar':
+            st.info("📖 **Zadanie:** Zapoznaj się z poniższymi zasadami gramatycznymi.")
             st.markdown(current_section['content'])
                 
+        # --- ĆWICZENIA Z LUKAMI ---
         elif current_section['type'] == 'exercises':
             st.write("Wypełnij luki i naciśnij Enter, aby sprawdzić odpowiedź.")
+            
+            total_ex = len(current_section['items'])
+            done_count = sum(1 for i in range(total_ex) if progress.get(f"ex_done_{lesson['lesson_metadata']['id']}_{current_section['id']}_{i}", False))
+            
+            st.info(f"📊 **Postęp sekcji:** Rozwiązane poprawnie ćwiczenia: **{done_count} / {total_ex}**")
+            
+            if done_count < total_ex:
+                st.progress(done_count / total_ex, text=f"Postęp: {done_count} z {total_ex}")
+            else:
+                st.progress(100, text="Wszystkie ćwiczenia z tej sekcji zostały rozwiązane!")
+                
             for i, ex in enumerate(current_section['items']):
-                with st.expander(f"💡 {ex['translation']}"):
-                    ans = st.text_input(ex['question'].replace("___", "[ ... ]"), key=f"ex_{selected_file}_{current_section['id']}_{i}")
-                    if ans:
-                        if ans.strip().lower() == ex['answer'].lower():
-                            st.success("✅ ¡Perfecto!")
-                        else:
-                            st.error(f"❌ Poprawnie: {ex['answer']}")
+                ex_done_key = f"ex_done_{lesson['lesson_metadata']['id']}_{current_section['id']}_{i}"
+                is_done = progress.get(ex_done_key, False)
+                
+                with st.expander(f"{'✅' if is_done else '💡'} {ex['translation']}"):
+                    if is_done:
+                        st.success(f"✅ ¡Perfecto! Odpowiedź: **{ex['answer']}**")
+                    else:
+                        ans = st.text_input(ex['question'].replace("___", "[ ... ]"), key=f"ex_input_{lesson['lesson_metadata']['id']}_{current_section['id']}_{i}")
+                        if ans:
+                            if ans.strip().lower() == ex['answer'].lower():
+                                # Zapis na żywo po każdym poprawnym rozwiązaniu
+                                progress[ex_done_key] = True
+                                save_progress_data(progress)
+                                st.rerun()
+                            else:
+                                st.error(f"❌ Poprawnie: {ex['answer']}")
 
         st.markdown("---")
         prog_key = f"{lesson['lesson_metadata']['id']}_{current_section['id']}"
         
+        # --- LOGIKA ZAKOŃCZENIA SEKCJI ---
         can_finish = True
         if current_section['type'] == 'vocabulary':
-            if st.session_state.get(f"vocab_idx_{lesson['lesson_metadata']['id']}_{current_section['id']}", 0) < len(current_section['items']):
+            idx = progress.get(f"vocab_idx_{lesson['lesson_metadata']['id']}_{current_section['id']}", 0)
+            if idx < len(current_section['items']):
                 can_finish = False
-                st.info("💡 Przeklikaj wszystkie fiszki powyżej, aby odblokować przycisk zakończenia sekcji.")
+                st.info("💡 Przeklikaj wszystkie fiszki treningowe powyżej, aby odblokować przycisk zakończenia sekcji.")
+                
+        elif current_section['type'] == 'exercises':
+            total_ex = len(current_section['items'])
+            done_count = sum(1 for i in range(total_ex) if progress.get(f"ex_done_{lesson['lesson_metadata']['id']}_{current_section['id']}_{i}", False))
+            if done_count < total_ex:
+                can_finish = False
+                st.info("💡 Rozwiąż poprawnie wszystkie ćwiczenia, aby odblokować przycisk zakończenia sekcji.")
 
         if not progress.get(prog_key, False):
             if can_finish:

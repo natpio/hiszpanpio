@@ -1,6 +1,7 @@
 import streamlit as st
 import os
 import random
+import json
 from datetime import datetime, timedelta
 
 from utils import (
@@ -16,7 +17,7 @@ def main():
     # 1. DYNAMICZNE WYKRYWANIE POZIOMÓW
     data_dir = "data"
     available_levels = [d for d in os.listdir(data_dir) if os.path.isdir(os.path.join(data_dir, d))]
-    available_levels.sort() # np. ['A1', 'A2']
+    available_levels.sort()
     
     if not available_levels:
         st.error("Brak folderów z danymi (np. data/A1). Utwórz strukturę plików.")
@@ -36,6 +37,35 @@ def main():
     ])
     st.sidebar.markdown("---")
     
+    # --- NOWOŚĆ: PANEL KOPII ZAPASOWEJ ---
+    with st.sidebar.expander("💾 Zapisz / Wczytaj postęp"):
+        st.write("Streamlit Cloud resetuje pliki po uśpieniu. Pobierz swój postęp na dysk, aby go nie stracić!")
+        
+        # Pobieranie
+        progress_path = os.path.join("data", "user_progress.json")
+        if os.path.exists(progress_path):
+            with open(progress_path, "r", encoding="utf-8") as f:
+                json_data = f.read()
+            st.download_button(
+                label="⬇️ Pobierz mój postęp (.json)",
+                data=json_data,
+                file_name=f"hiszpanski_postep_{datetime.now().strftime('%Y%m%d')}.json",
+                mime="application/json",
+                use_container_width=True
+            )
+            
+        st.markdown("---")
+        # Wgrywanie
+        uploaded_file = st.file_uploader("⬆️ Wgraj plik postępu", type=["json"])
+        if uploaded_file is not None:
+            if st.button("Wczytaj dane i przywróć", use_container_width=True):
+                try:
+                    loaded_data = json.load(uploaded_file)
+                    save_progress_data(loaded_data)
+                    st.success("✅ Postęp przywrócony! Odśwież stronę.")
+                except Exception as e:
+                    st.error("❌ Błąd wczytywania pliku.")
+
     # Pobieranie plików dla WYBRANEGO poziomu
     lesson_dir = os.path.join(data_dir, selected_level)
     lesson_files = sorted([f for f in os.listdir(lesson_dir) if f.endswith('.json')]) if os.path.exists(lesson_dir) else []
@@ -64,57 +94,51 @@ def main():
         st.sidebar.markdown("### Struktura lekcji")
         completed_sections = [s['id'] for s in lesson['sections'] if progress.get(f"{lesson['lesson_metadata']['id']}_{s['id']}", False)]
         
-        # --- ZAAWANSOWANE MENU BOCZNE Z POSTĘPEM (NAPRAWIONE) ---
-        current_lesson_id = lesson['lesson_metadata']['id']
-        index_key = f"section_index_{current_lesson_id}"
-        
-        # Ustawiamy domyślny indeks na 0
-        if index_key not in st.session_state:
-            st.session_state[index_key] = 0
-
-        # Budujemy etykiety opcji
-        radio_options = []
-        for s in lesson['sections']:
-            is_completed = progress.get(f"{current_lesson_id}_{s['id']}", False)
+        def format_section_label(idx):
+            s = lesson['sections'][idx]
+            is_completed = progress.get(f"{lesson['lesson_metadata']['id']}_{s['id']}", False)
             status_icon = "✅" if is_completed else "⭕"
             
             extra_info = ""
             if s['type'] == 'vocabulary':
                 total = len(s.get('items', []))
-                done = progress.get(f"vocab_idx_{current_lesson_id}_{s['id']}", 0)
+                done = progress.get(f"vocab_idx_{lesson['lesson_metadata']['id']}_{s['id']}", 0)
                 done = min(done, total)
                 extra_info = f" ({done}/{total})"
             elif s['type'] == 'exercises':
                 total = len(s.get('items', []))
-                done = sum(1 for j in range(total) if progress.get(f"ex_done_{current_lesson_id}_{s['id']}_{j}", False))
+                done = sum(1 for i in range(total) if progress.get(f"ex_done_{lesson['lesson_metadata']['id']}_{s['id']}_{i}", False))
                 extra_info = f" ({done}/{total})"
                 
-            radio_options.append(f"{status_icon} {s['title']}{extra_info}")
+            return f"{status_icon} {s['title']}{extra_info}"
 
-        # Zabezpieczenie przed błędem indeksu
-        if st.session_state[index_key] >= len(radio_options):
+        section_indices = list(range(len(lesson['sections'])))
+        
+        current_lesson_id = lesson['lesson_metadata']['id']
+        index_key = f"section_index_{current_lesson_id}"
+        
+        if index_key not in st.session_state:
+            st.session_state[index_key] = 0
+            
+        if st.session_state[index_key] >= len(section_indices):
             st.session_state[index_key] = 0
 
-        # Generujemy radio button, zmuszając Streamlit do utrzymania indeksu
-        selected_label = st.sidebar.radio(
+        selected_idx = st.sidebar.radio(
             "Sekcje:", 
-            options=radio_options,
+            options=section_indices, 
+            format_func=format_section_label,
             index=st.session_state[index_key],
-            key=f"radio_widget_{current_lesson_id}"
+            key=f"radio_sections_{current_lesson_id}"
         )
+        st.session_state[index_key] = selected_idx
         
-        # Aktualizujemy indeks na podstawie wyboru użytkownika
-        if selected_label in radio_options:
-            st.session_state[index_key] = radio_options.index(selected_label)
-
-        current_section = lesson['sections'][st.session_state[index_key]]
+        current_section = lesson['sections'][selected_idx]
         
         st.sidebar.markdown(f"**Postęp lekcji:** {len(completed_sections)}/{len(lesson['sections'])} ukończonych")
 
         st.title(f"[{selected_level}] {lesson['lesson_metadata']['title']}")
         st.header(current_section['title'])
         
-        # --- DIALOG ---
         if current_section['type'] == 'dialog':
             st.info("📖 **Zadanie:** Przeczytaj poniższy dialog i zapoznaj się z jego tłumaczeniem.")
             for line in current_section['content']:
@@ -122,13 +146,11 @@ def main():
                 if 'translation' in line:
                     st.caption(f"*{line['translation']}*")
                 
-        # --- SŁOWNICTWO (TRENING) ---
         elif current_section['type'] == 'vocabulary':
             vocab_items = current_section['items']
             total_vocab = len(vocab_items)
             vocab_key = f"vocab_idx_{lesson['lesson_metadata']['id']}_{current_section['id']}"
             
-            # Wczytanie z pamięci w czasie rzeczywistym
             if vocab_key not in st.session_state:
                 st.session_state[vocab_key] = progress.get(vocab_key, 0)
                 
@@ -175,12 +197,10 @@ def main():
                     st.session_state.vocab_show_answer = False
                     st.rerun()
                 
-        # --- GRAMATYKA ---
         elif current_section['type'] == 'grammar':
             st.info("📖 **Zadanie:** Zapoznaj się z poniższymi zasadami gramatycznymi.")
             st.markdown(current_section['content'])
                 
-        # --- ĆWICZENIA Z LUKAMI ---
         elif current_section['type'] == 'exercises':
             st.write("Wypełnij luki i naciśnij Enter, aby sprawdzić odpowiedź.")
             
@@ -205,7 +225,6 @@ def main():
                         ans = st.text_input(ex['question'].replace("___", "[ ... ]"), key=f"ex_input_{lesson['lesson_metadata']['id']}_{current_section['id']}_{i}")
                         if ans:
                             if ans.strip().lower() == ex['answer'].lower():
-                                # Zapis na żywo po każdym poprawnym rozwiązaniu
                                 progress[ex_done_key] = True
                                 save_progress_data(progress)
                                 st.rerun()
@@ -215,7 +234,6 @@ def main():
         st.markdown("---")
         prog_key = f"{lesson['lesson_metadata']['id']}_{current_section['id']}"
         
-        # --- LOGIKA ZAKOŃCZENIA SEKCJI ---
         can_finish = True
         if current_section['type'] == 'vocabulary':
             idx = progress.get(f"vocab_idx_{lesson['lesson_metadata']['id']}_{current_section['id']}", 0)
@@ -253,7 +271,6 @@ def main():
         today_str = datetime.now().strftime("%Y-%m-%d")
         due_cards = []
         
-        # Iterujemy przez WSZYSTKIE pobrane lekcje ze wszystkich poziomów
         for l_data in all_lessons_data:
             l_id = l_data['lesson_metadata']['id']
             for s in l_data['sections']:
@@ -319,7 +336,7 @@ def main():
     # -------------------------------------
     elif mode == "🏋️ Trener Słówek (Losowe 20)":
         st.title("🏋️ Szybki Trening Słówek")
-        st.write("Idealne na 5 minut przerwy! Aplikacja wylosuje 20 słówek ze wszystkich zakończonych przez Ciebie sekcji. Te powtórki nie wpływają na algorytm SuperMemo.")
+        st.write("Idealne na 5 minut przerwy! Aplikacja wylosuje 20 słówek ze wszystkich zakończonych przez Ciebie sekcji.")
         
         unlocked_words = []
         for l_data in all_lessons_data:

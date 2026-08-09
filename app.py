@@ -16,7 +16,7 @@ def main():
     # 1. DYNAMICZNE WYKRYWANIE POZIOMÓW
     data_dir = "data"
     available_levels = [d for d in os.listdir(data_dir) if os.path.isdir(os.path.join(data_dir, d))]
-    available_levels.sort() # np. ['A1', 'A2']
+    available_levels.sort()
     
     if not available_levels:
         st.error("Brak folderów z danymi (np. data/A1). Utwórz strukturę plików.")
@@ -36,11 +36,9 @@ def main():
     ])
     st.sidebar.markdown("---")
     
-    # Pobieranie plików dla WYBRANEGO poziomu
     lesson_dir = os.path.join(data_dir, selected_level)
     lesson_files = sorted([f for f in os.listdir(lesson_dir) if f.endswith('.json')]) if os.path.exists(lesson_dir) else []
     
-    # Pobieranie WSZYSTKICH lekcji dla trybów globalnych (Fiszki, Dashboard)
     all_lessons_data = []
     for lvl in available_levels:
         lvl_dir = os.path.join(data_dir, lvl)
@@ -64,16 +62,37 @@ def main():
         st.sidebar.markdown("### Struktura lekcji")
         completed_sections = [s['id'] for s in lesson['sections'] if progress.get(f"{lesson['lesson_metadata']['id']}_{s['id']}", False)]
         
-        section_options = [(s['title'], "✅" if progress.get(f"{lesson['lesson_metadata']['id']}_{s['id']}", False) else "⭕") for s in lesson['sections']]
-        selected_name = st.sidebar.radio("Sekcje:", [opt[0] for opt in section_options])
-        current_section = next(s for s in lesson['sections'] if s['title'] == selected_name)
+        # --- ZAAWANSOWANE MENU BOCZNE Z POSTĘPEM ---
+        radio_options = []
+        section_mapping = {}
+        
+        for s in lesson['sections']:
+            is_completed = progress.get(f"{lesson['lesson_metadata']['id']}_{s['id']}", False)
+            status_icon = "✅" if is_completed else "⭕"
+            
+            extra_info = ""
+            if s['type'] == 'vocabulary':
+                total = len(s.get('items', []))
+                done = progress.get(f"vocab_idx_{lesson['lesson_metadata']['id']}_{s['id']}", 0)
+                done = min(done, total) # Zabezpieczenie przed błędem wyświetlania
+                extra_info = f" ({done}/{total})"
+            elif s['type'] == 'exercises':
+                total = len(s.get('items', []))
+                done = sum(1 for i in range(total) if progress.get(f"ex_done_{lesson['lesson_metadata']['id']}_{s['id']}_{i}", False))
+                extra_info = f" ({done}/{total})"
+                
+            option_label = f"{status_icon} {s['title']}{extra_info}"
+            radio_options.append(option_label)
+            section_mapping[option_label] = s
+            
+        selected_label = st.sidebar.radio("Sekcje:", radio_options)
+        current_section = section_mapping[selected_label]
         
         st.sidebar.markdown(f"**Postęp lekcji:** {len(completed_sections)}/{len(lesson['sections'])} ukończonych")
 
         st.title(f"[{selected_level}] {lesson['lesson_metadata']['title']}")
         st.header(current_section['title'])
         
-        # --- DIALOG ---
         if current_section['type'] == 'dialog':
             st.info("📖 **Zadanie:** Przeczytaj poniższy dialog i zapoznaj się z jego tłumaczeniem.")
             for line in current_section['content']:
@@ -81,13 +100,11 @@ def main():
                 if 'translation' in line:
                     st.caption(f"*{line['translation']}*")
                 
-        # --- SŁOWNICTWO (TRENING) ---
         elif current_section['type'] == 'vocabulary':
             vocab_items = current_section['items']
             total_vocab = len(vocab_items)
             vocab_key = f"vocab_idx_{lesson['lesson_metadata']['id']}_{current_section['id']}"
             
-            # Wczytanie z pamięci w czasie rzeczywistym
             if vocab_key not in st.session_state:
                 st.session_state[vocab_key] = progress.get(vocab_key, 0)
                 
@@ -120,7 +137,6 @@ def main():
                     st.markdown(f"<div class='flashcard-back'>{active_word['es']}</div>", unsafe_allow_html=True)
                     if st.button("Następne słówko ➡️", key="next_es", use_container_width=True):
                         st.session_state[vocab_key] += 1
-                        # Zapis do bazy danych od razu po każdym słówku!
                         progress[vocab_key] = st.session_state[vocab_key]
                         save_progress_data(progress)
                         st.session_state.vocab_show_answer = False
@@ -135,12 +151,10 @@ def main():
                     st.session_state.vocab_show_answer = False
                     st.rerun()
                 
-        # --- GRAMATYKA ---
         elif current_section['type'] == 'grammar':
             st.info("📖 **Zadanie:** Zapoznaj się z poniższymi zasadami gramatycznymi.")
             st.markdown(current_section['content'])
                 
-        # --- ĆWICZENIA Z LUKAMI ---
         elif current_section['type'] == 'exercises':
             st.write("Wypełnij luki i naciśnij Enter, aby sprawdzić odpowiedź.")
             
@@ -165,7 +179,6 @@ def main():
                         ans = st.text_input(ex['question'].replace("___", "[ ... ]"), key=f"ex_input_{lesson['lesson_metadata']['id']}_{current_section['id']}_{i}")
                         if ans:
                             if ans.strip().lower() == ex['answer'].lower():
-                                # Zapis na żywo po każdym poprawnym rozwiązaniu
                                 progress[ex_done_key] = True
                                 save_progress_data(progress)
                                 st.rerun()
@@ -175,7 +188,6 @@ def main():
         st.markdown("---")
         prog_key = f"{lesson['lesson_metadata']['id']}_{current_section['id']}"
         
-        # --- LOGIKA ZAKOŃCZENIA SEKCJI ---
         can_finish = True
         if current_section['type'] == 'vocabulary':
             idx = progress.get(f"vocab_idx_{lesson['lesson_metadata']['id']}_{current_section['id']}", 0)

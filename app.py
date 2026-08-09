@@ -62,7 +62,7 @@ def main():
         st.sidebar.markdown("### Struktura lekcji")
         completed_sections = [s['id'] for s in lesson['sections'] if progress.get(f"{lesson['lesson_metadata']['id']}_{s['id']}", False)]
         
-        # --- ZAAWANSOWANE MENU BOCZNE Z POSTĘPEM (NAPRAWIONE) ---
+        # --- ZAAWANSOWANE MENU BOCZNE Z POSTĘPEM (ZABEZPIECZONE KLUCZEM) ---
         def format_section_label(idx):
             s = lesson['sections'][idx]
             is_completed = progress.get(f"{lesson['lesson_metadata']['id']}_{s['id']}", False)
@@ -81,9 +81,15 @@ def main():
                 
             return f"{status_icon} {s['title']}{extra_info}"
 
-        # Przekazujemy listę stałych indeksów [0, 1, 2...], aby radio button nie "gubił" wyboru po odświeżeniu
         section_indices = list(range(len(lesson['sections'])))
-        selected_idx = st.sidebar.radio("Sekcje:", options=section_indices, format_func=format_section_label)
+        
+        # DODANY SZTYWNY KLUCZ (key), ABY STREAMLIT NIE RESETOWAŁ WIDOKU
+        selected_idx = st.sidebar.radio(
+            "Sekcje:", 
+            options=section_indices, 
+            format_func=format_section_label,
+            key=f"radio_sections_{lesson['lesson_metadata']['id']}"
+        )
         current_section = lesson['sections'][selected_idx]
         
         st.sidebar.markdown(f"**Postęp lekcji:** {len(completed_sections)}/{len(lesson['sections'])} ukończonych")

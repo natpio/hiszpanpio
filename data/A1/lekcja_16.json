@@ -1,0 +1,117 @@
+{
+  "lesson_metadata": {
+    "id": "A1_16",
+    "level": "A1",
+    "title": "Wielkie Podsumowanie A1: Detale, które robią różnicę"
+  },
+  "sections": [
+    {
+      "id": "sec_01",
+      "type": "dialog",
+      "title": "Diálogo: Los preparativos",
+      "content": [
+        {"speaker": "Piotr", "text": "Natalia, ¿dónde están mis documentos y la carne para la degustación de Manufaktura Kiełbas?", "translation": "Natalia, gdzie są moje dokumenty i mięso na degustację Manufaktury Kiełbas?"},
+        {"speaker": "Natalia", "text": "Tu carne está en la nevera, y los documentos están encima de la mesa, al lado del ordenador.", "translation": "Twoje mięso jest w lodówce, a dokumenty są na stole, obok komputera."},
+        {"speaker": "Piotr", "text": "¿Cuándo es exactamente el evento? ¿El viernes o el sábado?", "translation": "Kiedy dokładnie jest to wydarzenie? W piątek czy w sobotę?"},
+        {"speaker": "Natalia", "text": "El evento es el sábado a las seis y media de la tarde. ¿Cuántas personas vienen?", "translation": "Wydarzenie jest w sobotę o wpół do siódmej wieczorem. Ile osób przychodzi?"},
+        {"speaker": "Piotr", "text": "Veinte personas. Es un problema pequeño porque nuestra sala no es muy grande.", "translation": "Dwadzieścia osób. To mały problem, bo nasza sala nie jest bardzo duża."},
+        {"speaker": "Natalia", "text": "No pasa nada. Nuestro proyecto es muy bueno. ¡Va a ser un gran día!", "translation": "Nic nie szkodzi. Nasz projekt jest bardzo dobry. To będzie wspaniały dzień!"}
+      ]
+    },
+    {
+      "id": "sec_02",
+      "type": "vocabulary",
+      "title": "Vocabulario (Dni, Czas, Pytania i Przestrzeń)",
+      "items": [
+        {"es": "¿Qué?", "pl": "Co? / Jaki?"},
+        {"es": "¿Quién?", "pl": "Kto?"},
+        {"es": "¿Dónde?", "pl": "Gdzie?"},
+        {"es": "¿Cuándo?", "pl": "Kiedy?"},
+        {"es": "¿Por qué?", "pl": "Dlaczego?"},
+        {"es": "¿Cuánto? / ¿Cuántos?", "pl": "Ile?"},
+        {"es": "Lunes, Martes, Miércoles", "pl": "Poniedziałek, Wtorek, Środa"},
+        {"es": "Jueves, Viernes, Sábado, Domingo", "pl": "Czwartek, Piątek, Sobota, Niedziela"},
+        {"es": "Encima de", "pl": "Na / Nad (czymś)"},
+        {"es": "Debajo de", "pl": "Pod (czymś)"},
+        {"es": "Al lado de", "pl": "Obok (czegoś)"},
+        {"es": "Delante de / Detrás de", "pl": "Przed / Za (czymś)"},
+        {"es": "Cerca de / Lejos de", "pl": "Blisko / Daleko (od)"},
+        {"es": "El problema", "pl": "Problem (r. męski!)"},
+        {"es": "El día", "pl": "Dzień (r. męski!)"},
+        {"es": "La mano", "pl": "Ręka (r. żeński!)"}
+      ]
+    },
+    {
+      "id": "sec_03",
+      "type": "grammar",
+      "title": "Gramatyka 1: Zaimki Pytające i Dzierżawcze",
+      "content": "### 1. Zaimki Pytające (Palabras interrogativas)\nZwróć uwagę, że **każde** hiszpańskie słowo pytające nosi akcent graficzny (tyldę). To ważne, bo bez niej słowo zmienia znaczenie (np. *qué* = co, ale *que* = że).\n* **¿Qué?** (Co? / Jaki?)\n* **¿Quién?** (Kto?) -> l. mnoga: **¿Quiénes?** (Kim oni są?)\n* **¿Cómo?** (Jak? / Jaki?)\n* **¿Dónde?** (Gdzie?) -> **¿De dónde?** (Skąd?), **¿Adónde?** (Dokąd?)\n* **¿Cuándo?** (Kiedy?)\n* **¿Por qué?** (Dlaczego?)\n* **¿Cuánto/a/os/as?** (Ile?) -> Dopasowuje się do rzeczownika, np. *¿Cuántos clientes?* (Ilu klientów?), *¿Cuánta carne?* (Ile mięsa?).\n\n### 2. Zaimki Dzierżawcze (Mój, Twój...)\nOkreślają przynależność. W liczbie pojedynczej i mnogiej dopasowujemy je do przedmiotu, który posiadamy (a nie do osoby, która posiada!).\n\n| Osoba | Przedmiot w l. poj. | Przedmiot w l. mn. | Znaczenie |\n| :--- | :--- | :--- | :--- |\n| **Yo** | **mi** (coche) | **mis** (coches) | mój, moja / moi, moje |\n| **Tú** | **tu** (casa) | **tus** (casas) | twój, twoja / twoi, twoje |\n| **Él/Ella/Usted** | **su** (billete) | **sus** (billetes) | jego, jej, Pana/Pani |\n| **Nosotros/as** | **nuestro/a** | **nuestros/as** | nasz, nasza, nasi, nasze |\n| **Vosotros/as** | **vuestro/a** | **vuestros/as** | wasz, wasza, wasi, wasze |\n| **Ellos/Ellas** | **su** | **sus** | ich, Państwa |\n\n⚠️ **Ważne:** *Nuestro* i *vuestro* jako jedyne zmieniają też końcówkę na żeńską (np. *nuestro proyecto*, ale *nuestra empresa*)."
+    },
+    {
+      "id": "sec_04",
+      "type": "grammar",
+      "title": "Gramatyka 2: Przestrzeń i Wyjątki Rzeczownikowe",
+      "content": "### 1. Przyimki Miejsca (Określanie położenia)\nAby opisać, gdzie coś się znajduje, używamy czasownika **ESTAR** oraz odpowiedniego przyimka. Większość hiszpańskich przyimków łączy się z partykułą **DE**.\n* **encima de** (na/nad)\n* **debajo de** (pod)\n* **al lado de** (obok)\n* **delante de** (przed)\n* **detrás de** (za)\n* **cerca de** (blisko)\n* **lejos de** (daleko)\n\n⚠️ **Złota zasada (DE + EL = DEL):** Jeśli po przyimku następuje rzeczownik z rodzajnikiem męskim *el*, łączymy je w jedno słowo **del**. \n*Przykład:* El router está al lado **del** ordenador. (Router jest obok komputera).\n\n### 2. Wyjątki Rzeczownikowe i Liczba Mnoga\nZazwyczaj słowa na **-o** są męskie (*el chico*), a na **-a** żeńskie (*la chica*). Musisz jednak uważać na bardzo popularne słowa, które łamią tę regułę (tzw. greckie korzenie na -ma i -ta):\n* **EL problema** (problem - r. męski)\n* **EL mapa** (mapa - r. męski)\n* **EL día** (dzień - r. męski)\n* **LA mano** (ręka - r. żeński)\n* **LA foto** (zdjęcie - skrót od *fotografía*)\n* **LA moto** (motocykl - skrót od *motocicleta*)"
+    },
+    {
+      "id": "sec_05",
+      "type": "grammar",
+      "title": "Gramatyka 3: Czas i Dni Tygodnia",
+      "content": "### 1. Podawanie Godziny\n* Pytanie o godzinę to: **¿Qué hora es?**\n* Odpowiadamy używając czasownika **SER**. Dla godziny 1:00 mówimy **Es la una**. Dla wszystkich pozostałych (2:00 - 12:00) mówimy **Son las...** (np. *Son las dos* - Jest druga, *Son las tres* - Jest trzecia).\n* Minuty dodajemy przez **\"y\"** (i), a odejmujemy przez **\"menos\"** (mniej): \n  * 14:15 -> Son las dos **y cuarto** (kwadrans).\n  * 18:30 -> Son las seis **y media** (połowa).\n  * 09:45 -> Son las diez **menos cuarto** (za kwadrans dziesiąta).\n* Kiedy pytamy \"O której?\" używamy **¿A qué hora...?**, a odpowiadamy **a las...** (np. *a las cinco* - o piątej).\n\n### 2. Dni tygodnia\n* lunes (poniedziałek), martes (wtorek), miércoles (środa), jueves (czwartek), viernes (piątek), sábado (sobota), domingo (niedziela).\n* ⚠️ **Zasady pisowni:** Dni tygodnia w hiszpańskim piszemy zawsze **małą literą**.\n* Jeśli chcemy powiedzieć \"w poniedziałek\", używamy rodzajnika **el** (np. *el lunes*). Nie używamy słowa \"en\"!"
+    },
+    {
+      "id": "sec_06",
+      "type": "exercises",
+      "title": "Ejercicios (Zaimki pytające i dzierżawcze)",
+      "items": [
+        {"question": "¿___ es tu nombre?", "answer": "Cuál", "translation": "Jakie jest twoje imię? (Używamy Cuál przed czasownikiem ser)."},
+        {"question": "¿___ años tienes?", "answer": "Cuántos", "translation": "Ile masz lat?"},
+        {"question": "¿De ___ eres?", "answer": "dónde", "translation": "Skąd jesteś?"},
+        {"question": "¿___ te llamas?", "answer": "Cómo", "translation": "Jak się nazywasz?"},
+        {"question": "¿___ estudias español?", "answer": "Por qué", "translation": "Dlaczego uczysz się hiszpańskiego?"},
+        {"question": "¿___ es la fiesta? ¿El viernes?", "answer": "Cuándo", "translation": "Kiedy jest impreza? W piątek?"},
+        {"question": "¿___ personas hay en la lista?", "answer": "Cuántas", "translation": "Ile osób jest na liście? (l. mn. żeńska)"},
+        {"question": "¿___ es ese hombre?", "answer": "Quién", "translation": "Kim jest ten mężczyzna?"},
+        {"question": "Yo tengo un coche. ___ coche es blanco.", "answer": "Mi", "translation": "Ja mam samochód. Mój samochód jest biały."},
+        {"question": "Tú tienes dos hijas. ___ hijas son simpáticas.", "answer": "Tus", "translation": "Ty masz dwie córki. Twoje córki są sympatyczne."},
+        {"question": "Él tiene un pasaporte. ___ pasaporte está en la mochila.", "answer": "Su", "translation": "On ma paszport. Jego paszport jest w plecaku."},
+        {"question": "Nosotros tenemos una empresa. ___ empresa es moderna.", "answer": "Nuestra", "translation": "My mamy firmę. Nasza firma jest nowoczesna."},
+        {"question": "Vosotros tenéis muchos proyectos. ___ proyectos son interesantes.", "answer": "Vuestros", "translation": "Wy macie dużo projektów. Wasze projekty są interesujące."},
+        {"question": "Ellos viven en Polonia. ___ casa está en Poznań.", "answer": "Su", "translation": "Oni mieszkają w Polsce. Ich dom jest w Poznaniu."},
+        {"question": "¿___ quieres comer hoy?", "answer": "Qué", "translation": "Co chcesz dzisiaj zjeść?"},
+        {"question": "Nosotros tenemos un camión. ___ camión es muy grande.", "answer": "Nuestro", "translation": "Mamy ciężarówkę. Nasza ciężarówka jest bardzo duża."},
+        {"question": "Tú viajas mucho. ¿Dónde están ___ maletas?", "answer": "tus", "translation": "Ty dużo podróżujesz. Gdzie są twoje walizki?"},
+        {"question": "Ellas tienen un perro. ___ perro es rápido.", "answer": "Su", "translation": "One mają psa. Ich pies jest szybki."},
+        {"question": "¿___ haces en tu tiempo libre?", "answer": "Qué", "translation": "Co robisz w swoim wolnym czasie?"},
+        {"question": "Yo tengo dos billetes. ___ billetes están aquí.", "answer": "Mis", "translation": "Mam dwa bilety. Moje bilety są tutaj."}
+      ]
+    },
+    {
+      "id": "sec_07",
+      "type": "exercises",
+      "title": "Ejercicios (Przestrzeń, Wyjątki i Czas)",
+      "items": [
+        {"question": "El ordenador está encima ___ escritorio.", "answer": "del", "translation": "Komputer jest na biurku. (de + el = del)"},
+        {"question": "El gato está debajo de ___ silla.", "answer": "la", "translation": "Kot jest pod krzesłem."},
+        {"question": "La farmacia está cerca ___ hotel.", "answer": "del", "translation": "Apteka jest blisko hotelu."},
+        {"question": "El aeropuerto está muy lejos ___ centro de la ciudad.", "answer": "del", "translation": "Lotnisko jest bardzo daleko od centrum miasta."},
+        {"question": "Tu chaqueta está al lado ___ puerta.", "answer": "de la", "translation": "Twoja kurtka jest obok drzwi."},
+        {"question": "¿Qué hora es? ___ las diez y media.", "answer": "Son", "translation": "Która jest godzina? Jest wpół do jedenastej (10:30)."},
+        {"question": "¿Qué hora es? ___ la una de la tarde.", "answer": "Es", "translation": "Która jest godzina? Jest pierwsza po południu."},
+        {"question": "Tengo una reunión importante ___ martes.", "answer": "el", "translation": "Mam ważne spotkanie we wtorek."},
+        {"question": "No trabajo ___ domingos.", "answer": "los", "translation": "Nie pracuję w niedziele."},
+        {"question": "El tren sale a ___ cuatro menos cuarto.", "answer": "las", "translation": "Pociąg odjeżdża za kwadrans czwarta (15:45)."},
+        {"question": "Tenemos un ___ grave con la aduana.", "answer": "problema", "translation": "Mamy poważny problem z urzędem celnym. (Rzeczownik męski!)"},
+        {"question": "Hoy es un buen ___ para descansar.", "answer": "día", "translation": "Dzisiaj jest dobry dzień, żeby odpocząć. (Rzeczownik męski!)"},
+        {"question": "¿Dónde está ___ mapa de Estados Unidos?", "answer": "el", "translation": "Gdzie jest mapa Stanów Zjednoczonych? (Rzeczownik męski!)"},
+        {"question": "Me duele mucho la ___ derecha.", "answer": "mano", "translation": "Bardzo boli mnie prawa ręka. (Rzeczownik żeński!)"},
+        {"question": "¿A qué hora es el vuelo? Es a las cinco y ___ (17:15).", "answer": "cuarto", "translation": "O której godzinie jest lot? O piątej piętnaście."},
+        {"question": "Mi coche está aparcado delante ___ edificio.", "answer": "del", "translation": "Mój samochód jest zaparkowany przed budynkiem."},
+        {"question": "El parque está detrás ___ estación.", "answer": "de la", "translation": "Park jest za stacją."},
+        {"question": "¿Puedes enviarme ___ fotos del evento?", "answer": "las", "translation": "Czy możesz mi wysłać te zdjęcia z wydarzenia? (Skrót - żeński!)"},
+        {"question": "___ lunes siempre estoy muy ocupado.", "answer": "El", "translation": "W poniedziałek zawsze jestem bardzo zajęty."},
+        {"question": "Nosotros vamos a España en el mes de ___.", "answer": "julio", "translation": "My jedziemy do Hiszpanii w lipcu. (miesiąc)"}
+      ]
+    }
+  ]
+}

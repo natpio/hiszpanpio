@@ -1,615 +1,617 @@
-import streamlit as st
+import json
 import os
 import random
-import json
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
+
+import streamlit as st
+import pandas as pd
 
 from utils import (
-    load_lesson, get_progress_data, save_progress_data, 
-    calculate_sm2, set_random_background_and_styles, trigger_js_confetti
+    activity_streak,
+    all_lessons,
+    answers_match,
+    calculate_sm2,
+    exercise_card_key,
+    exercise_key,
+    get_progress_data,
+    inject_styles,
+    is_due,
+    list_lessons,
+    list_levels,
+    load_lesson,
+    record_event,
+    section_key,
+    save_progress_data,
+    touch_activity,
+    trigger_confetti,
+    update_sm2,
+    vocab_card_key,
+    vocab_position_key,
 )
 
-st.set_page_config(page_title="Kurs Hiszpańskiego Ultra Pro", page_icon="🇪🇸", layout="wide")
+st.set_page_config(
+    page_title="Hiszpański • nauka po ludzku",
+    page_icon="🇪🇸",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
 
-def main():
-    set_random_background_and_styles()
-    
-    # 1. DYNAMICZNE WYKRYWANIE POZIOMÓW
-    data_dir = "data"
-    available_levels = [d for d in os.listdir(data_dir) if os.path.isdir(os.path.join(data_dir, d))]
-    available_levels.sort()
-    
-    if not available_levels:
-        st.error("Brak folderów z danymi (np. data/A1). Utwórz strukturę plików.")
+inject_styles()
+
+
+@st.cache_data(show_spinner=False)
+def get_catalog():
+    return all_lessons()
+
+
+def lesson_stats(lesson, progress):
+    lid = lesson["lesson_metadata"]["id"]
+    sections = lesson.get("sections", [])
+    done = sum(bool(progress.get(section_key(lid, s["id"]), False)) for s in sections)
+    total_items = sum(
+        len(s.get("items", [])) for s in sections if s["type"] in ("vocabulary", "exercises")
+    )
+    return done, len(sections), total_items
+
+
+def overall_stats(lessons, progress):
+    total_sections = done_sections = 0
+    vocabulary = exercises = 0
+    for lesson in lessons:
+        done, total, _ = lesson_stats(lesson, progress)
+        done_sections += done
+        total_sections += total
+        for s in lesson["sections"]:
+            if s["type"] == "vocabulary":
+                vocabulary += len(s.get("items", []))
+            elif s["type"] == "exercises":
+                exercises += len(s.get("items", []))
+    learned_words = sum(
+        1 for k, v in progress.items()
+        if k.startswith("vocab_card__") and isinstance(v, dict) and v.get("repetitions", 0) > 0
+    )
+    return {
+        "done_sections": done_sections,
+        "total_sections": total_sections,
+        "progress": round(done_sections / total_sections * 100) if total_sections else 0,
+        "vocabulary": vocabulary,
+        "exercises": exercises,
+        "learned_words": learned_words,
+    }
+
+
+def due_cards(lessons, progress):
+    cards = []
+    for lesson in lessons:
+        lid = lesson["lesson_metadata"]["id"]
+        for section in lesson["sections"]:
+            sid = section["id"]
+            if not progress.get(section_key(lid, sid), False):
+                continue
+            if section["type"] == "vocabulary":
+                for i, item in enumerate(section.get("items", [])):
+                    key = vocab_card_key(lid, sid, i)
+                    if is_due(progress.get(key)):
+                        cards.append({
+                            "key": key, "kind": "Słówko", "front": item["pl"], "back": item["es"],
+                            "lesson": lesson["lesson_metadata"]["title"],
+                        })
+            elif section["type"] == "exercises":
+                for i, ex in enumerate(section.get("items", [])):
+                    key = exercise_card_key(lid, sid, i)
+                    if is_due(progress.get(key)):
+                        cards.append({
+                            "key": key, "kind": "Zdanie", "front": ex["question"].replace("___", "_____"),
+                            "back": ex["question"].replace("___", ex["answer"]),
+                            "hint": ex.get("translation", ""),
+                            "lesson": lesson["lesson_metadata"]["title"],
+                        })
+    return cards
+
+
+def complete_section(progress, lesson_id, section_id):
+    progress[section_key(lesson_id, section_id)] = True
+    record_event(progress, "section_complete")
+    save_progress_data(progress)
+    trigger_confetti()
+
+
+def page_home(lessons, progress):
+    stats = overall_stats(lessons, progress)
+    due = due_cards(lessons, progress)
+    streak = activity_streak(progress)
+
+    st.markdown(
+        f"""
+        <div class="hero">
+          <div class="eyebrow">HISZPAŃSKI • TWÓJ PLAN NA DZIŚ</div>
+          <h1>Hola. Zróbmy dziś trochę hiszpańskiego.</h1>
+          <p class="hero-copy">Krótka sesja, konkretna lekcja i powtórki wtedy, kiedy naprawdę są potrzebne. Bez przeklikiwania się przez panel administracyjny.</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric("Postęp kursu", f"{stats['progress']}%")
+    c2.metric("Do powtórki", len(due))
+    c3.metric("Opanowane słówka", stats["learned_words"])
+    c4.metric("Seria dni", f"{streak} 🔥")
+
+    st.markdown("## Kontynuuj naukę")
+    incomplete = []
+    for lesson in lessons:
+        done, total, _ = lesson_stats(lesson, progress)
+        if done < total:
+            incomplete.append((lesson, done, total))
+    if incomplete:
+        lesson, done, total = incomplete[0]
+        lid = lesson["lesson_metadata"]["id"]
+        st.markdown(
+            f"""
+            <div class="feature-card">
+              <div class="card-kicker">{lesson['lesson_metadata']['level']} • następny krok</div>
+              <div class="card-title">{lesson['lesson_metadata']['title']}</div>
+              <div class="muted">{done}/{total} sekcji ukończonych</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        st.progress(done / total if total else 0)
+        if st.button("▶ Otwórz lekcję", type="primary", use_container_width=True):
+            st.session_state.page = "Kurs"
+            st.session_state.lesson_id = lid
+            st.rerun()
+    else:
+        st.success("🎉 Ukończyłeś wszystkie dostępne lekcje. Czas na powtórki i utrwalanie.")
+
+    st.markdown("## Dzisiejszy wybór")
+    a, b, c = st.columns(3)
+    with a:
+        st.markdown('<div class="feature-card"><div class="card-kicker">01 • POWTÓRKA</div><div class="card-title">Pamięć na pierwszym miejscu</div><p class="muted">Masz <b>%d</b> kart gotowych do powtórzenia.</p></div>' % len(due), unsafe_allow_html=True)
+    with b:
+        st.markdown('<div class="feature-card"><div class="card-kicker">02 • KURS</div><div class="card-title">Lekcje krok po kroku</div><p class="muted">Dialog → słownictwo → gramatyka → ćwiczenia.</p></div>', unsafe_allow_html=True)
+    with c:
+        st.markdown('<div class="feature-card"><div class="card-kicker">03 • TRENING</div><div class="card-title">5 minut na słówka</div><p class="muted">Szybka sesja losowych słów z ukończonych sekcji.</p></div>', unsafe_allow_html=True)
+
+
+def page_course(lessons, progress):
+    st.title("Kurs")
+    st.caption("Wybierz poziom i pracuj przez lekcje w logicznej kolejności.")
+
+    levels = list(dict.fromkeys(l["lesson_metadata"]["level"] for l in lessons))
+    level = st.segmented_control("Poziom", levels, default=st.session_state.get("level", levels[0]) if levels else None)
+    if level:
+        st.session_state.level = level
+    visible = [l for l in lessons if l["lesson_metadata"]["level"] == level]
+
+    for start in range(0, len(visible), 2):
+        cols = st.columns(2)
+        for col, lesson in zip(cols, visible[start:start+2]):
+            done, total, items = lesson_stats(lesson, progress)
+            pct = done / total if total else 0
+            status = "Ukończona" if pct == 1 else ("W toku" if done else "Do rozpoczęcia")
+            with col:
+                st.markdown(
+                    f"""
+                    <div class="lesson-card">
+                      <span class="pill">{lesson['lesson_metadata']['level']} · {status}</span>
+                      <div class="card-title">{lesson['lesson_metadata']['title']}</div>
+                      <div class="muted">{done}/{total} sekcji · {items} elementów treningowych</div>
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
+                st.progress(pct)
+                if st.button("Otwórz →", key=f"open_{lesson['lesson_metadata']['id']}", use_container_width=True):
+                    st.session_state.lesson_id = lesson["lesson_metadata"]["id"]
+                    st.session_state.page = "Lekcja"
+                    st.rerun()
+
+
+def render_dialog(section):
+    st.markdown('<div class="info-card">', unsafe_allow_html=True)
+    for line in section.get("content", []):
+        st.markdown(f"**{line.get('speaker','Rozmówca')}**  \n{line.get('text','')}")
+        if line.get("translation"):
+            st.caption(line["translation"])
+    st.markdown("</div>", unsafe_allow_html=True)
+
+
+def render_grammar(section):
+    st.markdown(section.get("content", ""))
+
+
+def render_vocabulary(lesson, section, progress):
+    lid, sid = lesson["lesson_metadata"]["id"], section["id"]
+    items = section.get("items", [])
+    pos_key = vocab_position_key(lid, sid)
+    pos = int(progress.get(pos_key, 0))
+    pos = min(pos, len(items))
+
+    st.progress(pos / len(items) if items else 1, text=f"{pos} / {len(items)} słówek przećwiczonych")
+    with st.expander("Zobacz pełną listę słówek"):
+        for item in items:
+            st.markdown(f"**{item['es']}** — {item['pl']}")
+
+    if pos >= len(items):
+        st.markdown('<div class="success-box"><b>Gotowe.</b> Wszystkie słówka z tej sekcji zostały przećwiczone.</div>', unsafe_allow_html=True)
+        if st.button("Powtórz sekcję od początku", key=f"reset_{lid}_{sid}"):
+            progress[pos_key] = 0
+            save_progress_data(progress)
+            st.rerun()
         return
 
-    st.sidebar.title("📚 Kurs Hiszpańskiego")
-    selected_level = st.sidebar.selectbox("Wybierz poziom:", available_levels)
-    st.sidebar.markdown(f"**Obecnie przerabiasz: {selected_level}**")
-    st.sidebar.markdown("---")
-    
-    mode = st.sidebar.radio("Widok:", [
-        "🎓 Moduły Kursu", 
-        "🧠 Tryb Powtórek (SM-2)", 
-        "🏋️ Trener Słówek (Losowe 20)",
-        "📖 Tablice Czasowników", 
-        "📊 Dashboard Analityczny"
-    ])
-    st.sidebar.markdown("---")
-    
-    # --- NOWOŚĆ: PANEL KOPII ZAPASOWEJ ---
-    with st.sidebar.expander("💾 Zapisz / Wczytaj postęp"):
-        st.write("Streamlit Cloud resetuje pliki po uśpieniu. Pobierz swój postęp na dysk, aby go nie stracić!")
-        
-        # Pobieranie
-        progress_path = os.path.join("data", "user_progress.json")
-        if os.path.exists(progress_path):
-            with open(progress_path, "r", encoding="utf-8") as f:
-                json_data = f.read()
-            st.download_button(
-                label="⬇️ Pobierz mój postęp (.json)",
-                data=json_data,
-                file_name=f"hiszpanski_postep_{datetime.now().strftime('%Y%m%d')}.json",
-                mime="application/json",
-                use_container_width=True
-            )
-            
-        st.markdown("---")
-        # Wgrywanie
-        uploaded_file = st.file_uploader("⬆️ Wgraj plik postępu", type=["json"])
-        if uploaded_file is not None:
-            if st.button("Wczytaj dane i przywróć", use_container_width=True):
-                try:
-                    loaded_data = json.load(uploaded_file)
-                    save_progress_data(loaded_data)
-                    st.success("✅ Postęp przywrócony! Odśwież stronę.")
-                except Exception as e:
-                    st.error("❌ Błąd wczytywania pliku.")
+    item = items[pos]
+    show_key = f"show_vocab_{lid}_{sid}"
+    show = st.session_state.get(show_key, False)
+    st.markdown(
+        f"""
+        <div class="flashcard">
+          <div class="eyebrow">FISZKA {pos+1} / {len(items)}</div>
+          <div class="flash-front">{item['pl']}</div>
+          <div class="flash-hint">Spróbuj powiedzieć po hiszpańsku, zanim odsłonisz odpowiedź.</div>
+          {'<div class="flash-back">'+item['es']+'</div>' if show else ''}
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    if not show:
+        if st.button("Pokaż odpowiedź", type="primary", use_container_width=True):
+            st.session_state[show_key] = True
+            st.rerun()
+    else:
+        if st.button("Znam → następne", type="primary", use_container_width=True):
+            progress[pos_key] = pos + 1
+            record_event(progress, "vocab")
+            save_progress_data(progress)
+            st.session_state[show_key] = False
+            st.rerun()
 
-    # Pobieranie plików dla WYBRANEGO poziomu
-    lesson_dir = os.path.join(data_dir, selected_level)
-    lesson_files = sorted([f for f in os.listdir(lesson_dir) if f.endswith('.json')]) if os.path.exists(lesson_dir) else []
-    
-    # Pobieranie WSZYSTKICH lekcji dla trybów globalnych (Fiszki, Dashboard)
-    all_lessons_data = []
-    for lvl in available_levels:
-        lvl_dir = os.path.join(data_dir, lvl)
-        for f in os.listdir(lvl_dir):
-            if f.endswith('.json'):
-                all_lessons_data.append(load_lesson(lvl, f))
 
-    progress = get_progress_data()
+def render_exercises(lesson, section, progress):
+    lid, sid = lesson["lesson_metadata"]["id"], section["id"]
+    items = section.get("items", [])
+    done = sum(progress.get(exercise_key(lid, sid, i), False) for i in range(len(items)))
+    st.progress(done / len(items) if items else 1, text=f"{done} / {len(items)} poprawnych")
 
-    # -------------------------------------
-    # TRYB 1: MODUŁY KURSU
-    # -------------------------------------
-    if mode == "🎓 Moduły Kursu":
-        if not lesson_files:
-            st.warning(f"Brak plików lekcji w folderze {selected_level}.")
-            return
+    for i, ex in enumerate(items):
+        key = exercise_key(lid, sid, i)
+        with st.expander(f"{'✅' if progress.get(key) else '○'} {ex.get('translation','Ćwiczenie')}"):
+            if progress.get(key):
+                st.success(f"Poprawnie: {ex['answer']}")
+                continue
+            answer = st.text_input(ex["question"], key=f"answer_{lid}_{sid}_{i}", placeholder="Wpisz odpowiedź…")
+            if st.button("Sprawdź", key=f"check_{lid}_{sid}_{i}"):
+                if answers_match(answer, ex["answer"]):
+                    progress[key] = True
+                    record_event(progress, "exercise")
+                    save_progress_data(progress)
+                    st.success("¡Perfecto! Poprawna odpowiedź.")
+                    st.rerun()
+                else:
+                    st.error("Jeszcze nie. Spróbuj ponownie — odpowiedź nie została zaliczona.")
 
-        selected_file = st.sidebar.selectbox("Wybierz lekcję", lesson_files)
-        lesson = load_lesson(selected_level, selected_file)
-        
-        st.sidebar.markdown("### Struktura lekcji")
-        completed_sections = [s['id'] for s in lesson['sections'] if progress.get(f"{lesson['lesson_metadata']['id']}_{s['id']}", False)]
-        
-        def format_section_label(idx):
-            s = lesson['sections'][idx]
-            is_completed = progress.get(f"{lesson['lesson_metadata']['id']}_{s['id']}", False)
-            status_icon = "✅" if is_completed else "⭕"
-            
-            extra_info = ""
-            if s['type'] == 'vocabulary':
-                total = len(s.get('items', []))
-                done = progress.get(f"vocab_idx_{lesson['lesson_metadata']['id']}_{s['id']}", 0)
-                done = min(done, total)
-                extra_info = f" ({done}/{total})"
-            elif s['type'] == 'exercises':
-                total = len(s.get('items', []))
-                done = sum(1 for i in range(total) if progress.get(f"ex_done_{lesson['lesson_metadata']['id']}_{s['id']}_{i}", False))
-                extra_info = f" ({done}/{total})"
-                
-            return f"{status_icon} {s['title']}{extra_info}"
 
-        section_indices = list(range(len(lesson['sections'])))
-        
-        current_lesson_id = lesson['lesson_metadata']['id']
-        index_key = f"section_index_{current_lesson_id}"
-        
-        if index_key not in st.session_state:
-            st.session_state[index_key] = 0
-            
-        if st.session_state[index_key] >= len(section_indices):
-            st.session_state[index_key] = 0
+def page_lesson(lessons, progress):
+    lesson_id = st.session_state.get("lesson_id")
+    lesson = next((l for l in lessons if l["lesson_metadata"]["id"] == lesson_id), None)
+    if not lesson:
+        st.info("Wybierz lekcję z kursu.")
+        return
+    lid = lesson["lesson_metadata"]["id"]
+    done, total, _ = lesson_stats(lesson, progress)
 
-        selected_idx = st.sidebar.radio(
-            "Sekcje:", 
-            options=section_indices, 
-            format_func=format_section_label,
-            index=st.session_state[index_key],
-            key=f"radio_sections_{current_lesson_id}"
+    top1, top2 = st.columns([4,1])
+    with top1:
+        st.caption(f"{lesson['lesson_metadata']['level']} · LEKCJA")
+        st.title(lesson["lesson_metadata"]["title"])
+    with top2:
+        st.metric("Postęp", f"{done}/{total}")
+
+    st.progress(done / total if total else 0)
+    options = lesson["sections"]
+    labels = [
+        ("✓ " if progress.get(section_key(lid, s["id"])) else "") + s["title"]
+        for s in options
+    ]
+    idx = st.segmented_control("Sekcja", labels, default=labels[0], key=f"sec_nav_{lid}")
+    section = options[labels.index(idx)] if idx in labels else options[0]
+
+    st.markdown(f"## {section['title']}")
+    st.caption({"dialog":"Czytaj i osłuchuj się z konstrukcjami.", "vocabulary":"Powiedz odpowiedź zanim ją zobaczysz.", "grammar":"Zrozum zasadę, potem wróć do ćwiczeń.", "exercises":"Wpisz odpowiedź z pamięci."}.get(section["type"], "Pracuj krok po kroku."))
+
+    if section["type"] == "dialog":
+        render_dialog(section)
+    elif section["type"] == "vocabulary":
+        render_vocabulary(lesson, section, progress)
+    elif section["type"] == "grammar":
+        render_grammar(section)
+    elif section["type"] == "exercises":
+        render_exercises(lesson, section, progress)
+
+    sid = section["id"]
+    can_finish = True
+    if section["type"] == "vocabulary":
+        can_finish = progress.get(vocab_position_key(lid, sid), 0) >= len(section.get("items", []))
+    elif section["type"] == "exercises":
+        can_finish = all(progress.get(exercise_key(lid, sid, i), False) for i in range(len(section.get("items", []))))
+
+    st.divider()
+    if progress.get(section_key(lid, sid)):
+        st.success("Sekcja ukończona. Możesz do niej wracać w dowolnym momencie.")
+    elif can_finish:
+        if st.button("✓ Oznacz sekcję jako ukończoną", type="primary", use_container_width=True):
+            complete_section(progress, lid, sid)
+            st.rerun()
+    else:
+        st.info("Dokończ aktywność w tej sekcji, aby ją zaliczyć.")
+
+
+def page_review(lessons, progress):
+    st.title("Powtórki")
+    cards = due_cards(lessons, progress)
+    if not cards:
+        st.success("🎉 Na dziś wszystko zrobione. Wróć jutro albo rozpocznij trening słówek.")
+        return
+
+    if "review_index" not in st.session_state:
+        st.session_state.review_index = 0
+        st.session_state.review_show = False
+    if st.session_state.review_index >= len(cards):
+        st.session_state.review_index = 0
+
+    card = cards[st.session_state.review_index]
+    st.caption(f"{card['kind']} · {st.session_state.review_index+1} / {len(cards)} · {card['lesson']}")
+    st.progress(st.session_state.review_index / len(cards))
+
+    back = card.get("back", "")
+    st.markdown(
+        f"""
+        <div class="flashcard">
+          <div class="eyebrow">{card['kind']}</div>
+          <div class="flash-front">{card['front']}</div>
+          {('<div class="flash-hint">'+card.get('hint','')+'</div>') if card.get('hint') else ''}
+          {('<div class="flash-back">'+back+'</div>') if st.session_state.review_show else ''}
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    if not st.session_state.review_show:
+        if st.button("Pokaż odpowiedź", type="primary", use_container_width=True):
+            st.session_state.review_show = True
+            st.rerun()
+    else:
+        st.write("Jak dobrze to pamiętałeś?")
+        cols = st.columns(4)
+        for col, label, quality in zip(
+            cols, ["Nie wiem", "Trudne", "Dobre", "Łatwe"], [0, 3, 4, 5]
+        ):
+            if col.button(label, key=f"rate_{quality}", use_container_width=True):
+                update_sm2(progress, card["key"], quality)
+                st.session_state.review_index += 1
+                st.session_state.review_show = False
+                st.rerun()
+
+
+def page_trainer(lessons, progress):
+    st.title("Trener słówek")
+    unlocked = []
+    for lesson in lessons:
+        lid = lesson["lesson_metadata"]["id"]
+        for s in lesson["sections"]:
+            if s["type"] == "vocabulary" and progress.get(section_key(lid, s["id"])):
+                unlocked += [{"es": x["es"], "pl": x["pl"]} for x in s.get("items", [])]
+
+    if not unlocked:
+        st.info("Najpierw ukończ sekcję ze słownictwem w kursie.")
+        return
+
+    if not st.session_state.get("trainer_active"):
+        st.markdown('<div class="info-card"><b>5 minut, zero przygotowań.</b><br>Losujemy do 20 słów z materiału, który już ukończyłeś.</div>', unsafe_allow_html=True)
+        if st.button("Rozpocznij trening", type="primary", use_container_width=True):
+            st.session_state.trainer_active = True
+            st.session_state.trainer_words = random.sample(unlocked, min(20, len(unlocked)))
+            st.session_state.trainer_idx = 0
+            st.session_state.trainer_score = 0
+            st.session_state.trainer_show = False
+            st.rerun()
+        return
+
+    words = st.session_state.trainer_words
+    i = st.session_state.trainer_idx
+    if i >= len(words):
+        st.success(f"Trening ukończony: {st.session_state.trainer_score} / {len(words)}.")
+        trigger_confetti()
+        if st.button("Nowy trening", type="primary", use_container_width=True):
+            st.session_state.trainer_active = False
+            st.rerun()
+        return
+
+    word = words[i]
+    st.progress(i / len(words), text=f"{i+1} / {len(words)}")
+    st.markdown(f'<div class="flashcard"><div class="eyebrow">PRZYPOMNIJ SOBIE</div><div class="flash-front">{word["pl"]}</div>{"<div class=\"flash-back\">"+word["es"]+"</div>" if st.session_state.trainer_show else ""}</div>', unsafe_allow_html=True)
+    if not st.session_state.trainer_show:
+        if st.button("Pokaż odpowiedź", type="primary", use_container_width=True):
+            st.session_state.trainer_show = True
+            st.rerun()
+    else:
+        a,b = st.columns(2)
+        if a.button("Nie pamiętałem", use_container_width=True):
+            st.session_state.trainer_idx += 1
+            st.session_state.trainer_show = False
+            st.rerun()
+        if b.button("Pamiętałem ✓", type="primary", use_container_width=True):
+            st.session_state.trainer_score += 1
+            st.session_state.trainer_idx += 1
+            st.session_state.trainer_show = False
+            st.rerun()
+
+
+VERB_TABLES = {
+    "Regularne": """| Osoba | -AR: trabajar | -ER: comer | -IR: vivir |
+|---|---|---|---|
+| Yo | trabajo | como | vivo |
+| Tú | trabajas | comes | vives |
+| Él / Ella / Usted | trabaja | come | vive |
+| Nosotros/as | trabajamos | comemos | vivimos |
+| Vosotros/as | trabajáis | coméis | vivís |
+| Ellos/as / Ustedes | trabajan | comen | viven |""",
+    "Nieregularne": """| Osoba | SER | ESTAR | TENER | IR |
+|---|---|---|---|---|
+| Yo | soy | estoy | tengo | voy |
+| Tú | eres | estás | tienes | vas |
+| Él / Ella / Usted | es | está | tiene | va |
+| Nosotros/as | somos | estamos | tenemos | vamos |
+| Vosotros/as | sois | estáis | tenéis | vais |
+| Ellos/as / Ustedes | son | están | tienen | van |""",
+    "Zwrotne": """| Osoba | Zaimek | levantarse |
+|---|---|---|
+| Yo | me | levanto |
+| Tú | te | levantas |
+| Él / Ella / Usted | se | levanta |
+| Nosotros/as | nos | levantamos |
+| Vosotros/as | os | levantáis |
+| Ellos/as / Ustedes | se | levantan |""",
+}
+
+
+def page_grammar():
+    st.title("Ściąga gramatyczna")
+    st.caption("Szybki dostęp do najważniejszych konstrukcji z kursu.")
+    tabs = st.tabs(list(VERB_TABLES) + ["Pretérito Perfecto", "Gerundio", "Gustar / Hay / Estar"])
+    for tab, (name, content) in zip(tabs[:3], VERB_TABLES.items()):
+        with tab:
+            st.markdown(content)
+    with tabs[3]:
+        st.markdown("### Pretérito Perfecto")
+        st.markdown("**haber + participio**: he, has, ha, hemos, habéis, han.")
+        st.markdown("-AR → **-ado** · -ER/-IR → **-ido**")
+        st.markdown("Nieregularne: **abierto, dicho, escrito, hecho, puesto, roto, sido, visto, vuelto**.")
+    with tabs[4]:
+        st.markdown("### Estar + gerundio")
+        st.markdown("-AR → **-ando** · -ER/-IR → **-iendo**")
+        st.markdown("Przykłady: *trabajando, comiendo, viviendo, leyendo, durmiendo, diciendo*.")
+    with tabs[5]:
+        st.markdown("### Trzy konstrukcje, które warto zapamiętać")
+        st.markdown("**Gustar:** me gusta + liczba pojedyncza / bezokolicznik; me gustan + liczba mnoga.")
+        st.markdown("**Hay:** informuje, że coś istnieje / znajduje się gdzieś. **Estar:** wskazuje lokalizację konkretnej rzeczy.")
+        st.markdown("**Ir + a + bezokolicznik:** *Voy a trabajar* — zamierzam pracować.")
+
+
+def page_analytics(lessons, progress):
+    stats = overall_stats(lessons, progress)
+    st.title("Twój postęp")
+    c1,c2,c3,c4 = st.columns(4)
+    c1.metric("Ukończone sekcje", stats["done_sections"])
+    c2.metric("Łącznie sekcji", stats["total_sections"])
+    c3.metric("Postęp", f"{stats['progress']}%")
+    c4.metric("Seria", f"{activity_streak(progress)} dni")
+
+    rows=[]
+    for lesson in lessons:
+        done,total,_=lesson_stats(lesson,progress)
+        rows.append({"Lekcja": f"{lesson['lesson_metadata']['level']} · {lesson['lesson_metadata']['title']}", "Ukończono": round(done/total*100) if total else 0})
+    if rows:
+        st.subheader("Postęp lekcji")
+        st.bar_chart(pd.DataFrame(rows).set_index("Lekcja"), y="Ukończono")
+
+    st.subheader("Odznaki")
+    achievements = [
+        ("🌱 Pierwszy krok", stats["done_sections"] >= 1, "Ukończ pierwszą sekcję."),
+        ("📚 Dziesięć sekcji", stats["done_sections"] >= 10, "Ukończ 10 sekcji."),
+        ("🧠 Pierwsza powtórka", any(k.startswith("vocab_card__") for k in progress), "Zrób pierwszą kartę SM-2."),
+        ("🔥 Seria 7 dni", activity_streak(progress) >= 7, "Ucz się przez 7 kolejnych dni."),
+        ("🏁 Cały poziom", any(
+            all(progress.get(section_key(l["lesson_metadata"]["id"], s["id"])) for s in l["sections"])
+            for l in lessons
+        ), "Ukończ wszystkie sekcje jednej lekcji."),
+    ]
+    for name, unlocked, hint in achievements:
+        st.markdown(
+            f'<div class="section-chip"><b>{name}</b> {"— odblokowane" if unlocked else "— "+hint}</div>',
+            unsafe_allow_html=True,
         )
-        st.session_state[index_key] = selected_idx
-        
-        current_section = lesson['sections'][selected_idx]
-        
-        st.sidebar.markdown(f"**Postęp lekcji:** {len(completed_sections)}/{len(lesson['sections'])} ukończonych")
 
-        st.title(f"[{selected_level}] {lesson['lesson_metadata']['title']}")
-        st.header(current_section['title'])
-        
-        if current_section['type'] == 'dialog':
-            st.info("📖 **Zadanie:** Przeczytaj poniższy dialog i zapoznaj się z jego tłumaczeniem.")
-            for line in current_section['content']:
-                st.markdown(f"**{line['speaker']}**: {line['text']}")
-                if 'translation' in line:
-                    st.caption(f"*{line['translation']}*")
-                
-        elif current_section['type'] == 'vocabulary':
-            vocab_items = current_section['items']
-            total_vocab = len(vocab_items)
-            vocab_key = f"vocab_idx_{lesson['lesson_metadata']['id']}_{current_section['id']}"
-            
-            if vocab_key not in st.session_state:
-                st.session_state[vocab_key] = progress.get(vocab_key, 0)
-                
-            idx = st.session_state[vocab_key]
-            
-            st.info(f"📊 **Postęp sekcji:** Przećwiczone słówka: **{idx} / {total_vocab}**")
-            
-            st.write("### Spis słówek")
-            for item in vocab_items:
-                st.write(f"✅ **{item['es']}** - {item['pl']}")
-            
-            st.markdown("---")
-            st.subheader("🧠 Trening nowych słówek")
-            st.write("Zanim przejdziesz dalej, przećwicz nowe słownictwo na szybkich fiszkach!")
-            
-            if 'vocab_show_answer' not in st.session_state:
-                st.session_state.vocab_show_answer = False
 
-            if idx < total_vocab:
-                active_word = vocab_items[idx]
-                st.progress(idx / total_vocab, text=f"Fiszka {idx+1} z {total_vocab}")
-                
-                st.markdown(f"<div class='flashcard-front'>{active_word['pl']}</div>", unsafe_allow_html=True)
-                
-                if not st.session_state.vocab_show_answer:
-                    if st.button("Pokaż hiszpańskie tłumaczenie", key=f"show_es_{current_section['id']}", use_container_width=True):
-                        st.session_state.vocab_show_answer = True
-                        st.rerun()
-                else:
-                    st.markdown(f"<div class='flashcard-back'>{active_word['es']}</div>", unsafe_allow_html=True)
-                    if st.button("Następne słówko ➡️", key=f"next_es_{current_section['id']}", use_container_width=True):
-                        st.session_state[vocab_key] += 1
-                        progress[vocab_key] = st.session_state[vocab_key]
-                        save_progress_data(progress)
-                        st.session_state.vocab_show_answer = False
-                        st.rerun()
-            else:
-                st.progress(100, text="Zakończono trening!")
-                st.success("Brawo! Przećwiczyłeś wszystkie nowe słówka.")
-                if st.button("🔄 Przećwicz ponownie (Opcjonalnie)", key=f"reset_es_{current_section['id']}"):
-                    st.session_state[vocab_key] = 0
-                    progress[vocab_key] = 0
-                    save_progress_data(progress)
-                    st.session_state.vocab_show_answer = False
-                    st.rerun()
-                
-        elif current_section['type'] == 'grammar':
-            st.info("📖 **Zadanie:** Zapoznaj się z poniższymi zasadami gramatycznymi.")
-            st.markdown(current_section['content'])
-                
-        elif current_section['type'] == 'exercises':
-            st.write("Wypełnij luki i naciśnij Enter, aby sprawdzić odpowiedź.")
-            
-            total_ex = len(current_section['items'])
-            done_count = sum(1 for i in range(total_ex) if progress.get(f"ex_done_{lesson['lesson_metadata']['id']}_{current_section['id']}_{i}", False))
-            
-            st.info(f"📊 **Postęp sekcji:** Rozwiązane poprawnie ćwiczenia: **{done_count} / {total_ex}**")
-            
-            if done_count < total_ex:
-                st.progress(done_count / total_ex, text=f"Postęp: {done_count} z {total_ex}")
-            else:
-                st.progress(100, text="Wszystkie ćwiczenia z tej sekcji zostały rozwiązane!")
-                
-            for i, ex in enumerate(current_section['items']):
-                ex_done_key = f"ex_done_{lesson['lesson_metadata']['id']}_{current_section['id']}_{i}"
-                is_done = progress.get(ex_done_key, False)
-                
-                with st.expander(f"{'✅' if is_done else '💡'} {ex['translation']}"):
-                    if is_done:
-                        st.success(f"✅ ¡Perfecto! Odpowiedź: **{ex['answer']}**")
-                    else:
-                        ans = st.text_input(ex['question'].replace("___", "[ ... ]"), key=f"ex_input_{lesson['lesson_metadata']['id']}_{current_section['id']}_{i}")
-                        if ans:
-                            if ans.strip().lower() == ex['answer'].lower():
-                                progress[ex_done_key] = True
-                                save_progress_data(progress)
-                                st.rerun()
-                            else:
-                                st.error(f"❌ Poprawnie: {ex['answer']}")
+def page_settings(progress):
+    st.title("Ustawienia i dane")
+    st.caption("Postęp jest zapisywany lokalnie w pliku JSON. Możesz go przenosić między instalacjami.")
 
-        st.markdown("---")
-        prog_key = f"{lesson['lesson_metadata']['id']}_{current_section['id']}"
-        
-        can_finish = True
-        if current_section['type'] == 'vocabulary':
-            idx = progress.get(f"vocab_idx_{lesson['lesson_metadata']['id']}_{current_section['id']}", 0)
-            if idx < len(current_section['items']):
-                can_finish = False
-                st.info("💡 Przeklikaj wszystkie fiszki treningowe powyżej, aby odblokować przycisk zakończenia sekcji.")
-                
-        elif current_section['type'] == 'exercises':
-            total_ex = len(current_section['items'])
-            done_count = sum(1 for i in range(total_ex) if progress.get(f"ex_done_{lesson['lesson_metadata']['id']}_{current_section['id']}_{i}", False))
-            if done_count < total_ex:
-                can_finish = False
-                st.info("💡 Rozwiąż poprawnie wszystkie ćwiczenia, aby odblokować przycisk zakończenia sekcji.")
+    st.download_button(
+        "⬇ Pobierz kopię postępu",
+        data=json.dumps(progress, ensure_ascii=False, indent=2),
+        file_name=f"hiszpanski_postep_{date.today().isoformat()}.json",
+        mime="application/json",
+        use_container_width=True,
+    )
+    uploaded = st.file_uploader("Wczytaj kopię postępu", type=["json"])
+    if uploaded and st.button("Przywróć postęp", type="primary"):
+        try:
+            data=json.load(uploaded)
+            if not isinstance(data, dict):
+                raise ValueError
+            save_progress_data(data)
+            st.success("Postęp przywrócony.")
+            st.rerun()
+        except Exception:
+            st.error("Nie udało się odczytać pliku.")
 
-        if not progress.get(prog_key, False):
-            if can_finish:
-                if st.button("Zakończ tę sekcję", use_container_width=True):
-                    progress[prog_key] = True
-                    save_progress_data(progress)
-                    trigger_js_confetti()
-                    st.rerun()
-        else:
-            st.success("🎉 Sekcja ukończona!")
-            if current_section['type'] == 'vocabulary':
-                st.info("💡 Słówka z tej sekcji zostały odblokowane do globalnych powtórek SuperMemo!")
-            elif current_section['type'] == 'exercises':
-                st.info("💡 Te ćwiczenia zostały odblokowane do powtórek SuperMemo (jako fiszki ze zdaniami)!")
+    st.divider()
+    st.markdown("### Strefa ostrożności")
+    st.caption("Reset usuwa lokalny postęp i historię powtórek.")
+    if st.button("Resetuj cały postęp", type="secondary"):
+        st.session_state.confirm_reset = True
+    if st.session_state.get("confirm_reset"):
+        st.warning("To działanie jest nieodwracalne bez kopii JSON.")
+        a,b=st.columns(2)
+        if a.button("Tak, usuń postęp"):
+            save_progress_data({})
+            st.session_state.confirm_reset=False
+            st.rerun()
+        if b.button("Anuluj"):
+            st.session_state.confirm_reset=False
+            st.rerun()
 
-    # -------------------------------------
-    # TRYB 2: FISZKI (SUPERMEMO + ĆWICZENIA)
-    # -------------------------------------
-    elif mode == "🧠 Tryb Powtórek (SM-2)":
-        st.title("🧠 Globalny Tryb Powtórek (SM-2)")
-        st.write("Algorytm dba o to, byś powtarzał słówka i zdania z lukami w idealnym momencie. Pobiera wiedzę ze wszystkich odblokowanych poziomów!")
-        today_str = datetime.now().strftime("%Y-%m-%d")
-        due_cards = []
-        
-        for l_data in all_lessons_data:
-            l_id = l_data['lesson_metadata']['id']
-            for s in l_data['sections']:
-                if progress.get(f"{l_id}_{s['id']}", False):
-                    if s['type'] == 'vocabulary':
-                        for item in s['items']:
-                            vocab_key = f"vocab_{l_id}_{item['es']}"
-                            card_data = progress.get(vocab_key)
-                            if not card_data or card_data['next_review'] <= today_str:
-                                due_cards.append({'key': vocab_key, 'front': item['pl'], 'back': item['es']})
-                    elif s['type'] == 'exercises':
-                        for i, ex in enumerate(s['items']):
-                            ex_key = f"ex_card_{l_id}_{s['id']}_{i}"
-                            card_data = progress.get(ex_key)
-                            if not card_data or card_data['next_review'] <= today_str:
-                                front_text = f"{ex['question'].replace('___', '[ ... ]')}<br><br><span style='font-size: 0.8em; color: #5c2c16;'>💡 {ex['translation']}</span>"
-                                back_text = ex['question'].replace("___", f"<b style='color:#b33929;'>{ex['answer']}</b>")
-                                due_cards.append({'key': ex_key, 'front': front_text, 'back': back_text})
 
-        if not due_cards:
-            st.success("🎉 Świetna robota! Nie masz na dziś żadnych elementów do powtórki.")
-            trigger_js_confetti()
-        else:
-            if 'current_card_index' not in st.session_state: st.session_state.current_card_index = 0
-            if 'show_answer' not in st.session_state: st.session_state.show_answer = False
-            if st.session_state.current_card_index >= len(due_cards): st.session_state.current_card_index = 0
-                
-            active_card = due_cards[st.session_state.current_card_index]
-            st.info(f"Fiszek do powtórki w tej sesji: **{len(due_cards)}**")
-            
-            st.markdown(f"<div class='flashcard-front'>{active_card['front']}</div>", unsafe_allow_html=True)
-            
-            if not st.session_state.show_answer:
-                if st.button("Pokaż odpowiedź", use_container_width=True):
-                    st.session_state.show_answer = True
-                    st.rerun()
-            else:
-                st.markdown(f"<div class='flashcard-back'>{active_card['back']}</div>", unsafe_allow_html=True)
-                st.write("Jak dobrze to pamiętałeś?")
-                
-                cols = st.columns(4)
-                buttons = [("Nie wiem (0)", 0), ("Trudne (3)", 3), ("Dobre (4)", 4), ("Łatwe (5)", 5)]
-                
-                def process_answer(quality):
-                    key = active_card['key']
-                    if key not in progress:
-                        progress[key] = {'repetitions': 0, 'ease_factor': 2.5, 'interval': 0, 'next_review': today_str}
-                    rep, ef, intrv = progress[key]['repetitions'], progress[key]['ease_factor'], progress[key]['interval']
-                    new_rep, new_ef, new_intrv = calculate_sm2(quality, rep, ef, intrv)
-                    progress[key] = {
-                        'repetitions': new_rep, 'ease_factor': new_ef, 'interval': new_intrv,
-                        'next_review': (datetime.now() + timedelta(days=new_intrv)).strftime("%Y-%m-%d")
-                    }
-                    save_progress_data(progress)
-                    st.session_state.show_answer = False
-                    st.rerun()
+def main():
+    progress = get_progress_data()
+    lessons = get_catalog()
+    if not lessons:
+        st.error("Brak danych lekcji w katalogu data/.")
+        return
 
-                for col, (label, q_val) in zip(cols, buttons):
-                    if col.button(label, use_container_width=True): process_answer(q_val)
+    with st.sidebar:
+        st.markdown('<div class="brand">🇪🇸 Hiszpański</div><div class="brand-sub">nauka po ludzku</div>', unsafe_allow_html=True)
+        pages = ["Start", "Kurs", "Powtórki", "Trener słówek", "Ściąga", "Postęp", "Dane"]
+        current = st.session_state.get("page", "Start")
+        page = st.radio("Nawigacja", pages, index=pages.index(current) if current in pages else 0)
+        st.session_state.page = page
+        st.divider()
+        stats=overall_stats(lessons,progress)
+        st.caption("TWÓJ POSTĘP")
+        st.progress(stats["progress"]/100)
+        st.write(f"**{stats['progress']}%** kursu")
+        st.caption(f"{len(due_cards(lessons, progress))} kart do powtórki · {activity_streak(progress)} dni serii")
 
-    # -------------------------------------
-    # TRYB 3: TRENER SŁÓWEK
-    # -------------------------------------
-    elif mode == "🏋️ Trener Słówek (Losowe 20)":
-        st.title("🏋️ Szybki Trening Słówek")
-        st.write("Idealne na 5 minut przerwy! Aplikacja wylosuje 20 słówek ze wszystkich zakończonych przez Ciebie sekcji.")
-        
-        unlocked_words = []
-        for l_data in all_lessons_data:
-            l_id = l_data['lesson_metadata']['id']
-            for s in l_data['sections']:
-                if s['type'] == 'vocabulary' and progress.get(f"{l_id}_{s['id']}", False):
-                    for item in s['items']:
-                        unlocked_words.append(item)
+    if st.session_state.page == "Start":
+        page_home(lessons, progress)
+    elif st.session_state.page == "Kurs":
+        page_course(lessons, progress)
+    elif st.session_state.page == "Lekcja":
+        page_lesson(lessons, progress)
+    elif st.session_state.page == "Powtórki":
+        page_review(lessons, progress)
+    elif st.session_state.page == "Trener słówek":
+        page_trainer(lessons, progress)
+    elif st.session_state.page == "Ściąga":
+        page_grammar()
+    elif st.session_state.page == "Postęp":
+        page_analytics(lessons, progress)
+    elif st.session_state.page == "Dane":
+        page_settings(progress)
 
-        if not unlocked_words:
-            st.warning("Nie ukończyłeś jeszcze żadnej sekcji ze słownictwem. Przerób moduły z lekcji, aby odblokować słówka!")
-        else:
-            if 'trainer_active' not in st.session_state or not st.session_state.trainer_active:
-                if st.button("Rozpocznij losowanie 20 słówek 🚀", use_container_width=True):
-                    st.session_state.trainer_active = True
-                    sample_size = min(20, len(unlocked_words))
-                    st.session_state.trainer_words = random.sample(unlocked_words, sample_size)
-                    st.session_state.trainer_idx = 0
-                    st.session_state.trainer_score = 0
-                    st.session_state.trainer_show_ans = False
-                    st.rerun()
-            else:
-                idx = st.session_state.trainer_idx
-                words = st.session_state.trainer_words
-                
-                if idx < len(words):
-                    st.progress(idx / len(words), text=f"Słówko {idx + 1} z {len(words)}")
-                    current_word = words[idx]
-                    
-                    st.markdown(f"<div class='flashcard-front'>{current_word['pl']}</div>", unsafe_allow_html=True)
-                    
-                    if not st.session_state.trainer_show_ans:
-                        if st.button("Pokaż odpowiedź", use_container_width=True):
-                            st.session_state.trainer_show_ans = True
-                            st.rerun()
-                    else:
-                        st.markdown(f"<div class='flashcard-back'>{current_word['es']}</div>", unsafe_allow_html=True)
-                        
-                        col1, col2 = st.columns(2)
-                        with col1:
-                            if st.button("🔴 Nie pamiętałem", use_container_width=True):
-                                st.session_state.trainer_idx += 1
-                                st.session_state.trainer_show_ans = False
-                                st.rerun()
-                        with col2:
-                            if st.button("🟢 Pamiętałem (+1)", use_container_width=True):
-                                st.session_state.trainer_score += 1
-                                st.session_state.trainer_idx += 1
-                                st.session_state.trainer_show_ans = False
-                                st.rerun()
-                else:
-                    st.progress(100, text="Trening zakończony!")
-                    st.success(f"Twój wynik: **{st.session_state.trainer_score} / {len(words)}**")
-                    trigger_js_confetti()
-                    if st.button("Zakończ i wróć", use_container_width=True):
-                        st.session_state.trainer_active = False
-                        st.rerun()
-
-    # -------------------------------------
-    # TRYB 4: TABLICE CZASOWNIKÓW 
-    # -------------------------------------
-    elif mode == "📖 Tablice Czasowników":
-        st.title("📖 Tablice Odmian Czasowników")
-        st.write("Twój podręczny niezbędnik gramatyczny. Szybka ściągawka z najważniejszych hiszpańskich zasad.")
-        
-        tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs([
-            "📏 Regularne", 
-            "🔥 Nieregularne", 
-            "🔀 Wymiana Samogł.",
-            "🔄 Zwrotne", 
-            "⏳ Przeszły (Perf.)",
-            "🏃 Gerundio",
-            "⭐ Specjalne",
-            "👈 Zaimki"
-        ])
-        
-        with tab1:
-            st.subheader("Czasowniki Regularne (Presente de Indicativo)")
-            st.markdown("""
-            | Osoba (Zaimek) | -AR (np. **trabajar** - pracować) | -ER (np. **comer** - jeść) | -IR (np. **vivir** - mieszkać/żyć) |
-            | :--- | :--- | :--- | :--- |
-            | **Yo** (Ja) | trabaj**o** | com**o** | viv**o** |
-            | **Tú** (Ty) | trabaj**as** | com**es** | viv**es** |
-            | **Él/Ella/Usted** (On/Ona/Pan/i) | trabaj**a** | com**e** | viv**e** |
-            | **Nosotros/as** (My) | trabaj**amos** | com**emos** | viv**imos** |
-            | **Vosotros/as** (Wy) | trabaj**áis** | com**éis** | viv**ís** |
-            | **Ellos/Ellas/Ustedes** (Oni/One/Państwo)| trabaj**an** | com**en** | viv**en** |
-            """)
-            
-        with tab2:
-            st.subheader("Najważniejsze Czasowniki Nieregularne")
-            st.markdown("""
-            | Osoba | SER (być - cechy) | ESTAR (być - lokalizacja) | TENER (mieć) | IR (iść/jechać) |
-            | :--- | :--- | :--- | :--- | :--- |
-            | **Yo** | soy | estoy | tengo | voy |
-            | **Tú** | eres | estás | tienes | vas |
-            | **Él/Ella/Usted** | es | está | tiene | va |
-            | **Nosotros/as** | somos | estamos | tenemos | vamos |
-            | **Vosotros/as** | sois | estáis | tenéis | vais |
-            | **Ellos/Ellas/Ustedes**| son | están | tienen | van |
-            """)
-            st.markdown("---")
-            st.markdown("#### Nieregularne TYLKO w 1. osobie (Dla 'Yo')")
-            st.write("W tych czasownikach tylko forma 'Ja' jest inna, reszta odmienia się w 100% regularnie.")
-            st.markdown("""
-            | Bezokolicznik | Forma 'Yo' (Ja) | Forma 'Tú' (Ty) | Znaczenie |
-            | :--- | :--- | :--- | :--- |
-            | **Hacer** | **hago** | haces | robić |
-            | **Salir** | **salgo** | sales | wychodzić |
-            | **Poner** | **pongo** | pones | kłaść / zakładać |
-            | **Saber** | **sé** | sabes | wiedzieć / umieć |
-            | **Dar** | **doy** | das | dawać |
-            """)
-            
-        with tab3:
-            st.subheader("Wymiana Samogłoskowa ('Zasada Buta')")
-            st.write("Wielu hiszpańskich czasowników dotyczy wymiana w rdzeniu (w środku słowa). Samogłoska wymienia się we wszystkich osobach **OPRÓCZ** 'nosotros' i 'vosotros'.")
-            st.markdown("""
-            #### 1. O ➡️ UE
-            * **Costar** (kosztować): yo c**ue**sto, tú c**ue**stas, él c**ue**sta, nosotros costamos, vosotros costáis, ellos c**ue**stan.
-            * **Volar** (latać): v**ue**lo, v**ue**las, v**ue**la, volamos, voláis, v**ue**lan.
-            * **Dormir** (spać): d**ue**rmo, d**ue**rmes...
-            
-            #### 2. E ➡️ IE
-            * **Querer** (chcieć): yo qu**ie**ro, tú qu**ie**res, él qu**ie**re, nosotros queremos, vosotros queréis, ellos qu**ie**ren.
-            * **Pensar** (myśleć): p**ie**nso, p**ie**nsas...
-            * **Empezar** (zaczynać): emp**ie**zo, emp**ie**zas...
-            
-            #### 3. E ➡️ I
-            * **Pedir** (prosić / zamawiać): p**i**do, p**i**des, p**i**de, pedimos, pedís, p**i**den.
-            """)
-            
-        with tab4:
-            st.subheader("Czasowniki Zwrotne (z cząstką 'się')")
-            st.write("Zaimek zwrotny wędruje ZAWSZE przed odmieniony czasownik.")
-            st.markdown("""
-            | Osoba | Zaimek | LEVANTARSE (budzić się / wstawać) |
-            | :--- | :--- | :--- |
-            | **Yo** | **me** | levanto |
-            | **Tú** | **te** | levantas |
-            | **Él/Ella/Usted** | **se** | levanta |
-            | **Nosotros/as** | **nos** | levantamos |
-            | **Vosotros/as** | **os** | levantáis |
-            | **Ellos/Ellas/Ustedes**| **se** | levantan |
-            """)
-            
-        with tab5:
-            st.subheader("Czas Przeszły (Pretérito Perfecto)")
-            st.write("Składa się z posiłkowego **HABER** i imiesłowu biernego.")
-            st.markdown("""
-            #### 1. Odmiana czasownika posiłkowego HABER
-            | Yo | Tú | Él/Ella/Usted | Nosotros/as | Vosotros/as | Ellos/Ellas/Ustedes |
-            | :--- | :--- | :--- | :--- | :--- | :--- |
-            | **he** | **has** | **ha** | **hemos** | **habéis** | **han** |
-
-            #### 2. Tworzenie regularnych imiesłowów
-            * Czasowniki na **-AR** ➡️ dodajemy **-ado** (np. trabajar ➡️ **trabajado**)
-            * Czasowniki na **-ER** / **-IR** ➡️ dodajemy **-ido** (np. comer ➡️ **comido**, vivir ➡️ **vivido**)
-
-            #### 3. Najważniejsze imiesłowy NIEREGULARNE 🔥
-            | Bezokolicznik | Znaczenie | Forma nieregularna |
-            | :--- | :--- | :--- |
-            | **Abrir** | otwierać | **abierto** (otwarty) |
-            | **Decir** | mówić | **dicho** (powiedziany) |
-            | **Escribir** | pisać | **escrito** (napisany) |
-            | **Hacer** | robić | **hecho** (zrobiony) |
-            | **Poner** | kłaść | **puesto** (położony) |
-            | **Romper** | psuć / łamać | **roto** (zepsuty / złamany) |
-            | **Ser** | być | **sido** (był) |
-            | **Ver** | widzieć | **visto** (widziany) |
-            | **Volver** | wracać | **vuelto** (wrócił) |
-            """)
-            
-        with tab6:
-            st.subheader("Czas Ciągły (Estar + Gerundio)")
-            st.write("Używamy go do opisania czynności, która dzieje się **dokładnie w tej chwili**.")
-            st.markdown("""
-            #### 1. Tworzenie Gerundio
-            | Końcówka bezokolicznika | Końcówka Gerundio | Przykład |
-            | :--- | :--- | :--- |
-            | **-AR** | **-ando** | trabajar ➡️ trabaj**ando** |
-            | **-ER / -IR** | **-iendo** | comer ➡️ com**iendo** |
-            
-            #### 2. Najważniejsze wyjątki (Zmiana pisowni)
-            * **Leer** (czytać) ➡️ **leyendo**
-            * **Dormir** (spać) ➡️ **durmiendo**
-            * **Decir** (mówić) ➡️ **diciendo**
-            * **Pedir** (zamawiać) ➡️ **pidiendo**
-            
-            #### 3. Przykłady z odmienionym ESTAR
-            * *Yo **estoy volando** en el simulador.* (Właśnie teraz lecę w symulatorze).
-            * *Natalia **está conduciendo**.* (Natalia w tym momencie prowadzi).
-            """)
-            
-        with tab7:
-            st.subheader("Konstrukcje Specjalne")
-            st.markdown("#### 1. HAY vs ESTAR")
-            st.markdown("""
-            Najczęstszy problem! Kiedy użyć którego "jest"?
-            | HAY (Istnienie - "tam jest coś") | ESTAR (Lokalizacja - "to coś jest tu") |
-            | :--- | :--- |
-            | Rzeczy nieznane, nowe w rozmowie | Rzeczy konkretne, znane rozmówcy |
-            | Z rodzajnikami nieokreślonymi: **un, una, unos, unas** | Z rodzajnikami określonymi: **el, la, los, las** |
-            | Z liczbami: **dos, tres, muchos** | Z zaimkami dzierżawczymi: **mi, tu, su** |
-            | *Hay una mesa* (Jest jakiś stół) | *La mesa está aquí* (Ten stół jest tutaj) |
-            """)
-            
-            st.markdown("#### 2. Czasownik GUSTAR (Lubić / Smakować)")
-            st.markdown("""
-            *Dosłownie: 'Coś sprawia mi przyjemność'. Dopasowujemy końcówkę do tego, **co** lubimy, a nie kto lubi.*
-            * **(A mí) me gusta** + l. poj. (np. *la carne*) / bezokolicznik (np. *comer*)
-            * **(A ti) te gustan** + l. mnoga (np. *los tomates*)
-            * Inne zaimki: **le** (jemu/jej), **nos** (nam), **os** (wam), **les** (im).
-            """)
-            st.markdown("#### 3. Plany na przyszłość: IR + A + Bezokolicznik")
-            st.markdown("""
-            * **Voy a trabajar.** - Zamierzam pracować.
-            * **Vamos a comer.** - Zamierzamy jeść.
-            """)
-            st.markdown("#### 4. Obowiązek: TENER QUE vs HAY QUE")
-            st.markdown("""
-            * **Tengo que** + bezokolicznik -> *Ja muszę...* (Osobisty obowiązek)
-            * **Hay que** + bezokolicznik -> *Trzeba...* (Ogólna zasada, forma bezosobowa)
-            """)
-            
-        with tab8:
-            st.subheader("Zaimki Wskazujące (Ten, Ta, Ci, Te)")
-            st.write("Używamy ich, by wskazać przedmioty znajdujące się **blisko** nas.")
-            st.markdown("""
-            | Liczba | Rodzaj Męski | Rodzaj Żeński |
-            | :--- | :--- | :--- |
-            | **Pojedyncza (Ten/Ta)** | **este** (np. *este coche* - ten samochód) | **esta** (np. *esta maleta* - ta walizka) |
-            | **Mnoga (Ci/Te)** | **estos** (np. *estos zapatos* - te buty) | **estas** (np. *estas chicas* - te dziewczyny) |
-            
-            💡 **Uwaga na wyjątek:** Słowo *este* często myli się z *esto*.
-            * **Este** używamy z rzeczownikiem męskim (*Este ordenador* - Ten komputer).
-            * **Esto** to forma neutralna, używana gdy nie znamy nazwy przedmiotu, na który patrzymy (*¿Qué es esto?* - Co to jest?).
-            """)
-
-    # -------------------------------------
-    # TRYB 5: DASHBOARD ANALITYCZNY
-    # -------------------------------------
-    elif mode == "📊 Dashboard Analityczny":
-        st.title("📊 Dashboard Analityczny Kursu")
-        total_sections, completed_sections_count = 0, 0
-        lesson_progress_summary = []
-        
-        for l_data in all_lessons_data:
-            l_total = len(l_data['sections'])
-            l_done = sum(1 for s in l_data['sections'] if progress.get(f"{l_data['lesson_metadata']['id']}_{s['id']}", False))
-            total_sections += l_total
-            completed_sections_count += l_done
-            pct = int((l_done / l_total) * 100) if l_total > 0 else 0
-            lesson_progress_summary.append({
-                "Poziom": l_data['lesson_metadata']['level'], 
-                "Lekcja": l_data['lesson_metadata']['title'], 
-                "Ukończono (%)": pct, 
-                "Zaliczone": f"{l_done}/{l_total}"
-            })
-
-        words_in_learning = sum(1 for key in progress if key.startswith("vocab_"))
-        ex_in_learning = sum(1 for key in progress if key.startswith("ex_card_"))
-
-        col1, col2, col3, col4 = st.columns(4)
-        col1.metric("Ukończone sekcje", f"{completed_sections_count} / {total_sections}")
-        col2.metric("Ogólny postęp", f"{int((completed_sections_count / total_sections) * 100) if total_sections > 0 else 0}%")
-        col3.metric("Opanowane słówka", words_in_learning)
-        col4.metric("Opanowane zdania", ex_in_learning)
-
-        st.markdown("---")
-        for item in lesson_progress_summary:
-            st.write(f"**[{item['Poziom']}] {item['Lekcja']}** — {item['Zaliczone']} sekcji")
-            st.progress(item['Ukończono (%)'])
 
 if __name__ == "__main__":
     main()
